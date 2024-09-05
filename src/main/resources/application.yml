@@ -1,0 +1,11 @@
+app:
+
+spring:
+  application:
+    name: dcompiler
+  main:
+    web-application-type: none
+
+
+logging:
+  config: classpath:log4j2-plain.xml
