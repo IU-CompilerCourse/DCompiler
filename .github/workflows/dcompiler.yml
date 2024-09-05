@@ -14,7 +14,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build
+    name: Build & Test
     permissions:
       contents: read
       packages: write
@@ -56,7 +56,7 @@ jobs:
           update-comment: true
 
   checkstyle:
-    name: checkstyle
+    name: Checkstyle
     runs-on: ubuntu-latest
 
     steps:
