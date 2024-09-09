@@ -1,0 +1,37 @@
+TOKENS
+
+Token{type: Var, lexeme: 'var', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'num', literal: null, line: 1}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 1}
+Token{type: DoubleLiteral, lexeme: '3.14', literal: 3.14, line: 1}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 1}
+Token{type: If, lexeme: 'if', literal: null, line: 3}
+Token{type: Identifier, lexeme: 'num', literal: null, line: 3}
+Token{type: Greater, lexeme: '>', literal: null, line: 3}
+Token{type: IntLiteral, lexeme: '0', literal: 0, line: 3}
+Token{type: Then, lexeme: 'then', literal: null, line: 3}
+Token{type: Print, lexeme: 'print', literal: null, line: 4}
+Token{type: Identifier, lexeme: 'num', literal: null, line: 4}
+Token{type: Comma, lexeme: ',', literal: null, line: 4}
+Token{type: StringLiteral, lexeme: '" is positive."', literal:  is positive., line: 4}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 4}
+Token{type: Else, lexeme: 'else', literal: null, line: 5}
+Token{type: If, lexeme: 'if', literal: null, line: 5}
+Token{type: Identifier, lexeme: 'num', literal: null, line: 5}
+Token{type: Less, lexeme: '<', literal: null, line: 5}
+Token{type: IntLiteral, lexeme: '0', literal: 0, line: 5}
+Token{type: Then, lexeme: 'then', literal: null, line: 5}
+Token{type: Print, lexeme: 'print', literal: null, line: 6}
+Token{type: Identifier, lexeme: 'num', literal: null, line: 6}
+Token{type: Comma, lexeme: ',', literal: null, line: 6}
+Token{type: StringLiteral, lexeme: '" is negative."', literal:  is negative., line: 6}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 6}
+Token{type: Else, lexeme: 'else', literal: null, line: 7}
+Token{type: Print, lexeme: 'print', literal: null, line: 8}
+Token{type: StringLiteral, lexeme: '"is zero"', literal: is zero, line: 8}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 8}
+Token{type: End, lexeme: 'end', literal: null, line: 9}
+Token{type: EOF, lexeme: '', literal: null, line: 10}
+
+ERRORS
+

@@ -1,0 +1,29 @@
+TOKENS
+
+Token{type: Var, lexeme: 'var', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 1}
+Token{type: IntLiteral, lexeme: '10', literal: 10, line: 1}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 1}
+Token{type: Var, lexeme: 'var', literal: null, line: 2}
+Token{type: Identifier, lexeme: 'y', literal: null, line: 2}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 2}
+Token{type: IntLiteral, lexeme: '20', literal: 20, line: 2}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 2}
+Token{type: If, lexeme: 'if', literal: null, line: 3}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 3}
+Token{type: Less, lexeme: '<', literal: null, line: 3}
+Token{type: Identifier, lexeme: 'y', literal: null, line: 3}
+Token{type: Then, lexeme: 'then', literal: null, line: 3}
+Token{type: Print, lexeme: 'print', literal: null, line: 4}
+Token{type: StringLiteral, lexeme: '"x is less than y"', literal: x is less than y, line: 4}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 4}
+Token{type: Else, lexeme: 'else', literal: null, line: 5}
+Token{type: Print, lexeme: 'print', literal: null, line: 6}
+Token{type: StringLiteral, lexeme: '"x is not less than y"', literal: x is not less than y, line: 6}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 6}
+Token{type: End, lexeme: 'end', literal: null, line: 7}
+Token{type: EOF, lexeme: '', literal: null, line: 8}
+
+ERRORS
+

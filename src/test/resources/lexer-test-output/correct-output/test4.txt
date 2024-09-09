@@ -1,0 +1,67 @@
+TOKENS
+
+Token{type: Var, lexeme: 'var', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'add', literal: null, line: 1}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 1}
+Token{type: Func, lexeme: 'func', literal: null, line: 1}
+Token{type: OpenParen, lexeme: '(', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+Token{type: Comma, lexeme: ',', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'y', literal: null, line: 1}
+Token{type: CloseParen, lexeme: ')', literal: null, line: 1}
+Token{type: Arrow, lexeme: '=>', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+Token{type: Plus, lexeme: '+', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'y', literal: null, line: 1}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 1}
+Token{type: Var, lexeme: 'var', literal: null, line: 2}
+Token{type: Identifier, lexeme: 'result', literal: null, line: 2}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 2}
+Token{type: Identifier, lexeme: 'add', literal: null, line: 2}
+Token{type: OpenParen, lexeme: '(', literal: null, line: 2}
+Token{type: IntLiteral, lexeme: '3', literal: 3, line: 2}
+Token{type: Comma, lexeme: ',', literal: null, line: 2}
+Token{type: IntLiteral, lexeme: '4', literal: 4, line: 2}
+Token{type: CloseParen, lexeme: ')', literal: null, line: 2}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 2}
+Token{type: Print, lexeme: 'print', literal: null, line: 4}
+Token{type: Identifier, lexeme: 'result', literal: null, line: 4}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 4}
+Token{type: Var, lexeme: 'var', literal: null, line: 6}
+Token{type: Identifier, lexeme: 'multiply', literal: null, line: 6}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 6}
+Token{type: Func, lexeme: 'func', literal: null, line: 6}
+Token{type: OpenParen, lexeme: '(', literal: null, line: 6}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 6}
+Token{type: Comma, lexeme: ',', literal: null, line: 6}
+Token{type: Identifier, lexeme: 'y', literal: null, line: 6}
+Token{type: CloseParen, lexeme: ')', literal: null, line: 6}
+Token{type: Is, lexeme: 'is', literal: null, line: 6}
+Token{type: Var, lexeme: 'var', literal: null, line: 7}
+Token{type: Identifier, lexeme: 'res', literal: null, line: 7}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 7}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 7}
+Token{type: Star, lexeme: '*', literal: null, line: 7}
+Token{type: Identifier, lexeme: 'y', literal: null, line: 7}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 7}
+Token{type: Return, lexeme: 'return', literal: null, line: 8}
+Token{type: Identifier, lexeme: 'res', literal: null, line: 8}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 8}
+Token{type: End, lexeme: 'end', literal: null, line: 9}
+Token{type: Var, lexeme: 'var', literal: null, line: 11}
+Token{type: Identifier, lexeme: 'product', literal: null, line: 11}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 11}
+Token{type: Identifier, lexeme: 'multiply', literal: null, line: 11}
+Token{type: OpenParen, lexeme: '(', literal: null, line: 11}
+Token{type: IntLiteral, lexeme: '2', literal: 2, line: 11}
+Token{type: Comma, lexeme: ',', literal: null, line: 11}
+Token{type: IntLiteral, lexeme: '5', literal: 5, line: 11}
+Token{type: CloseParen, lexeme: ')', literal: null, line: 11}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 11}
+Token{type: Print, lexeme: 'print', literal: null, line: 13}
+Token{type: Identifier, lexeme: 'product', literal: null, line: 13}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 13}
+Token{type: EOF, lexeme: '', literal: null, line: 14}
+
+ERRORS
+

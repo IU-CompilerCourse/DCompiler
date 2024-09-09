@@ -10,47 +10,48 @@ import java.util.List;
 import java.util.Map;
 
 public final class Lexer {
-    private static final Map<String, TokenType> keywords;
+    private static final Map<String, TokenType> KEYWORDS;
+    private static final Map<String, TokenType> BOOL_LITERALS;
+
     static {
-        keywords = new HashMap<>();
+        KEYWORDS = new HashMap<>();
 
-        keywords.put("and", TokenType.And);
-        keywords.put("or", TokenType.Or);
-        keywords.put("xor", TokenType.Xor);
-        keywords.put("not", TokenType.Not);
+        KEYWORDS.put("and", TokenType.And);
+        KEYWORDS.put("or", TokenType.Or);
+        KEYWORDS.put("xor", TokenType.Xor);
+        KEYWORDS.put("not", TokenType.Not);
 
-        keywords.put("is", TokenType.Is);
+        KEYWORDS.put("is", TokenType.Is);
 
-        keywords.put("int", TokenType.Int);
-        keywords.put("real", TokenType.Real);
-        keywords.put("string", TokenType.String);
-        keywords.put("bool", TokenType.Bool);
-        keywords.put("empty", TokenType.Empty);
-        keywords.put("func", TokenType.Func);
+        KEYWORDS.put("int", TokenType.Int);
+        KEYWORDS.put("real", TokenType.Real);
+        KEYWORDS.put("string", TokenType.String);
+        KEYWORDS.put("bool", TokenType.Bool);
+        KEYWORDS.put("empty", TokenType.Empty);
+        KEYWORDS.put("func", TokenType.Func);
 
-        keywords.put("var", TokenType.Var);
+        KEYWORDS.put("var", TokenType.Var);
 
-        keywords.put("readInt", TokenType.ReadInt);
-        keywords.put("readReal", TokenType.ReadReal);
-        keywords.put("readString", TokenType.ReadString);
-        keywords.put("print", TokenType.Print);
+        KEYWORDS.put("readInt", TokenType.ReadInt);
+        KEYWORDS.put("readReal", TokenType.ReadReal);
+        KEYWORDS.put("readString", TokenType.ReadString);
+        KEYWORDS.put("print", TokenType.Print);
 
-        keywords.put("return", TokenType.Return);
-        keywords.put("if", TokenType.If);
-        keywords.put("then", TokenType.Then);
-        keywords.put("else", TokenType.Else);
-        keywords.put("end", TokenType.End);
-        keywords.put("while", TokenType.While);
-        keywords.put("for", TokenType.For);
-        keywords.put("in", TokenType.In);
-        keywords.put("loop", TokenType.Loop);
+        KEYWORDS.put("return", TokenType.Return);
+        KEYWORDS.put("if", TokenType.If);
+        KEYWORDS.put("then", TokenType.Then);
+        KEYWORDS.put("else", TokenType.Else);
+        KEYWORDS.put("end", TokenType.End);
+        KEYWORDS.put("while", TokenType.While);
+        KEYWORDS.put("for", TokenType.For);
+        KEYWORDS.put("in", TokenType.In);
+        KEYWORDS.put("loop", TokenType.Loop);
     }
 
-    private static final Map<String, TokenType> boolLiterals;
     static {
-        boolLiterals = new HashMap<>();
-        boolLiterals.put("false", TokenType.BooleanLiteral);
-        boolLiterals.put("true",TokenType.BooleanLiteral);
+        BOOL_LITERALS = new HashMap<>();
+        BOOL_LITERALS.put(Boolean.FALSE.toString(), TokenType.BooleanLiteral);
+        BOOL_LITERALS.put(Boolean.TRUE.toString(), TokenType.BooleanLiteral);
     }
 
     private final String src;
@@ -84,24 +85,48 @@ public final class Lexer {
         addToken(type, null);
     }
 
-    private void scanToken() {
+    @SuppressWarnings("checkstyle:CyclomaticComplexity") private void scanToken() {
         char c = eat();
         switch (c) {
             // brackets, parenthesis, braces
-            case '(': addToken(TokenType.OpenParen); break;
-            case ')': addToken(TokenType.CloseParen); break;
-            case '{': addToken(TokenType.OpenBrace); break;
-            case '}': addToken(TokenType.CloseBrace); break;
-            case '[': addToken(TokenType.OpenBracket); break;
-            case ']': addToken(TokenType.CloseBracket); break;
+            case '(':
+                addToken(TokenType.OpenParen);
+                break;
+            case ')':
+                addToken(TokenType.CloseParen);
+                break;
+            case '{':
+                addToken(TokenType.OpenBrace);
+                break;
+            case '}':
+                addToken(TokenType.CloseBrace);
+                break;
+            case '[':
+                addToken(TokenType.OpenBracket);
+                break;
+            case ']':
+                addToken(TokenType.CloseBracket);
+                break;
 
             // operators
-            case '.': addToken(TokenType.Dot); break;
-            case ',': addToken(TokenType.Comma); break;
-            case '-': addToken(TokenType.Minus); break;
-            case '+': addToken(TokenType.Plus); break;
-            case ';': addToken(TokenType.Semicolon); break;
-            case '*': addToken(TokenType.Star); break;
+            case '.':
+                addToken(TokenType.Dot);
+                break;
+            case ',':
+                addToken(TokenType.Comma);
+                break;
+            case '-':
+                addToken(TokenType.Minus);
+                break;
+            case '+':
+                addToken(TokenType.Plus);
+                break;
+            case ';':
+                addToken(TokenType.Semicolon);
+                break;
+            case '*':
+                addToken(TokenType.Star);
+                break;
             case '=':
                 addToken(match('>') ? TokenType.Arrow : TokenType.Equal);
                 break;
@@ -161,11 +186,11 @@ public final class Lexer {
 
         var id = getLexeme();
         // bool literal
-        if (boolLiterals.containsKey(id)) {
-            var literal = id.equals("true");
+        if (BOOL_LITERALS.containsKey(id)) {
+            var literal = id.equals(Boolean.TRUE.toString());
             addToken(TokenType.BooleanLiteral, literal);
-        } else if (keywords.containsKey(id)) {
-            var keyword = keywords.get(id);
+        } else if (KEYWORDS.containsKey(id)) {
+            var keyword = KEYWORDS.get(id);
             addToken(keyword);
         } else {
             addToken(TokenType.Identifier);
@@ -188,7 +213,7 @@ public final class Lexer {
         addToken(TokenType.IntLiteral, Integer.parseInt(getLexeme()));
     }
 
-    private void stringLiteral() {
+    @SuppressWarnings("checkstyle:ReturnCount") private void stringLiteral() {
         while (peek() != '"' && !isAtEnd()) {
             // escaping
             if (peek() == '\\') {
@@ -260,9 +285,9 @@ public final class Lexer {
     }
 
     private boolean isAlpha(char c) {
-        return (c >= 'a' && c <= 'z') ||
-            (c >= 'A' && c <= 'Z') ||
-            c == '_';
+        return (c >= 'a' && c <= 'z')
+               || (c >= 'A' && c <= 'Z')
+               || c == '_';
     }
 
     private boolean isAlphaNumeric(char c) {
@@ -270,6 +295,7 @@ public final class Lexer {
     }
 
     private String getLexeme() {
-        return src.substring(start, current);
+        var lexeme = src.substring(start, current);
+        return lexeme.equals("\n") ? "" : lexeme;
     }
 }

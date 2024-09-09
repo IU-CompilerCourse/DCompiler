@@ -2,6 +2,7 @@ package com.java.lexer.errors;
 
 public abstract class LexerError {
     protected int line;
+
     public LexerError(int line) {
         this.line = line;
     }

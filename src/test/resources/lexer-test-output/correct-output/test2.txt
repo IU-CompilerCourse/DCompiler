@@ -1,0 +1,52 @@
+TOKENS
+
+Token{type: Var, lexeme: 'var', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 1}
+Token{type: IntLiteral, lexeme: '0', literal: 0, line: 1}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 1}
+Token{type: Var, lexeme: 'var', literal: null, line: 2}
+Token{type: Identifier, lexeme: 'y', literal: null, line: 2}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 2}
+Token{type: IntLiteral, lexeme: '10', literal: 10, line: 2}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 2}
+Token{type: If, lexeme: 'if', literal: null, line: 4}
+Token{type: Identifier, lexeme: 'y', literal: null, line: 4}
+Token{type: Greater, lexeme: '>', literal: null, line: 4}
+Token{type: IntLiteral, lexeme: '5', literal: 5, line: 4}
+Token{type: Then, lexeme: 'then', literal: null, line: 4}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 5}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 5}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 5}
+Token{type: Plus, lexeme: '+', literal: null, line: 5}
+Token{type: IntLiteral, lexeme: '1', literal: 1, line: 5}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 5}
+Token{type: Else, lexeme: 'else', literal: null, line: 6}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 7}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 7}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 7}
+Token{type: Minus, lexeme: '-', literal: null, line: 7}
+Token{type: IntLiteral, lexeme: '1', literal: 1, line: 7}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 7}
+Token{type: End, lexeme: 'end', literal: null, line: 8}
+Token{type: While, lexeme: 'while', literal: null, line: 10}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 10}
+Token{type: Less, lexeme: '<', literal: null, line: 10}
+Token{type: IntLiteral, lexeme: '5', literal: 5, line: 10}
+Token{type: Loop, lexeme: 'loop', literal: null, line: 10}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 11}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 11}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 11}
+Token{type: Plus, lexeme: '+', literal: null, line: 11}
+Token{type: IntLiteral, lexeme: '1', literal: 1, line: 11}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 11}
+Token{type: End, lexeme: 'end', literal: null, line: 12}
+Token{type: Print, lexeme: 'print', literal: null, line: 14}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 14}
+Token{type: Comma, lexeme: ',', literal: null, line: 14}
+Token{type: Identifier, lexeme: 'y', literal: null, line: 14}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 14}
+Token{type: EOF, lexeme: '', literal: null, line: 15}
+
+ERRORS
+

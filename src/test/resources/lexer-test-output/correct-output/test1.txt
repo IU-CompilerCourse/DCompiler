@@ -1,0 +1,58 @@
+TOKENS
+
+Token{type: Var, lexeme: 'var', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 1}
+Token{type: IntLiteral, lexeme: '5', literal: 5, line: 1}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 1}
+Token{type: Var, lexeme: 'var', literal: null, line: 2}
+Token{type: Identifier, lexeme: 'b', literal: null, line: 2}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 2}
+Token{type: DoubleLiteral, lexeme: '10.5', literal: 10.5, line: 2}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 2}
+Token{type: Var, lexeme: 'var', literal: null, line: 3}
+Token{type: Identifier, lexeme: 'c', literal: null, line: 3}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 3}
+Token{type: StringLiteral, lexeme: '"Hello"', literal: Hello, line: 3}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 3}
+Token{type: Var, lexeme: 'var', literal: null, line: 4}
+Token{type: Identifier, lexeme: 'd', literal: null, line: 4}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 4}
+Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 4}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 4}
+Token{type: Identifier, lexeme: 'a', literal: null, line: 6}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 6}
+Token{type: Identifier, lexeme: 'a', literal: null, line: 6}
+Token{type: Plus, lexeme: '+', literal: null, line: 6}
+Token{type: IntLiteral, lexeme: '2', literal: 2, line: 6}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 6}
+Token{type: Identifier, lexeme: 'b', literal: null, line: 7}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 7}
+Token{type: Identifier, lexeme: 'b', literal: null, line: 7}
+Token{type: Minus, lexeme: '-', literal: null, line: 7}
+Token{type: DoubleLiteral, lexeme: '3.5', literal: 3.5, line: 7}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 7}
+Token{type: Identifier, lexeme: 'c', literal: null, line: 8}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 8}
+Token{type: Identifier, lexeme: 'c', literal: null, line: 8}
+Token{type: Plus, lexeme: '+', literal: null, line: 8}
+Token{type: StringLiteral, lexeme: '" World"', literal:  World, line: 8}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 8}
+Token{type: Identifier, lexeme: 'd', literal: null, line: 9}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 9}
+Token{type: Not, lexeme: 'not', literal: null, line: 9}
+Token{type: Identifier, lexeme: 'd', literal: null, line: 9}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 9}
+Token{type: Print, lexeme: 'print', literal: null, line: 11}
+Token{type: Identifier, lexeme: 'a', literal: null, line: 11}
+Token{type: Comma, lexeme: ',', literal: null, line: 11}
+Token{type: Identifier, lexeme: 'b', literal: null, line: 11}
+Token{type: Comma, lexeme: ',', literal: null, line: 11}
+Token{type: Identifier, lexeme: 'c', literal: null, line: 11}
+Token{type: Comma, lexeme: ',', literal: null, line: 11}
+Token{type: Identifier, lexeme: 'd', literal: null, line: 11}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 11}
+Token{type: EOF, lexeme: '', literal: null, line: 12}
+
+ERRORS
+

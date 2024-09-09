@@ -1,5 +1,6 @@
 package com.java.lexer;
 
+@SuppressWarnings("IllegalIdentifierName")
 public enum TokenType {
     // Comparison operators
     Less, // <
@@ -61,7 +62,7 @@ public enum TokenType {
     In, // in
     Loop, // loop
 
-    EOF, // End of file
+    EOF, // End of a file
 
     // Literals
     StringLiteral, // "...."

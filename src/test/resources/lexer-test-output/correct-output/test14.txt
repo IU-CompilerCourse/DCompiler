@@ -1,0 +1,35 @@
+TOKENS
+
+Token{type: Var, lexeme: 'var', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 1}
+Token{type: IntLiteral, lexeme: '5', literal: 5, line: 1}
+Token{type: Comma, lexeme: ',', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'b', literal: null, line: 1}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 1}
+Token{type: IntLiteral, lexeme: '3', literal: 3, line: 1}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 1}
+Token{type: Print, lexeme: 'print', literal: null, line: 3}
+Token{type: Identifier, lexeme: 'a', literal: null, line: 3}
+Token{type: Comma, lexeme: ',', literal: null, line: 3}
+Token{type: Identifier, lexeme: 'b', literal: null, line: 3}
+Token{type: If, lexeme: 'if', literal: null, line: 5}
+Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 5}
+Token{type: Then, lexeme: 'then', literal: null, line: 5}
+Token{type: Var, lexeme: 'var', literal: null, line: 6}
+Token{type: Identifier, lexeme: 'a', literal: null, line: 6}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 6}
+Token{type: IntLiteral, lexeme: '10', literal: 10, line: 6}
+Token{type: Print, lexeme: 'print', literal: null, line: 7}
+Token{type: Identifier, lexeme: 'a', literal: null, line: 7}
+Token{type: Comma, lexeme: ',', literal: null, line: 7}
+Token{type: Identifier, lexeme: 'b', literal: null, line: 7}
+Token{type: End, lexeme: 'end', literal: null, line: 8}
+Token{type: Print, lexeme: 'print', literal: null, line: 10}
+Token{type: Identifier, lexeme: 'a', literal: null, line: 10}
+Token{type: Comma, lexeme: ',', literal: null, line: 10}
+Token{type: Identifier, lexeme: 'b', literal: null, line: 10}
+Token{type: EOF, lexeme: '', literal: null, line: 11}
+
+ERRORS
+

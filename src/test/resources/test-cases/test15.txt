@@ -1,0 +1,5 @@
+var endlessRecursion := func(x) is
+    endlessRecursion(x - 1);
+end;
+
+endlessRecursion(10)
