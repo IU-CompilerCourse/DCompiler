@@ -15,6 +15,6 @@ public class UnreadableTokenError extends LexerError {
 
     @Override
     public String error() {
-        return "Can not read token starting as \"%s\"".formatted(tokenStart);
+        return "Cannot read token starting as \"%s\"".formatted(tokenStart);
     }
 }

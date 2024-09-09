@@ -71,7 +71,7 @@ public final class TestUtils {
 
         sb.append("\nERRORS\n\n");
         for (var error : output.lexingErrors()) {
-            sb.append(error).append("\n");
+            sb.append(String.format("Found error: '%s' at line %d", error.error(), error.atLine())).append("\n");
         }
 
         return sb.toString();

@@ -31,4 +31,4 @@ Token{type: EOF, lexeme: '', literal: null, line: 9}
 
 ERRORS
 
-com.java.lexer.errors.UnreadableTokenError@501edcf1
+Found error: 'Cannot read token starting as "%"' at line 4
