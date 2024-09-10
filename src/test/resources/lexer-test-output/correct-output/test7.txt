@@ -1,0 +1,55 @@
+TOKENS
+
+Token{type: Var, lexeme: 'var', literal: null, line: 2}
+Token{type: Identifier, lexeme: 'n', literal: null, line: 2}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 2}
+Token{type: IntLiteral, lexeme: '3', literal: 3, line: 2}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 2}
+Token{type: Var, lexeme: 'var', literal: null, line: 3}
+Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 3}
+Token{type: OpenBracket, lexeme: '[', literal: null, line: 3}
+Token{type: IntLiteral, lexeme: '1', literal: 1, line: 3}
+Token{type: Comma, lexeme: ',', literal: null, line: 3}
+Token{type: IntLiteral, lexeme: '2', literal: 2, line: 3}
+Token{type: Comma, lexeme: ',', literal: null, line: 3}
+Token{type: IntLiteral, lexeme: '3', literal: 3, line: 3}
+Token{type: CloseBracket, lexeme: ']', literal: null, line: 3}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 3}
+Token{type: Var, lexeme: 'var', literal: null, line: 4}
+Token{type: Identifier, lexeme: 'sum', literal: null, line: 4}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 4}
+Token{type: DoubleLiteral, lexeme: '0.0', literal: 0.0, line: 4}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 4}
+Token{type: Identifier, lexeme: 'i', literal: null, line: 5}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 5}
+Token{type: IntLiteral, lexeme: '1', literal: 1, line: 5}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 5}
+Token{type: While, lexeme: 'while', literal: null, line: 6}
+Token{type: Identifier, lexeme: 'i', literal: null, line: 6}
+Token{type: LessEqual, lexeme: '<=', literal: null, line: 6}
+Token{type: Identifier, lexeme: 'n', literal: null, line: 6}
+Token{type: Loop, lexeme: 'loop', literal: null, line: 6}
+Token{type: Identifier, lexeme: 'sum', literal: null, line: 7}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 7}
+Token{type: Identifier, lexeme: 'sum', literal: null, line: 7}
+Token{type: Plus, lexeme: '+', literal: null, line: 7}
+Token{type: Identifier, lexeme: 'arr', literal: null, line: 7}
+Token{type: OpenBracket, lexeme: '[', literal: null, line: 7}
+Token{type: Identifier, lexeme: 'i', literal: null, line: 7}
+Token{type: CloseBracket, lexeme: ']', literal: null, line: 7}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 7}
+Token{type: Identifier, lexeme: 'i', literal: null, line: 8}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 8}
+Token{type: Identifier, lexeme: 'i', literal: null, line: 8}
+Token{type: Plus, lexeme: '+', literal: null, line: 8}
+Token{type: IntLiteral, lexeme: '1', literal: 1, line: 8}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 8}
+Token{type: End, lexeme: 'end', literal: null, line: 9}
+Token{type: Print, lexeme: 'print', literal: null, line: 11}
+Token{type: Identifier, lexeme: 'sum', literal: null, line: 11}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 11}
+Token{type: EOF, lexeme: '', literal: null, line: 12}
+
+ERRORS
+

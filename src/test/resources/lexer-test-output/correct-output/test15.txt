@@ -1,0 +1,27 @@
+TOKENS
+
+Token{type: Var, lexeme: 'var', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'endlessRecursion', literal: null, line: 1}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 1}
+Token{type: Func, lexeme: 'func', literal: null, line: 1}
+Token{type: OpenParen, lexeme: '(', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+Token{type: CloseParen, lexeme: ')', literal: null, line: 1}
+Token{type: Is, lexeme: 'is', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'endlessRecursion', literal: null, line: 2}
+Token{type: OpenParen, lexeme: '(', literal: null, line: 2}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 2}
+Token{type: Minus, lexeme: '-', literal: null, line: 2}
+Token{type: IntLiteral, lexeme: '1', literal: 1, line: 2}
+Token{type: CloseParen, lexeme: ')', literal: null, line: 2}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 2}
+Token{type: End, lexeme: 'end', literal: null, line: 3}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 3}
+Token{type: Identifier, lexeme: 'endlessRecursion', literal: null, line: 5}
+Token{type: OpenParen, lexeme: '(', literal: null, line: 5}
+Token{type: IntLiteral, lexeme: '10', literal: 10, line: 5}
+Token{type: CloseParen, lexeme: ')', literal: null, line: 5}
+Token{type: EOF, lexeme: '', literal: null, line: 6}
+
+ERRORS
+

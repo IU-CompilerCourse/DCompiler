@@ -1,0 +1,10 @@
+var arr := [1, 2, 3];
+var tup := {a := 5, b := "test"};
+
+arr[4] := 4;
+tup := tup + {c := true};
+
+var val1 := arr[4];
+var val2 := tup.c;
+
+print val1, val2;

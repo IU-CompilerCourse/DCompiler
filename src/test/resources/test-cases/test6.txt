@@ -1,0 +1,12 @@
+// calculate factorial function
+var factorial := func(n) is
+    if n = 0 or n = 1 then
+        return 1;
+    else
+        return n * factorial(n - 1);
+    end
+end;
+
+var factResult := factorial(5);
+
+print  factResult;

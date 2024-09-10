@@ -1,0 +1,34 @@
+TOKENS
+
+Token{type: Var, lexeme: 'var', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'n', literal: null, line: 1}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 1}
+Token{type: IntLiteral, lexeme: '7', literal: 7, line: 1}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 1}
+Token{type: If, lexeme: 'if', literal: null, line: 4}
+Token{type: Identifier, lexeme: 'n', literal: null, line: 4}
+Token{type: IntLiteral, lexeme: '2', literal: 2, line: 4}
+Token{type: Equal, lexeme: '=', literal: null, line: 4}
+Token{type: IntLiteral, lexeme: '0', literal: 0, line: 4}
+Token{type: Then, lexeme: 'then', literal: null, line: 4}
+Token{type: Print, lexeme: 'print', literal: null, line: 5}
+Token{type: StringLiteral, lexeme: '"Integer "', literal: Integer , line: 5}
+Token{type: Comma, lexeme: ',', literal: null, line: 5}
+Token{type: Identifier, lexeme: 'n', literal: null, line: 5}
+Token{type: Comma, lexeme: ',', literal: null, line: 5}
+Token{type: StringLiteral, lexeme: '" is even."', literal:  is even., line: 5}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 5}
+Token{type: Else, lexeme: 'else', literal: null, line: 6}
+Token{type: Print, lexeme: 'print', literal: null, line: 7}
+Token{type: StringLiteral, lexeme: '"Integer "', literal: Integer , line: 7}
+Token{type: Comma, lexeme: ',', literal: null, line: 7}
+Token{type: Identifier, lexeme: 'n', literal: null, line: 7}
+Token{type: Comma, lexeme: ',', literal: null, line: 7}
+Token{type: StringLiteral, lexeme: '" is odd."', literal:  is odd., line: 7}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 7}
+Token{type: End, lexeme: 'end', literal: null, line: 8}
+Token{type: EOF, lexeme: '', literal: null, line: 9}
+
+ERRORS
+
+Found error: 'Cannot read token starting as "%"' at line 4
