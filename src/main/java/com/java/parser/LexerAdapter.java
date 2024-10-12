@@ -9,6 +9,7 @@ import java.util.List;
 public class LexerAdapter implements Parser.Lexer {
     private final List<Token> tokens;
     private int currentTokenIndex;
+    private Token currentToken;
 
     public LexerAdapter(Lexer lexer) {
         var output = lexer.scanTokens();
@@ -17,18 +18,16 @@ public class LexerAdapter implements Parser.Lexer {
         currentTokenIndex = 0;
     }
 
-    @Override
-    public Object getLVal() {
-        return null;
+    @Override public Object getLVal() {
+        return currentToken;
     }
 
-    @Override
-    public int yylex() throws IOException {
+    @Override public int yylex() throws IOException {
         if (currentTokenIndex == tokens.size()) {
             return YYEOF;
         }
 
-        var currentToken = tokens.get(currentTokenIndex++);
+        currentToken = tokens.get(currentTokenIndex++);
 
         var name = currentToken.type().name();
         int tokenCode = YYerror;
@@ -39,14 +38,12 @@ public class LexerAdapter implements Parser.Lexer {
             e.printStackTrace();
         }
 
-
         System.out.printf("yylex({%s}) --> {%d}\n", name, tokenCode);
 
         return tokenCode;
     }
 
-    @Override
-    public void yyerror(String msg) {
+    @Override public void yyerror(String msg) {
         System.out.println(msg);
     }
 }
