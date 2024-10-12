@@ -332,6 +332,9 @@ literal:
     | tuple_literal {
         $$ = new LiteralNode($1);
     }
+    | function_literal {
+        $$ = new LiteralNode($1);
+    }
 
 array_literal:
     OpenBracket expression_list CloseBracket {
