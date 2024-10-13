@@ -3,9 +3,21 @@
   import java.io.InputStreamReader;
   import java.io.Reader;
   import java.io.IOException;
+  import com.java.lexer.*;
+  import com.java.parser.ast.ASTree;
   import com.java.parser.ast.node.*;
   import com.java.parser.ast.node.type.*;
   import com.java.lexer.Token;
+}
+
+%code {
+	static ASTree ast;
+    public static ASTree makeAST(com.java.lexer.Lexer lexer) throws IOException {
+		LexerAdapter lexerAdapter = new LexerAdapter(lexer);
+		Parser p = new Parser(lexerAdapter);
+		p.parse();
+		return ast;
+	}
 }
 
 %define api.prefix {Parser}
@@ -30,9 +42,28 @@
 
 // Declare types for non-terminals
 %type <ASTNode> program statement assignment_statement var_declaration_statement print_statement return_statement if_statement loop_statement
-%type <ASTNode> expression expression_list relation factor term unary primary tail body type_indicator named_expression_list
-%type <ASTNode> identifier_list loop_body tail_list fun_body parameters function_literal array_literal tuple_literal
+%type <ASTNode> expression relation factor term unary primary tail body type_indicator
+%type <ASTNode> loop_body fun_body parameters function_literal
 %type <ASTNode> literal
+%type <ASTListNode> expression_list named_expression_list tail_list statements_list
+%type <TokenListNode> identifier_list
+
+%left Or  // "or" logical operator, left-associative
+%left And  // "and" logical operator, left-associative
+%left Xor  // "xor" logical operator, left-associative
+
+%right Not  // "not" logical operator, right-associative
+
+%nonassoc Less LessEqual Greater GreaterEqual Equal NotEqual  // Comparison operators, non-associative
+%left Is  // "is" type-checking operator, right-associative
+
+%left Plus Minus  // "+" and "-" arithmetic operators, left-associative
+%left Star Slash  // "*" and "/" arithmetic operators, left-associative
+
+%right Assignment
+%right Arrow  // "=>" lambda arrow, right-associative
+
+%left Dot  // "." for member access, left-associative
 
 %start program
 
@@ -41,28 +72,32 @@
 // Grammar Rules
 
 program:
-    program statement
-    | statement
+	statements_list {ast = new ASTree($1);}
+	;
+
+statements_list:
+    /* empty */ { $$ = new ASTListNode(); }
+    | statement statements_list {$$ = new ASTListNode($1, $2); }
     ;
 
 expression_list:
     /* empty */ {
-        $$ = new ExpressionListNode();
+        $$ = new ASTListNode();
     }
     | expression {
-        $$ = new ExpressionListNode($1);
+        $$ = new ASTListNode($1);
     }
-    | expression_list Comma expression {
+    | expression_list Dot expression {
         $1.append($3);
         $$ = $1;
     }
 
 named_expression_list:
     /* empty */ {
-        $$ = new NamedExpressionListNode();
+        $$ = new ASTListNode();
     }
     | Identifier Assignment expression {
-        $$ = new NamedExpressionListNode($1, $3);
+        $$ = new ASTListNode($1, $3);
     }
     | named_expression_list Comma Identifier Assignment expression {
         $1.append($3, $5);
@@ -71,10 +106,10 @@ named_expression_list:
 
 identifier_list:
     /* empty */ {
-        $$ = new IdentifierListNode();
+        $$ = new TokenListNode();
     }
     | Identifier {
-        $$ = new IdentifierListNode($1);
+        $$ = new TokenListNode($1);
     }
     | identifier_list Comma Identifier {
         $1.append($3);
@@ -106,11 +141,8 @@ var_declaration_statement:
     ;
 
 print_statement:
-    Print expression Semicolon {
+    Print expression_list Semicolon {
         $$ = new PrintNode($2);
-    }
-    | Print expression Comma expression_list Semicolon {
-        $$ = new PrintNode($2, $4);
     }
     ;
 
@@ -156,13 +188,13 @@ expression:
         $$ = $1;
     }
     | expression Or relation {
-        $$ = new BinaryOpNode("or", $1, $3);
+        $$ = new BinaryOpNode($2, $1, $3);
     }
     | expression And relation {
-        $$ = new BinaryOpNode("and", $1, $3);
+        $$ = new BinaryOpNode($2, $1, $3);
     }
     | expression Xor relation {
-        $$ = new BinaryOpNode("xor", $1, $3);
+        $$ = new BinaryOpNode($2, $1, $3);
     }
     ;
 
@@ -171,22 +203,22 @@ relation:
         $$ = $1;
     }
     | factor Less factor {
-        $$ = new BinaryOpNode("<", $1, $3);
+        $$ = new BinaryOpNode($2, $1, $3);
     }
     | factor LessEqual factor {
-        $$ = new BinaryOpNode("<=", $1, $3);
+        $$ = new BinaryOpNode($2, $1, $3);
     }
     | factor Greater factor {
-        $$ = new BinaryOpNode(">", $1, $3);
+        $$ = new BinaryOpNode($2, $1, $3);
     }
     | factor GreaterEqual factor {
-        $$ = new BinaryOpNode(">=", $1, $3);
+        $$ = new BinaryOpNode($2, $1, $3);
     }
     | factor Equal factor {
-        $$ = new BinaryOpNode("==", $1, $3);
+        $$ = new BinaryOpNode($2, $1, $3);
     }
     | factor NotEqual factor {
-        $$ = new BinaryOpNode("!=", $1, $3);
+        $$ = new BinaryOpNode($2, $1, $3);
     }
     ;
 
@@ -195,10 +227,10 @@ factor:
         $$ = $1;
     }
     | factor Plus term {
-        $$ = new BinaryOpNode(Plus, $1, $3);
+        $$ = new BinaryOpNode($2, $1, $3);
     }
     | factor Minus term {
-        $$ = new BinaryOpNode(Minus, $1, $3);
+        $$ = new BinaryOpNode($2, $1, $3);
     }
     ;
 
@@ -207,10 +239,10 @@ term:
         $$ = $1;
     }
     | term Star unary {
-        $$ = new BinaryOpNode(Star, $1, $3);
+        $$ = new BinaryOpNode($2, $1, $3);
     }
     | term Slash unary {
-        $$ = new BinaryOpNode(Slash, $1, $3);
+        $$ = new BinaryOpNode($2, $1, $3);
     }
     ;
 
@@ -222,28 +254,28 @@ unary:
         $$ = $2;
     }
     | Minus unary {
-        $$ = new UnaryOpNode(Minus, $2);
+        $$ = new UnaryOpNode($1, $2);
     }
     | Not unary {
-        $$ = new UnaryOpNode(Not, $2);
+        $$ = new UnaryOpNode($1, $2);
     }
-    | unary Is type_indicator {
-        $$ = new UnaryOpNode(Is, $1, $3);
+    | primary Is type_indicator {
+        $$ = new UnaryOpNode($2, $1, $3);
     }
     | literal {
         $$ = $1;
     }
-    | OpenBracket expression CloseBracket {
+    | OpenParen expression CloseParen {
         $$ = $2;
     }
     ;
 
 tail_list:
     /* empty */ {
-        $$ = new TailAccessListNode();
+        $$ = new ASTListNode();
     }
     | tail {
-        $$ = new TailAccessListNode($1);
+        $$ = new ASTListNode($1);
     }
     | tail_list Comma tail {
         $1.append($3);
@@ -251,38 +283,32 @@ tail_list:
     }
 
 primary:
-    Identifier {
-        $$ = new VarNode($1);
-    }
-    | primary tail_list {
-        $$ = new PrimaryAccessNode($1, $2);
+    Identifier tail_list {
+        $$ = new VarNode($1, $2);
     }
     | ReadInt {
-        $$ = new ReadIntNode();
+        $$ = new ReadNode(ReadType.INT);
     }
     | ReadReal {
-        $$ = new ReadRealNode();
+        $$ = new ReadNode(ReadType.REAL);
     }
     | ReadString {
-        $$ = new ReadStringNode();
+        $$ = new ReadNode(ReadType.STRING);
     }
     ;
 
 tail:
     Dot IntLiteral {
-        $$ = new TupleAccessNode($2);
+        $$ = new TupleAccessNode($2, null);
     }
     | Dot Identifier {
-        $$ = new TupleAccessNode($2);
+        $$ = new TupleAccessNode(null, $2);
     }
     | OpenBracket expression CloseBracket {
-        $$ = new ArrayAccessNode($$2);
+        $$ = new ArrayAccessNode($2);
     }
-    | OpenParen expression CloseParen {
+    | OpenParen expression_list CloseParen {
         $$ = new FunctionCallNode($2);
-    }
-    | OpenParen expression Comma expression_list CloseParen {
-        $$ = new FunctionCallNode($2, $4);
     }
     ;
 
@@ -303,10 +329,10 @@ type_indicator:
         $$ = new TypeNode($1);
     }
     | OpenBracket CloseBracket {
-        $$ = new TypeNode(Types.VectorType());
+        $$ = new TypeNode(ConstructionType.VectorType);
     }
     | OpenBrace CloseBrace {
-        $$ = new TypeNode(Types.TupleType());
+        $$ = new TypeNode(ConstructionType.TupleType);
     }
     | Func {
         $$ = new TypeNode($1);
@@ -315,44 +341,30 @@ type_indicator:
 
 literal:
     IntLiteral {
-            $$ = new LiteralNode($1);
+        $$ = new TokenLiteralNode($1);
     }
     | DoubleLiteral {
-        $$ = new LiteralNode($1);
+        $$ = new TokenLiteralNode($1);
     }
     | StringLiteral {
-        $$ = new LiteralNode($1);
+        $$ = new TokenLiteralNode($1);
     }
     | BooleanLiteral {
-        $$ = new LiteralNode($1);
+        $$ = new TokenLiteralNode($1);
     }
-    | array_literal {
-        $$ = new LiteralNode($1);
-    }
-    | tuple_literal {
-        $$ = new LiteralNode($1);
-    }
-    | function_literal {
-        $$ = new LiteralNode($1);
-    }
-
-array_literal:
-    OpenBracket expression_list CloseBracket {
-        $$ = new ArrayLiteralNode($2);
-    }
-
-tuple_literal:
-    /* Need to handle mixed list */
-    OpenBrace named_expression_list CloseBrace {
-        $$ = new TupleLiteralNode($2);
+    | OpenBracket expression_list CloseBracket {
+        $$ = new ASTLiteralNode($2);
     }
     | OpenBrace expression_list CloseBrace {
-        $$ = new TupleLiteralNode($2);
+        $$ = new ASTLiteralNode($2);
+    }
+    | function_literal {
+        $$ = new ASTLiteralNode($1);
     }
 
 function_literal:
     Func fun_body {
-        $$ = new FunctionLiteralNode($2);
+        $$ = new FunctionLiteralNode(null, $2);
     }
     | Func parameters fun_body {
         $$ = new FunctionLiteralNode($2, $3);
@@ -360,7 +372,7 @@ function_literal:
 
 parameters:
     OpenParen Identifier CloseParen {
-        $$ = new ParametersNode($2);
+        $$ = new ParametersNode($2, null);
     }
     | OpenParen Identifier Comma identifier_list CloseParen {
         $$ = new ParametersNode($2, $4);

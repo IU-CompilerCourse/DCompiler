@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class VarNode extends ASTNode {
     private final Token name;
+    private final ASTNode tailList;
 
     @Override
     public <R> R accept(ASTVisitor<R> visitor) {
