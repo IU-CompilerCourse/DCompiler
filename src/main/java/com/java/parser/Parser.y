@@ -23,7 +23,7 @@
 %define api.prefix {Parser}
 %define api.parser.class {Parser}
 %define api.parser.public
-%define parse.error verbose
+%define parse.error detailed
 %define api.value.type {Object}
 %define api.parser.final
 %define api.package {com.java.parser}
@@ -42,28 +42,12 @@
 
 // Declare types for non-terminals
 %type <ASTNode> program statement assignment_statement var_declaration_statement print_statement return_statement if_statement loop_statement
-%type <ASTNode> expression relation factor term unary primary tail body type_indicator
-%type <ASTNode> loop_body fun_body parameters function_literal
-%type <ASTNode> literal
-%type <ASTListNode> expression_list named_expression_list tail_list statements_list
-%type <TokenListNode> identifier_list
-
-%left Or  // "or" logical operator, left-associative
-%left And  // "and" logical operator, left-associative
-%left Xor  // "xor" logical operator, left-associative
-
-%right Not  // "not" logical operator, right-associative
-
-%nonassoc Less LessEqual Greater GreaterEqual Equal NotEqual  // Comparison operators, non-associative
-%left Is  // "is" type-checking operator, right-associative
-
-%left Plus Minus  // "+" and "-" arithmetic operators, left-associative
-%left Star Slash  // "*" and "/" arithmetic operators, left-associative
-
-%right Assignment
-%right Arrow  // "=>" lambda arrow, right-associative
-
-%left Dot  // "." for member access, left-associative
+%type <ASTNode> expression relation factor term tail type_indicator
+%type <ASTNode> loop_body function_literal
+%type <ASTNode> expression_statement
+%type <ASTListNode> consecutive_statements function_args expressions_comma statements_list
+%type <TokenListNode> parameters
+%type <TupleListNode> tuple_data
 
 %start program
 
@@ -80,44 +64,9 @@ statements_list:
     | statement statements_list {$$ = new ASTListNode($1, $2); }
     ;
 
-expression_list:
-    /* empty */ {
-        $$ = new ASTListNode();
-    }
-    | expression {
-        $$ = new ASTListNode($1);
-    }
-    | expression_list Dot expression {
-        $1.append($3);
-        $$ = $1;
-    }
-
-named_expression_list:
-    /* empty */ {
-        $$ = new ASTListNode();
-    }
-    | Identifier Assignment expression {
-        $$ = new ASTListNode($1, $3);
-    }
-    | named_expression_list Comma Identifier Assignment expression {
-        $1.append($3, $5);
-        $$ = $1;
-    }
-
-identifier_list:
-    /* empty */ {
-        $$ = new TokenListNode();
-    }
-    | Identifier {
-        $$ = new TokenListNode($1);
-    }
-    | identifier_list Comma Identifier {
-        $1.append($3);
-        $$ = $1;
-    }
-
 statement:
-    assignment_statement
+    expression_statement
+    | assignment_statement
     | var_declaration_statement
     | if_statement
     | loop_statement
@@ -125,11 +74,28 @@ statement:
     | print_statement
     ;
 
-assignment_statement:
-    primary Assignment expression Semicolon {
-        $$ = new AssignNode($1, $3);
+if_statement:
+    If expression Then consecutive_statements Else consecutive_statements End {
+        $$ = new IfNode($2, $4, $6);
+    }
+    | If expression Then consecutive_statements End {
+        $$ = new IfNode($2, $4, null);
     }
     ;
+
+loop_statement:
+    While expression loop_body {
+        $$ = new WhileNode($2, $3);
+    }
+    | For Identifier In Identifier loop_body {
+        $$ = new ForNode($2, $4, $5);
+    }
+    ;
+
+loop_body:
+    Loop consecutive_statements End {
+        $$ = new LoopBodyNode($2);
+    }
 
 var_declaration_statement:
     Var Identifier Assignment expression Semicolon {
@@ -140,68 +106,52 @@ var_declaration_statement:
     }
     ;
 
+assignment_statement:
+    Identifier Assignment expression Semicolon {
+        $$ = new AssignNode($1, $3);
+    }
+    ;
+
 print_statement:
-    Print expression_list Semicolon {
+    Print expressions_comma Semicolon {
         $$ = new PrintNode($2);
     }
     ;
 
-return_statement:
-    Return expression Semicolon {
-        $$ = new ReturnNode($2);
+expressions_comma:
+    expression {
+        $$ = new ASTListNode($1);
     }
-    | Return Semicolon {
-        $$ = new ReturnNode(null);
-    }
-    ;
-
-if_statement:
-    If expression Then body Else body End {
-        $$ = new IfNode($2, $4, $6);
-    }
-    | If expression Then body End Semicolon {
-        $$ = new IfNode($2, $4, null);
+    | expressions_comma Comma expression {
+        $1.append($3);
+        $$ = $1;
     }
     ;
 
-loop_statement:
-    While expression loop_body {
-        $$ = new WhileNode($2, $3);
+expression_statement:
+    expression Semicolon {
+        $$ = new ExpressionStatementNode($1);
     }
-    | For Identifier In type_indicator loop_body {
-        $$ = new ForNode($2, $4, $5);
-    }
-    ;
-
-loop_body:
-    Loop body End {
-        $$ = new LoopBodyNode($2);
-    }
-
-body:
-    statement
-    | body statement
     ;
 
 expression:
     relation {
         $$ = $1;
     }
-    | expression Or relation {
+    | relation Or relation {
         $$ = new BinaryOpNode($2, $1, $3);
     }
-    | expression And relation {
+    | relation And relation {
         $$ = new BinaryOpNode($2, $1, $3);
     }
-    | expression Xor relation {
+    | relation Xor relation {
         $$ = new BinaryOpNode($2, $1, $3);
     }
+    | function_literal
     ;
 
 relation:
-    factor {
-        $$ = $1;
-    }
+    factor
     | factor Less factor {
         $$ = new BinaryOpNode($2, $1, $3);
     }
@@ -223,123 +173,81 @@ relation:
     ;
 
 factor:
-    term {
+    add_expression
+    ;
+
+function_literal:
+    Func OpenParen parameters CloseParen Is consecutive_statements End {
+        $$ = new FunctionLiteralNode($3, $6);
+    }
+    | Func OpenParen parameters CloseParen Arrow expression {
+        $$ = new FunctionLiteralNode($3, $6);
+    }
+    ;
+
+parameters:
+    %empty {
+        $$ = new TokenListNode();
+    }
+    | Identifier {
+        $$ = new TokenListNode($1);
+    }
+    | parameters Comma Identifier {
+        $1.append($3);
         $$ = $1;
     }
-    | factor Plus term {
+    ;
+
+consecutive_statements:
+    statement {
+        $$ = new ASTListNode($1);
+    }
+    | consecutive_statements statement {
+        $1.append($2);
+        $$ = $1;
+    }
+    ;
+
+return_statement:
+    Return expression Semicolon {
+        $$ = new ReturnNode($2);
+    }
+    | Return Semicolon {
+        $$ = new ReturnNode(null);
+    }
+    ;
+
+add_expression:
+    multi_expression
+    | add_expression Plus multi_expression {
         $$ = new BinaryOpNode($2, $1, $3);
     }
-    | factor Minus term {
+    | add_expression Minus multi_expression {
         $$ = new BinaryOpNode($2, $1, $3);
+    }
+    ;
+
+multi_expression:
+    unary_expression
+    | multi_expression Star unary_expression {
+        $$ = new BinaryOpNode($2, $1, $3);
+    }
+    | multi_expression Slash unary_expression {
+        $$ = new BinaryOpNode($2, $1, $3);
+    }
+    ;
+
+unary_expression:
+    term
+    | OpenParen add_expression CloseParen {
+        $$ = new UnaryOpNode(null, $2);
+    }
+    | Minus term {
+        $$ = new UnaryOpNode($1, $2);
     }
     ;
 
 term:
-    unary {
-        $$ = $1;
-    }
-    | term Star unary {
-        $$ = new BinaryOpNode($2, $1, $3);
-    }
-    | term Slash unary {
-        $$ = new BinaryOpNode($2, $1, $3);
-    }
-    ;
-
-unary:
-    primary {
-        $$ = $1;
-    }
-    | Plus unary {
-        $$ = $2;
-    }
-    | Minus unary {
-        $$ = new UnaryOpNode($1, $2);
-    }
-    | Not unary {
-        $$ = new UnaryOpNode($1, $2);
-    }
-    | primary Is type_indicator {
-        $$ = new UnaryOpNode($2, $1, $3);
-    }
-    | literal {
-        $$ = $1;
-    }
-    | OpenParen expression CloseParen {
-        $$ = $2;
-    }
-    ;
-
-tail_list:
-    /* empty */ {
-        $$ = new ASTListNode();
-    }
-    | tail {
-        $$ = new ASTListNode($1);
-    }
-    | tail_list Comma tail {
-        $1.append($3);
-        $$ = $1;
-    }
-
-primary:
-    Identifier tail_list {
-        $$ = new VarNode($1, $2);
-    }
-    | ReadInt {
-        $$ = new ReadNode(ReadType.INT);
-    }
-    | ReadReal {
-        $$ = new ReadNode(ReadType.REAL);
-    }
-    | ReadString {
-        $$ = new ReadNode(ReadType.STRING);
-    }
-    ;
-
-tail:
-    Dot IntLiteral {
-        $$ = new TupleAccessNode($2, null);
-    }
-    | Dot Identifier {
-        $$ = new TupleAccessNode(null, $2);
-    }
-    | OpenBracket expression CloseBracket {
-        $$ = new ArrayAccessNode($2);
-    }
-    | OpenParen expression_list CloseParen {
-        $$ = new FunctionCallNode($2);
-    }
-    ;
-
-type_indicator:
-    Int {
-        $$ = new TypeNode($1);
-    }
-    | Real {
-        $$ = new TypeNode($1);
-    }
-    | Bool {
-        $$ = new TypeNode($1);
-    }
-    | String {
-        $$ = new TypeNode($1);
-    }
-    | Empty {
-        $$ = new TypeNode($1);
-    }
-    | OpenBracket CloseBracket {
-        $$ = new TypeNode(ConstructionType.VectorType);
-    }
-    | OpenBrace CloseBrace {
-        $$ = new TypeNode(ConstructionType.TupleType);
-    }
-    | Func {
-        $$ = new TypeNode($1);
-    }
-    /* Need one more: Expression .. Expression; I didn't understand what it is */
-
-literal:
     IntLiteral {
         $$ = new TokenLiteralNode($1);
     }
@@ -352,38 +260,113 @@ literal:
     | BooleanLiteral {
         $$ = new TokenLiteralNode($1);
     }
-    | OpenBracket expression_list CloseBracket {
+    | reference
+    | reference Is type_indicator {
+        $$ = new TokenTypeIndicator($1, $3);
+    }
+    | array
+    | tuple
+    ;
+
+type_indicator:
+    Int
+    | Real
+    | Bool
+    | String
+    | Empty
+    | Func
+    ;
+
+reference:
+    Identifier tail {
+        $$ = new ReferenceTailNode($1, $2);
+    }
+    ;
+
+tail:
+    %empty
+    | array_tail
+    | tuple_tail
+    | func_tail
+    ;
+
+array_tail:
+    OpenBracket expression CloseBracket {
+        $$ = new ArrayAccessNode($2);
+    }
+    ;
+
+tuple_tail:
+    Dot IntLiteral {
+        $$ = new TupleAccessNode($2, null);
+    }
+    | Dot Identifier {
+        $$ = new TupleAccessNode(null, $2);
+    }
+    ;
+
+func_tail:
+    OpenParen function_args CloseParen {
+        $$ = new FunctionCallNode($2);
+    }
+    ;
+
+function_args:
+    %empty {
+        $$ = new ASTListNode();
+    }
+    | expression {
+        $$ = new ASTListNode($1);
+    }
+    | function_args Comma expression {
+        $1.append($3);
+        $$ = $1;
+    }
+    ;
+
+array:
+    OpenBracket CloseBracket {
+        $$ = new ASTLiteralNode(null);
+    }
+    | OpenBracket array_data CloseBracket {
         $$ = new ASTLiteralNode($2);
     }
-    | OpenBrace expression_list CloseBrace {
+    ;
+
+array_data:
+    expression {
+        $$ = new ASTListNode($1);
+    }
+    | array_data Comma expression {
+        $1.append($3);
+        $$ = $1;
+    }
+    ;
+
+tuple:
+    OpenBrace CloseBrace {
+        $$ = new ASTLiteralNode(null);
+    }
+    | OpenBrace tuple_data CloseBrace {
         $$ = new ASTLiteralNode($2);
     }
-    | function_literal {
-        $$ = new ASTLiteralNode($1);
-    }
+    ;
 
-function_literal:
-    Func fun_body {
-        $$ = new FunctionLiteralNode(null, $2);
+tuple_data:
+    expression {
+        $$ = new TupleListNode($1);
     }
-    | Func parameters fun_body {
-        $$ = new FunctionLiteralNode($2, $3);
+    | Identifier Assignment expression {
+        $$ = new TupleListNode($1, $3);
     }
-
-parameters:
-    OpenParen Identifier CloseParen {
-        $$ = new ParametersNode($2, null);
+    | tuple_data Comma expression {
+        $1.append($3);
+        $$ = $1;
     }
-    | OpenParen Identifier Comma identifier_list CloseParen {
-        $$ = new ParametersNode($2, $4);
+    | tuple_data Comma Identifier expression {
+        $1.append($3, $4);
+        $$ = $1;
     }
-
-fun_body:
-    Is body End {
-        $$ = new FunBodyNode($2);
-    }
-    | Arrow expression {
-        $$ = new FunBodyNode($2);
-    }
+    ;
 
 %%
