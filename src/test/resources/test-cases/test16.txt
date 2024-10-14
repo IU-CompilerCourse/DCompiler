@@ -1,0 +1,7 @@
+var a, b, c;
+
+readInt a;
+readString b;
+readReal c;
+
+print a, b, c;
