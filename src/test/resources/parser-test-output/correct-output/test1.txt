@@ -1,0 +1,123 @@
+ListNode {
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
+    }
+    Literal {
+     Token{type: IntLiteral, lexeme: '5', literal: 5, line: 1}
+    }
+   }
+  }
+ }
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'b', literal: null, line: 2}
+    }
+    Literal {
+     Token{type: DoubleLiteral, lexeme: '10.5', literal: 10.5, line: 2}
+    }
+   }
+  }
+ }
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'c', literal: null, line: 3}
+    }
+    Literal {
+     Token{type: StringLiteral, lexeme: '"Hello"', literal: Hello, line: 3}
+    }
+   }
+  }
+ }
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'd', literal: null, line: 4}
+    }
+    Literal {
+     Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 4}
+    }
+   }
+  }
+ }
+ Identifier Assign {
+  Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 6}
+  Binary Operation {
+   Left {
+    Reference Tail {
+     Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 6}
+    }
+   }
+   Token{type: Plus, lexeme: '+', literal: null, line: 6}
+   Right {
+    Literal {
+     Token{type: IntLiteral, lexeme: '2', literal: 2, line: 6}
+    }
+   }
+  }
+ }
+ Identifier Assign {
+  Identifier Token{type: Identifier, lexeme: 'b', literal: null, line: 7}
+  Binary Operation {
+   Left {
+    Reference Tail {
+     Identifier Token{type: Identifier, lexeme: 'b', literal: null, line: 7}
+    }
+   }
+   Token{type: Minus, lexeme: '-', literal: null, line: 7}
+   Right {
+    Literal {
+     Token{type: DoubleLiteral, lexeme: '3.5', literal: 3.5, line: 7}
+    }
+   }
+  }
+ }
+ Identifier Assign {
+  Identifier Token{type: Identifier, lexeme: 'c', literal: null, line: 8}
+  Binary Operation {
+   Left {
+    Reference Tail {
+     Identifier Token{type: Identifier, lexeme: 'c', literal: null, line: 8}
+    }
+   }
+   Token{type: Plus, lexeme: '+', literal: null, line: 8}
+   Right {
+    Literal {
+     Token{type: StringLiteral, lexeme: '" World"', literal:  World, line: 8}
+    }
+   }
+  }
+ }
+ Identifier Assign {
+  Identifier Token{type: Identifier, lexeme: 'd', literal: null, line: 9}
+  Unary Operator {
+   Token{type: Not, lexeme: 'not', literal: null, line: 9}
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'd', literal: null, line: 9}
+   }
+  }
+ }
+ Print {
+  ListNode {
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 11}
+   }
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'b', literal: null, line: 11}
+   }
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'c', literal: null, line: 11}
+   }
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'd', literal: null, line: 11}
+   }
+  }
+ }
+}

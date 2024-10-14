@@ -1,6 +1,6 @@
 var arr := [ 1, 2, [ "apple", {x := 3} ], true ];
 
-print arr[1], arr[2], arr[3][1], arr[3][2].x, arr[4];
+print arr[1], arr[2], arr[3][1], arr[3][2].x[1], arr[4];
 
 arr[1] := func(x) => x + 1;
 arr[2] := "string";

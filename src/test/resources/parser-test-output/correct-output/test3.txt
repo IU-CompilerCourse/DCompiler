@@ -1,0 +1,135 @@
+ListNode {
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'arr', literal: null, line: 1}
+    }
+    ContainerNode {
+     Array
+     ListNode {
+      Literal {
+       Token{type: IntLiteral, lexeme: '1', literal: 1, line: 1}
+      }
+      Literal {
+       Token{type: IntLiteral, lexeme: '2', literal: 2, line: 1}
+      }
+      Literal {
+       Token{type: IntLiteral, lexeme: '3', literal: 3, line: 1}
+      }
+     }
+    }
+   }
+  }
+ }
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'tup', literal: null, line: 2}
+    }
+    ContainerNode {
+     Tuple
+     Tuple list {
+      Named element {
+       Token{type: Identifier, lexeme: 'b', literal: null, line: 2}
+       Literal {
+        Token{type: StringLiteral, lexeme: '"test"', literal: test, line: 2}
+       }
+      }
+      Named element {
+       Token{type: Identifier, lexeme: 'a', literal: null, line: 2}
+       Literal {
+        Token{type: IntLiteral, lexeme: '5', literal: 5, line: 2}
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+ Reference Assign {
+  Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 4}
+  Literal {
+   Token{type: IntLiteral, lexeme: '4', literal: 4, line: 4}
+  }
+  ListNode {
+   Array Access {
+    Literal {
+     Token{type: IntLiteral, lexeme: '4', literal: 4, line: 4}
+    }
+   }
+  }
+ }
+ Identifier Assign {
+  Identifier Token{type: Identifier, lexeme: 'tup', literal: null, line: 5}
+  Binary Operation {
+   Left {
+    Reference Tail {
+     Identifier Token{type: Identifier, lexeme: 'tup', literal: null, line: 5}
+    }
+   }
+   Token{type: Plus, lexeme: '+', literal: null, line: 5}
+   Right {
+    ContainerNode {
+     Tuple
+     Tuple list {
+      Named element {
+       Token{type: Identifier, lexeme: 'c', literal: null, line: 5}
+       Literal {
+        Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 5}
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'val1', literal: null, line: 7}
+    }
+    Reference Tail {
+     Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 7}
+     ListNode {
+      Array Access {
+       Literal {
+        Token{type: IntLiteral, lexeme: '4', literal: 4, line: 7}
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'val2', literal: null, line: 8}
+    }
+    Reference Tail {
+     Identifier Token{type: Identifier, lexeme: 'tup', literal: null, line: 8}
+     ListNode {
+      Tuple Access {
+       Token{type: Identifier, lexeme: 'c', literal: null, line: 8}
+       null
+      }
+     }
+    }
+   }
+  }
+ }
+ Print {
+  ListNode {
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'val1', literal: null, line: 10}
+   }
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'val2', literal: null, line: 10}
+   }
+  }
+ }
+}

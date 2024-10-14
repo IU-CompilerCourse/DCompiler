@@ -1,5 +1,5 @@
 var intVal := 5, realVal := 1.23, boolVal := true;
-var stringVal := "string", arrayVal := [ [ true, 2 ], [ empty, 1.23 ] ], tupleVal := {x := 2};
+var stringVal := "string", arrayVal := [ [ true, 2 ], [ 1.23 ] ], tupleVal := {x := 2};
 var funcVal := func(x) => x + 1;
 var nullVal;
 

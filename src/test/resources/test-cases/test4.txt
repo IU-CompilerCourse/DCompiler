@@ -6,7 +6,7 @@ print result;
 var multiply := func(x, y) is
     var res := x * y;
     return res;
-end
+end;
 
 var product := multiply(2, 5);
 

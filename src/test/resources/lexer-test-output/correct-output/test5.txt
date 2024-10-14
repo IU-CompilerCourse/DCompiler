@@ -22,7 +22,6 @@ Token{type: End, lexeme: 'end', literal: null, line: 6}
 Token{type: Print, lexeme: 'print', literal: null, line: 8}
 Token{type: Identifier, lexeme: 'a', literal: null, line: 8}
 Token{type: Semicolon, lexeme: ';', literal: null, line: 8}
-Token{type: Slash, lexeme: '/', literal: null, line: 8}
 Token{type: While, lexeme: 'while', literal: null, line: 10}
 Token{type: Identifier, lexeme: 'a', literal: null, line: 10}
 Token{type: Less, lexeme: '<', literal: null, line: 10}
