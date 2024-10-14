@@ -2,9 +2,11 @@ package com.java.parser.ast.node;
 
 import com.java.lexer.Token;
 import com.java.parser.ast.visitor.ASTVisitor;
+import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class TokenListNode extends ASTNode {
     private final List<Token> tokens;
 
@@ -23,6 +25,6 @@ public class TokenListNode extends ASTNode {
 
     @Override
     public <R> R accept(ASTVisitor<R> visitor) {
-        return null;
+        return visitor.visitTokenList(this);
     }
 }

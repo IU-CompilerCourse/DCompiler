@@ -2,7 +2,9 @@ package com.java.parser.ast.node;
 
 import com.java.lexer.Token;
 import com.java.parser.ast.visitor.ASTVisitor;
+import lombok.Getter;
 
+@Getter
 public class ReferenceTypeNode extends ASTNode {
     private final ASTNode reference;
     private final Token type;

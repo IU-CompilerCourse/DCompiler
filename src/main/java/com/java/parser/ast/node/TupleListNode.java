@@ -2,11 +2,13 @@ package com.java.parser.ast.node;
 
 import com.java.lexer.Token;
 import com.java.parser.ast.visitor.ASTVisitor;
+import lombok.Getter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Getter
 public class TupleListNode extends ASTNode {
     private final Map<Token, ASTNode> namedNodes;
     private final List<ASTNode> allNodes;
@@ -37,6 +39,6 @@ public class TupleListNode extends ASTNode {
 
     @Override
     public <R> R accept(ASTVisitor<R> visitor) {
-        return null;
+        return visitor.visitTupleList(this);
     }
 }

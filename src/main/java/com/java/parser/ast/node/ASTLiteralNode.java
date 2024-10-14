@@ -11,6 +11,6 @@ public class ASTLiteralNode extends ASTNode {
 
     @Override
     public <R> R accept(ASTVisitor<R> visitor) {
-        return null;
+        return visitor.visitAstLiteralNode(this);
     }
 }
