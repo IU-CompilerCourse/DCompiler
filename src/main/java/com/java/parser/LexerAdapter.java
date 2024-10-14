@@ -14,6 +14,12 @@ public class LexerAdapter implements Parser.Lexer {
     public LexerAdapter(Lexer lexer) {
         var output = lexer.scanTokens();
 
+        if (!output.lexingErrors().isEmpty()) {
+            throw new RuntimeException("Errors in lexer: \n" + java.lang.String.join("", output.lexingErrors().stream()
+                .map(lexerError -> java.lang.String.format("| -- %s\n", lexerError.error()))
+                .toList()));
+        }
+
         tokens = output.tokens();
         currentTokenIndex = 0;
     }

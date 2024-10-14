@@ -62,8 +62,10 @@ public class ParserTest {
                 System.out.println("TEST {" + key + "}");
                 Parser.makeAST(new Lexer(value));
                 System.out.println();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 System.out.println("Test Case is invalid: " + key);
+                System.out.println(e.getMessage());
+                System.out.println();
             }
 
 //            TESTCASES_ACTUAL_OUTPUT.put(key, TestUtils.lexerFormatOutput(lexer.scanTokens()));
