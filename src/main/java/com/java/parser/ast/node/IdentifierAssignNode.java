@@ -1,13 +1,14 @@
 package com.java.parser.ast.node;
 
+import com.java.lexer.Token;
 import com.java.parser.ast.visitor.ASTVisitor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class AssignNode extends ASTNode {
-    private final ASTNode identifier;
+public class IdentifierAssignNode extends ASTNode {
+    private final Token identifier;
     private final ASTNode expression;
 
     @Override

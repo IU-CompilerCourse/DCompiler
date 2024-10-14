@@ -7,10 +7,10 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public class ForNode extends ASTNode {
+public class ReferenceAssignNode extends ASTNode {
     private final Token identifier;
-    private final Token typeIndicator;
-    private final ASTNode loopBody;
+    private final ASTNode tail;
+    private final ASTNode expression;
 
     @Override
     public <R> R accept(ASTVisitor<R> visitor) {

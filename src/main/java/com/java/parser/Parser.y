@@ -39,13 +39,15 @@
 %token <Token> Var ReadInt ReadReal ReadString Print Return If Then Else End While For In Loop
 %token <Token> StringLiteral DoubleLiteral IntLiteral BooleanLiteral
 %token <Token> Identifier
+%type <Token> type_indicator
 
 // Declare types for non-terminals
 %type <ASTNode> program statement assignment_statement var_declaration_statement print_statement return_statement if_statement loop_statement
-%type <ASTNode> expression relation factor term tail type_indicator
-%type <ASTNode> loop_body function_literal
-%type <ASTNode> expression_statement
-%type <ASTListNode> consecutive_statements function_args expressions_comma statements_list
+%type <ASTNode> expression relation factor term tail
+%type <ASTNode> loop_body function_literal array array_tail tuple_tail reference tuple
+%type <ASTNode> expression_statement func_tail unary_expression add_expression multi_expression
+%type <ASTListNode> consecutive_statements function_args expressions_comma statements_list array_data consecutive_array_tail
+%type <ASTListNode> consecutive_declarations
 %type <TokenListNode> parameters
 %type <TupleListNode> tuple_data
 
@@ -60,7 +62,7 @@ program:
 	;
 
 statements_list:
-    /* empty */ { $$ = new ASTListNode(); }
+    %empty { $$ = new ASTListNode(); }
     | statement statements_list {$$ = new ASTListNode($1, $2); }
     ;
 
@@ -98,17 +100,40 @@ loop_body:
     }
 
 var_declaration_statement:
-    Var Identifier Assignment expression Semicolon {
-        $$ = new VarDeclNode($2, $4);
+    Var consecutive_declarations Semicolon {
+        $$ = new MultipleDeclarationNode($2);
     }
     | Var Identifier Semicolon {
         $$ = new VarDeclNode($2, null);
     }
     ;
 
+consecutive_declarations:
+    Identifier Assignment expression {
+        $$ = new ASTListNode(new VarDeclNode($1, $3));
+    }
+    | consecutive_declarations Comma Identifier Assignment expression {
+        $1.append(new VarDeclNode($3, $5));
+        $$ = $1;
+    }
+    ;
+
 assignment_statement:
     Identifier Assignment expression Semicolon {
-        $$ = new AssignNode($1, $3);
+        $$ = new IdentifierAssignNode($1, $3);
+    }
+    | Identifier consecutive_array_tail Assignment expression Semicolon {
+        $$ = new ReferenceAssignNode($1, $2, $4);
+    }
+    ;
+
+consecutive_array_tail:
+    array_tail {
+        $$ = new ASTListNode($1);
+    }
+    | consecutive_array_tail array_tail {
+        $1.append($2);
+        $$ = $1;
     }
     ;
 
@@ -242,7 +267,13 @@ unary_expression:
     | OpenParen add_expression CloseParen {
         $$ = new UnaryOpNode(null, $2);
     }
+    | Plus term {
+        $$ = new UnaryOpNode($1, $2);
+    }
     | Minus term {
+        $$ = new UnaryOpNode($1, $2);
+    }
+    | Not term {
         $$ = new UnaryOpNode($1, $2);
     }
     ;
@@ -262,7 +293,7 @@ term:
     }
     | reference
     | reference Is type_indicator {
-        $$ = new TokenTypeIndicator($1, $3);
+        $$ = new ReferenceTypeNode($1, $3);
     }
     | array
     | tuple
@@ -284,7 +315,9 @@ reference:
     ;
 
 tail:
-    %empty
+    %empty {
+        $$ = new EmptyTailNode();
+    }
     | array_tail
     | tuple_tail
     | func_tail
@@ -363,8 +396,8 @@ tuple_data:
         $1.append($3);
         $$ = $1;
     }
-    | tuple_data Comma Identifier expression {
-        $1.append($3, $4);
+    | tuple_data Comma Identifier Assignment expression {
+        $1.append($3, $5);
         $$ = $1;
     }
     ;

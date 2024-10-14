@@ -2,8 +2,6 @@ var num := 3.14;
 
 if num > 0 then
     print num, " is positive.";
-else if num < 0 then
-    print num, " is negative.";
 else
     print "is zero";
 end

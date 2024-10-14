@@ -38,7 +38,7 @@ public class LexerAdapter implements Parser.Lexer {
             e.printStackTrace();
         }
 
-        System.out.printf("yylex({%s}) --> {%d}\n", name, tokenCode);
+//        System.out.printf("yylex({%s}) --> {%d}\n", name, tokenCode);
 
         return tokenCode;
     }
