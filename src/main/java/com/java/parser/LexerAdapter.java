@@ -15,9 +15,10 @@ public class LexerAdapter implements Parser.Lexer {
         var output = lexer.scanTokens();
 
         if (!output.lexingErrors().isEmpty()) {
-            throw new RuntimeException("Errors in lexer: \n" + java.lang.String.join("", output.lexingErrors().stream()
-                .map(lexerError -> java.lang.String.format("| -- %s\n", lexerError.error()))
-                .toList()));
+            throw new RuntimeException(
+                "\uD83D\uDCDD Errors in lexer: \n" + java.lang.String.join("\n", output.lexingErrors().stream()
+                    .map(lexerError -> java.lang.String.format("| --- %s", lexerError.error()))
+                    .toList()));
         }
 
         tokens = output.tokens();

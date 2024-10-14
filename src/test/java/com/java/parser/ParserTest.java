@@ -2,7 +2,6 @@ package com.java.parser;
 
 import com.java.TestUtils;
 import com.java.lexer.Lexer;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,14 +57,19 @@ public class ParserTest {
     @Test
     void givenTestCases_whenLexerUsed_thenCorrectOutput() {
         TESTCASES_INPUT.forEach((key, value) -> {
+            boolean isOK = true;
             try {
                 System.out.println("TEST {" + key + "}");
                 Parser.makeAST(new Lexer(value));
-                System.out.println();
             } catch (Exception e) {
-                System.out.println("Test Case is invalid: " + key);
+                isOK = false;
+                System.out.println("❌ Invalid\n");
                 System.out.println(e.getMessage());
                 System.out.println();
+            }
+
+            if (isOK) {
+                System.out.println("✅ Passed\n");
             }
 
 //            TESTCASES_ACTUAL_OUTPUT.put(key, TestUtils.lexerFormatOutput(lexer.scanTokens()));

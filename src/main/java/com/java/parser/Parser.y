@@ -34,17 +34,17 @@
 %token <Token> Var ReadInt ReadReal ReadString Print Return If Then Else End While For In Loop
 %token <Token> StringLiteral DoubleLiteral IntLiteral BooleanLiteral
 %token <Token> Identifier
-%type <Token> type_indicator
+%type <Token> type_indicator read_type
 
 // Non-Terminals Declarations
 
 %type <ASTNode> program statement
 %type <ASTNode> assignment_statement var_declaration_statement print_statement return_statement if_statement loop_statement
-%type <ASTNode> expression relation factor term tail
+%type <ASTNode> expression relation factor term tail read_statement
 %type <ASTNode> loop_body function_literal array array_tail tuple_tail reference tuple
 %type <ASTNode> expression_statement func_tail unary_expression second_order_algebraic first_order_algebraic
 %type <ASTListNode> consecutive_statements function_args expressions_comma statements_list array_data consecutive_array_tail
-%type <ASTListNode> consecutive_declarations
+%type <ASTListNode> consecutive_declarations consecutive_tuple_tail consecutive_mixed_tail
 %type <TokenListNode> parameters
 %type <TupleListNode> tuple_data
 
@@ -70,6 +70,7 @@ statement:
     | if_statement
     | loop_statement
     | return_statement
+    | read_statement
     | print_statement
     ;
 
@@ -85,7 +86,7 @@ assignment_statement:
     Identifier Assignment expression Semicolon {
         $$ = new IdentifierAssignNode($1, $3);
     }
-    | Identifier consecutive_array_tail Assignment expression Semicolon {
+    | Identifier consecutive_mixed_tail Assignment expression Semicolon {
         $$ = new ReferenceAssignNode($1, $2, $4);
     }
     ;
@@ -94,7 +95,7 @@ var_declaration_statement:
     Var consecutive_declarations Semicolon {
         $$ = new MultipleDeclarationNode($2);
     }
-    | Var Identifier Semicolon {
+    | Var parameters Semicolon {
         $$ = new VarDeclNode($2, null);
     }
     ;
@@ -131,6 +132,12 @@ return_statement:
     }
     ;
 
+read_statement:
+    read_type expression Semicolon {
+        $$ = new ReadStatementNode($1, $2);
+    }
+    ;
+
 print_statement:
     Print expressions_comma Semicolon {
         $$ = new PrintNode($2);
@@ -140,9 +147,7 @@ print_statement:
 // Possible Statement Parts
 
 expression:
-    relation {
-        $$ = $1;
-    }
+    relation
     | relation Or relation {
         $$ = new BinaryOpNode($2, $1, $3);
     }
@@ -253,6 +258,9 @@ reference:
     Identifier tail {
         $$ = new ReferenceTailNode($1, $2);
     }
+    | Identifier consecutive_mixed_tail {
+        $$ = new ReferenceTailNode($1, $2);
+    }
     ;
 
 array:
@@ -284,14 +292,18 @@ type_indicator:
     | Func
     ;
 
+read_type:
+    ReadInt
+    | ReadReal
+    | ReadString
+    ;
+
 // Tail
 
 tail:
     %empty {
         $$ = new EmptyTailNode();
     }
-    | array_tail
-    | tuple_tail
     | func_tail
     ;
 
@@ -333,6 +345,33 @@ consecutive_array_tail:
         $$ = new ASTListNode($1);
     }
     | consecutive_array_tail array_tail {
+        $1.append($2);
+        $$ = $1;
+    }
+    ;
+
+consecutive_tuple_tail:
+    tuple_tail {
+        $$ = new ASTListNode($1);
+    }
+    | consecutive_tuple_tail tuple_tail {
+        $1.append($2);
+        $$ = $1;
+    }
+    ;
+
+consecutive_mixed_tail:
+    consecutive_array_tail {
+        $$ = new ASTListNode($1);
+    }
+    | consecutive_tuple_tail {
+        $$ = new ASTListNode($1);
+    }
+    | consecutive_array_tail tuple_tail {
+        $1.append($2);
+        $$ = $1;
+    }
+    | consecutive_tuple_tail consecutive_array_tail {
         $1.append($2);
         $$ = $1;
     }
