@@ -64,14 +64,14 @@ public final class TestUtils {
     public static String lexerFormatOutput(@NotNull LexerOutput output) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("TOKENS\r\n\r\n");
+        sb.append("TOKENS\n\n");
         for (var token : output.tokens()) {
-            sb.append(token).append("\r\n");
+            sb.append(token).append("\n");
         }
 
-        sb.append("\r\nERRORS\r\n\r\n");
+        sb.append("\nERRORS\n\n");
         for (var error : output.lexingErrors()) {
-            sb.append(String.format("Found error: '%s' at line %d", error.error(), error.atLine())).append("\r\n");
+            sb.append(String.format("Found error: '%s' at line %d", error.error(), error.atLine())).append("\n");
         }
 
         return sb.toString();
