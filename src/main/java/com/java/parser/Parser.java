@@ -73,7 +73,7 @@ import java.text.MessageFormat;
 
 @SuppressWarnings("all")
 /**
- * A Bison parser, automatically generated from <tt>Parser.y</tt>.
+ * A Bison parser, automatically generated from <tt>Parser.y</code>.
  *
  * @author LALR (1) parser skeleton written by Paolo Bonzini.
  */
@@ -347,7 +347,7 @@ public final class Parser {
 
     /**
      * Communication interface between the scanner and the Bison-generated
-     * parser <tt>Parser</tt>.
+     * parser <code>Parser</code>.
      */
     public interface Lexer {
         /* Token kinds.  */
@@ -581,13 +581,13 @@ public final class Parser {
 
     /**
      * Returned by a Bison action in order to stop the parsing process and
-     * return success (<tt>true</tt>).
+     * return success (<code>true</code>).
      */
     public static final int YYACCEPT = 0;
 
     /**
      * Returned by a Bison action in order to stop the parsing process and
-     * return failure (<tt>false</tt>).
+     * return failure (<code>false</code>).
      */
     public static final int YYABORT = 1;
 
@@ -1240,7 +1240,7 @@ public final class Parser {
      * Parse input from the scanner that was specified at object construction
      * time.  Return whether the end of the input was reached successfully.
      *
-     * @return <tt>true</tt> if the parsing succeeds.  Note that this does not
+     * @return <code>true</code> if the parsing succeeds.  Note that this does not
      *     imply that there were no syntax errors.
      */
     public boolean parse() throws java.io.IOException {
@@ -1567,7 +1567,7 @@ public final class Parser {
     /**
      * Build and emit a "syntax error" message in a user-defined way.
      *
-     * @param ctx The context of the error.
+     * @param yyctx The context of the error.
      */
     private void yyreportSyntaxError(Context yyctx) {
         if (yyErrorVerbose) {
