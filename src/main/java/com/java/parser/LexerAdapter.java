@@ -2,10 +2,12 @@ package com.java.parser;
 
 import com.java.lexer.Lexer;
 import com.java.lexer.Token;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
+@SuppressWarnings({"checkstyle:RegexpSinglelineJava", "checkstyle:MultipleStringLiterals"})
+@Slf4j
 public class LexerAdapter implements Parser.Lexer {
     private final List<Token> tokens;
     private int currentTokenIndex;
@@ -29,7 +31,7 @@ public class LexerAdapter implements Parser.Lexer {
         return currentToken;
     }
 
-    @Override public int yylex() throws IOException {
+    @Override public int yylex() {
         if (currentTokenIndex == tokens.size()) {
             return YYEOF;
         }
@@ -42,7 +44,7 @@ public class LexerAdapter implements Parser.Lexer {
             Field field = Parser.Lexer.class.getDeclaredField(name);
             tokenCode = (Integer) field.get(Parser.Lexer.class);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
 
 //        System.out.printf("yylex({%s}) --> {%d}\n", name, tokenCode);
