@@ -1,0 +1,71 @@
+ListNode {
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
+    }
+    Literal {
+     Token{type: IntLiteral, lexeme: '5', literal: 5, line: 1}
+    }
+   }
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'b', literal: null, line: 1}
+    }
+    Literal {
+     Token{type: IntLiteral, lexeme: '3', literal: 3, line: 1}
+    }
+   }
+  }
+ }
+ Print {
+  ListNode {
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 3}
+   }
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'b', literal: null, line: 3}
+   }
+  }
+ }
+ If Statement {
+  Literal {
+   Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 5}
+  }
+  ListNode {
+   Multiple Declarations {
+    ListNode {
+     Declaration {
+      Token List {
+       Token{type: Identifier, lexeme: 'a', literal: null, line: 6}
+      }
+      Literal {
+       Token{type: IntLiteral, lexeme: '10', literal: 10, line: 6}
+      }
+     }
+    }
+   }
+   Print {
+    ListNode {
+     Reference Tail {
+      Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 7}
+     }
+     Reference Tail {
+      Identifier Token{type: Identifier, lexeme: 'b', literal: null, line: 7}
+     }
+    }
+   }
+  }
+ }
+ Print {
+  ListNode {
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 10}
+   }
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'b', literal: null, line: 10}
+   }
+  }
+ }
+}

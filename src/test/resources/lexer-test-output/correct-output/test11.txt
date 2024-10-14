@@ -28,8 +28,6 @@ Token{type: IntLiteral, lexeme: '2', literal: 2, line: 2}
 Token{type: CloseBracket, lexeme: ']', literal: null, line: 2}
 Token{type: Comma, lexeme: ',', literal: null, line: 2}
 Token{type: OpenBracket, lexeme: '[', literal: null, line: 2}
-Token{type: Empty, lexeme: 'empty', literal: null, line: 2}
-Token{type: Comma, lexeme: ',', literal: null, line: 2}
 Token{type: DoubleLiteral, lexeme: '1.23', literal: 1.23, line: 2}
 Token{type: CloseBracket, lexeme: ']', literal: null, line: 2}
 Token{type: CloseBracket, lexeme: ']', literal: null, line: 2}

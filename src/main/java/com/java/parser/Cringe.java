@@ -6,13 +6,10 @@ import java.io.IOException;
 
 public class Cringe {
     public static void main(String[] args) throws IOException {
-        Lexer lx = new Lexer("var tup := {a := 5, b := \"test\"};\n" +
-            "\n" +
-            "arr[4] := 4;\n" +
-            "tup := tup + {c := true};");
+        Lexer lx = new Lexer("var tup := {a := 5, 10, b := 15, c := -256};");
         var ast = Parser.makeAST(lx);
         if (ast != null) {
-            ast.nodes().accept(new PrintVisitor(0));
+            ast.accept(new PrintVisitor(0));
         }
     }
 }

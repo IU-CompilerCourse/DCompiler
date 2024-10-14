@@ -1,5 +1,6 @@
 package com.java.parser.ast.node;
 
+import com.java.parser.ast.node.type.ContainerType;
 import com.java.parser.ast.visitor.ASTVisitor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public class ASTLiteralNode extends ASTNode {
+    private final ContainerType type;
     private final ASTNode value;
 
     @Override

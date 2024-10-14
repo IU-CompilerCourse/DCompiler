@@ -1,5 +1,6 @@
 package com.java.parser.ast.visitor;
 
+import com.java.parser.ast.ASTree;
 import com.java.parser.ast.node.ASTListNode;
 import com.java.parser.ast.node.ASTLiteralNode;
 import com.java.parser.ast.node.ArrayAccessNode;
@@ -14,7 +15,7 @@ import com.java.parser.ast.node.IfNode;
 import com.java.parser.ast.node.LoopBodyNode;
 import com.java.parser.ast.node.MultipleDeclarationNode;
 import com.java.parser.ast.node.PrintNode;
-import com.java.parser.ast.node.ReadNode;
+import com.java.parser.ast.node.ReadStatementNode;
 import com.java.parser.ast.node.ReferenceAssignNode;
 import com.java.parser.ast.node.ReferenceTailNode;
 import com.java.parser.ast.node.ReferenceTypeNode;
@@ -27,7 +28,8 @@ import com.java.parser.ast.node.UnaryOpNode;
 import com.java.parser.ast.node.VarDeclNode;
 import com.java.parser.ast.node.WhileNode;
 
-public class PrintVisitor implements ASTVisitor {
+@SuppressWarnings({"checkstyle:RegexpSinglelineJava", "checkstyle:MultipleStringLiterals"})
+public class PrintVisitor implements ASTVisitor<Object> {
     private final int ident;
 
     public PrintVisitor(int ident) {
@@ -35,10 +37,18 @@ public class PrintVisitor implements ASTVisitor {
     }
 
     @Override
+    public Object visitAST(ASTree ast) {
+        ast.getNodes().accept(this);
+        return null;
+    }
+
+    @Override
     public Object visitVarDeclNode(VarDeclNode node) {
         System.out.println(" ".repeat(ident) + "Declaration {");
-        System.out.println(" ".repeat(ident + 1) + "Variable " + node.getIdentifier());
-        node.getInitialValue().accept(new PrintVisitor(ident + 1));
+        node.getIdentifiers().accept(new PrintVisitor(ident + 1));
+        if (node.getInitialValue() != null) {
+            node.getInitialValue().accept(new PrintVisitor(ident + 1));
+        }
         System.out.println(" ".repeat(ident) + "}");
         return null;
     }
@@ -68,7 +78,7 @@ public class PrintVisitor implements ASTVisitor {
     @Override
     public Object visitListNode(ASTListNode astListNode) {
         System.out.println(" ".repeat(ident) + "ListNode {");
-        for (var node: astListNode.getNodes()) {
+        for (var node : astListNode.getNodes()) {
             node.accept(new PrintVisitor(ident + 1));
         }
         System.out.println(" ".repeat(ident) + "}");
@@ -77,8 +87,11 @@ public class PrintVisitor implements ASTVisitor {
 
     @Override
     public Object visitAstLiteralNode(ASTLiteralNode astLiteralNode) {
-        System.out.println(" ".repeat(ident) + "ASTLiteralNode {");
-        astLiteralNode.getValue().accept(new PrintVisitor(ident + 1));
+        System.out.println(" ".repeat(ident) + "ContainerNode {");
+        System.out.println(" ".repeat(ident + 1) + astLiteralNode.getType());
+        if (astLiteralNode.getValue() != null) {
+            astLiteralNode.getValue().accept(new PrintVisitor(ident + 1));
+        }
         System.out.println(" ".repeat(ident) + "}");
         return null;
     }
@@ -86,13 +99,12 @@ public class PrintVisitor implements ASTVisitor {
     @Override
     public Object visitForNode(ForNode forNode) {
         System.out.println(" ".repeat(ident) + "For Loop {");
-        System.out.println(" ".repeat(ident) + "Identifier " + forNode.getIdentifier());
-        System.out.println(" ".repeat(ident) + "Type Indicator " + forNode.getTypeIndicator());
+        System.out.println(" ".repeat(ident + 1) + "Identifier " + forNode.getIdentifier());
+        System.out.println(" ".repeat(ident + 1) + "Type Indicator " + forNode.getTypeIndicator());
         forNode.getLoopBody().accept(new PrintVisitor(ident + 1));
         System.out.println(" ".repeat(ident) + "}");
         return null;
     }
-
 
     @Override
     public Object visitFunctionCall(FunctionCallNode funCall) {
@@ -140,9 +152,10 @@ public class PrintVisitor implements ASTVisitor {
     }
 
     @Override
-    public Object visitReadNode(ReadNode readNode) {
-        System.out.println(" ".repeat(ident) + "Print {");
-        System.out.println(" ".repeat(ident) + readNode.getReadType());
+    public Object visitReadStatementNode(ReadStatementNode readStatementNode) {
+        System.out.println(" ".repeat(ident) + "Read {");
+        System.out.println(" ".repeat(ident + 1) + readStatementNode.getReadType());
+        readStatementNode.getDest().accept(new PrintVisitor(ident + 1));
         System.out.println(" ".repeat(ident) + "}");
         return null;
     }
@@ -177,9 +190,17 @@ public class PrintVisitor implements ASTVisitor {
     @Override
     public Object visitUnaryOperation(UnaryOpNode unaryOpNode) {
         System.out.println(" ".repeat(ident) + "Unary Operator {");
-        System.out.println(" ".repeat(ident) + unaryOpNode.getOperator());
-        unaryOpNode.getTypeIndicator().accept(new PrintVisitor(ident + 1));
+
+        if (unaryOpNode.getOperator() != null) {
+            System.out.println(" ".repeat(ident + 1) + unaryOpNode.getOperator());
+        }
+
         unaryOpNode.getUnary().accept(new PrintVisitor(ident + 1));
+
+        if (unaryOpNode.getTypeIndicator() != null) {
+            unaryOpNode.getTypeIndicator().accept(new PrintVisitor(ident + 1));
+        }
+
         System.out.println(" ".repeat(ident) + "}");
         return null;
     }
@@ -262,9 +283,18 @@ public class PrintVisitor implements ASTVisitor {
     @Override
     public Object visitTupleList(TupleListNode tupleListNode) {
         System.out.println(" ".repeat(ident) + "Tuple list {");
-        // TODO: как печатать именованные ноды, если мы хотим? Надо решить
-        for (var node: tupleListNode.getAllNodes()) {
-            node.accept(new PrintVisitor(ident + 1));
+        int index = 0;
+        for (var node : tupleListNode.getAllNodes()) {
+            if (tupleListNode.getNamedNodes().containsValue(node)) {
+                var entry = tupleListNode.getNamedNodes().entrySet().stream().toList().get(index++);
+
+                System.out.println(" ".repeat(ident + 1) + "Named element {");
+                System.out.println(" ".repeat(ident + 2) + entry.getKey());
+                entry.getValue().accept(new PrintVisitor(ident + 2));
+                System.out.println(" ".repeat(ident + 1) + "}");
+            } else {
+                node.accept(new PrintVisitor(ident + 1));
+            }
         }
         System.out.println(" ".repeat(ident) + "}");
         return null;

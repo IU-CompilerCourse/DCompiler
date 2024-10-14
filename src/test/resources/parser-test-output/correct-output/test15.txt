@@ -1,0 +1,52 @@
+ListNode {
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'endlessRecursion', literal: null, line: 1}
+    }
+    Function literal {
+     Token List {
+      Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+     }
+     ListNode {
+      Expression statement {
+       Reference Tail {
+        Identifier Token{type: Identifier, lexeme: 'endlessRecursion', literal: null, line: 2}
+        Function call {
+         ListNode {
+          Binary Operation {
+           Left {
+            Reference Tail {
+             Identifier Token{type: Identifier, lexeme: 'x', literal: null, line: 2}
+            }
+           }
+           Token{type: Minus, lexeme: '-', literal: null, line: 2}
+           Right {
+            Literal {
+             Token{type: IntLiteral, lexeme: '1', literal: 1, line: 2}
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+ Expression statement {
+  Reference Tail {
+   Identifier Token{type: Identifier, lexeme: 'endlessRecursion', literal: null, line: 5}
+   Function call {
+    ListNode {
+     Literal {
+      Token{type: IntLiteral, lexeme: '10', literal: 10, line: 5}
+     }
+    }
+   }
+  }
+ }
+}

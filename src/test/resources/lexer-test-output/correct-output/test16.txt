@@ -1,0 +1,29 @@
+TOKENS
+
+Token{type: Var, lexeme: 'var', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
+Token{type: Comma, lexeme: ',', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'b', literal: null, line: 1}
+Token{type: Comma, lexeme: ',', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'c', literal: null, line: 1}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 1}
+Token{type: ReadInt, lexeme: 'readInt', literal: null, line: 3}
+Token{type: Identifier, lexeme: 'a', literal: null, line: 3}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 3}
+Token{type: ReadString, lexeme: 'readString', literal: null, line: 4}
+Token{type: Identifier, lexeme: 'b', literal: null, line: 4}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 4}
+Token{type: ReadReal, lexeme: 'readReal', literal: null, line: 5}
+Token{type: Identifier, lexeme: 'c', literal: null, line: 5}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 5}
+Token{type: Print, lexeme: 'print', literal: null, line: 7}
+Token{type: Identifier, lexeme: 'a', literal: null, line: 7}
+Token{type: Comma, lexeme: ',', literal: null, line: 7}
+Token{type: Identifier, lexeme: 'b', literal: null, line: 7}
+Token{type: Comma, lexeme: ',', literal: null, line: 7}
+Token{type: Identifier, lexeme: 'c', literal: null, line: 7}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 7}
+Token{type: EOF, lexeme: '', literal: null, line: 8}
+
+ERRORS
+

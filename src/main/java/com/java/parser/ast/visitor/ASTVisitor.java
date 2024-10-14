@@ -1,5 +1,6 @@
 package com.java.parser.ast.visitor;
 
+import com.java.parser.ast.ASTree;
 import com.java.parser.ast.node.ASTListNode;
 import com.java.parser.ast.node.ASTLiteralNode;
 import com.java.parser.ast.node.ArrayAccessNode;
@@ -14,7 +15,7 @@ import com.java.parser.ast.node.IfNode;
 import com.java.parser.ast.node.LoopBodyNode;
 import com.java.parser.ast.node.MultipleDeclarationNode;
 import com.java.parser.ast.node.PrintNode;
-import com.java.parser.ast.node.ReadNode;
+import com.java.parser.ast.node.ReadStatementNode;
 import com.java.parser.ast.node.ReferenceAssignNode;
 import com.java.parser.ast.node.ReferenceTailNode;
 import com.java.parser.ast.node.ReferenceTypeNode;
@@ -28,6 +29,8 @@ import com.java.parser.ast.node.VarDeclNode;
 import com.java.parser.ast.node.WhileNode;
 
 public interface ASTVisitor<R> {
+    R visitAST(ASTree ast);
+
     R visitVarDeclNode(VarDeclNode node);
 
     R visitLiteralNode(TokenLiteralNode node);
@@ -50,7 +53,7 @@ public interface ASTVisitor<R> {
 
     R visitPrintNode(PrintNode printNode);
 
-    R visitReadNode(ReadNode readNode);
+    R visitReadStatementNode(ReadStatementNode readNode);
 
     R visitReturnNode(ReturnNode returnNode);
 

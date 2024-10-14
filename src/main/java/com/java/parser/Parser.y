@@ -3,6 +3,7 @@
   import com.java.parser.ast.ASTree;
   import com.java.parser.ast.node.*;
   import com.java.lexer.Token;
+  import com.java.parser.ast.node.type.*;
 }
 
 %code {
@@ -265,19 +266,19 @@ reference:
 
 array:
     OpenBracket CloseBracket {
-        $$ = new ASTLiteralNode(null);
+        $$ = new ASTLiteralNode(ContainerType.Array, null);
     }
     | OpenBracket array_data CloseBracket {
-        $$ = new ASTLiteralNode($2);
+        $$ = new ASTLiteralNode(ContainerType.Array, $2);
     }
     ;
 
 tuple:
     OpenBrace CloseBrace {
-        $$ = new ASTLiteralNode(null);
+        $$ = new ASTLiteralNode(ContainerType.Tuple, null);
     }
     | OpenBrace tuple_data CloseBrace {
-        $$ = new ASTLiteralNode($2);
+        $$ = new ASTLiteralNode(ContainerType.Tuple, $2);
     }
     ;
 

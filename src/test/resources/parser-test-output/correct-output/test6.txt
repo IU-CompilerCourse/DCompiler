@@ -1,0 +1,120 @@
+ListNode {
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'factorial', literal: null, line: 2}
+    }
+    Function literal {
+     Token List {
+      Token{type: Identifier, lexeme: 'n', literal: null, line: 2}
+     }
+     ListNode {
+      If Statement {
+       Binary Operation {
+        Left {
+         Binary Operation {
+          Left {
+           Reference Tail {
+            Identifier Token{type: Identifier, lexeme: 'n', literal: null, line: 3}
+           }
+          }
+          Token{type: Equal, lexeme: '=', literal: null, line: 3}
+          Right {
+           Literal {
+            Token{type: IntLiteral, lexeme: '0', literal: 0, line: 3}
+           }
+          }
+         }
+        }
+        Token{type: Or, lexeme: 'or', literal: null, line: 3}
+        Right {
+         Binary Operation {
+          Left {
+           Reference Tail {
+            Identifier Token{type: Identifier, lexeme: 'n', literal: null, line: 3}
+           }
+          }
+          Token{type: Equal, lexeme: '=', literal: null, line: 3}
+          Right {
+           Literal {
+            Token{type: IntLiteral, lexeme: '1', literal: 1, line: 3}
+           }
+          }
+         }
+        }
+       }
+       ListNode {
+        Return {
+         Literal {
+          Token{type: IntLiteral, lexeme: '1', literal: 1, line: 4}
+         }
+        }
+       }
+       ListNode {
+        Return {
+         Binary Operation {
+          Left {
+           Reference Tail {
+            Identifier Token{type: Identifier, lexeme: 'n', literal: null, line: 6}
+           }
+          }
+          Token{type: Star, lexeme: '*', literal: null, line: 6}
+          Right {
+           Reference Tail {
+            Identifier Token{type: Identifier, lexeme: 'factorial', literal: null, line: 6}
+            Function call {
+             ListNode {
+              Binary Operation {
+               Left {
+                Reference Tail {
+                 Identifier Token{type: Identifier, lexeme: 'n', literal: null, line: 6}
+                }
+               }
+               Token{type: Minus, lexeme: '-', literal: null, line: 6}
+               Right {
+                Literal {
+                 Token{type: IntLiteral, lexeme: '1', literal: 1, line: 6}
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'factResult', literal: null, line: 10}
+    }
+    Reference Tail {
+     Identifier Token{type: Identifier, lexeme: 'factorial', literal: null, line: 10}
+     Function call {
+      ListNode {
+       Literal {
+        Token{type: IntLiteral, lexeme: '5', literal: 5, line: 10}
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+ Print {
+  ListNode {
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'factResult', literal: null, line: 12}
+   }
+  }
+ }
+}

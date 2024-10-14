@@ -48,6 +48,7 @@ Token{type: Return, lexeme: 'return', literal: null, line: 8}
 Token{type: Identifier, lexeme: 'res', literal: null, line: 8}
 Token{type: Semicolon, lexeme: ';', literal: null, line: 8}
 Token{type: End, lexeme: 'end', literal: null, line: 9}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 9}
 Token{type: Var, lexeme: 'var', literal: null, line: 11}
 Token{type: Identifier, lexeme: 'product', literal: null, line: 11}
 Token{type: Assignment, lexeme: ':=', literal: null, line: 11}
