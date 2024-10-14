@@ -40,11 +40,11 @@
 
 %type <ASTNode> program statement
 %type <ASTNode> assignment_statement var_declaration_statement print_statement return_statement if_statement loop_statement
-%type <ASTNode> expression relation factor term tail read_statement
+%type <ASTNode> expression relation factor term tail read_statement access_tail
 %type <ASTNode> loop_body function_literal array array_tail tuple_tail reference tuple
 %type <ASTNode> expression_statement func_tail unary_expression second_order_algebraic first_order_algebraic
-%type <ASTListNode> consecutive_statements function_args expressions_comma statements_list array_data consecutive_array_tail
-%type <ASTListNode> consecutive_declarations consecutive_tuple_tail consecutive_mixed_tail
+%type <ASTListNode> consecutive_statements function_args expressions_comma statements_list array_data
+%type <ASTListNode> consecutive_declarations consecutive_access_tail
 %type <TokenListNode> parameters
 %type <TupleListNode> tuple_data
 
@@ -86,7 +86,7 @@ assignment_statement:
     Identifier Assignment expression Semicolon {
         $$ = new IdentifierAssignNode($1, $3);
     }
-    | Identifier consecutive_mixed_tail Assignment expression Semicolon {
+    | Identifier consecutive_access_tail Assignment expression Semicolon {
         $$ = new ReferenceAssignNode($1, $2, $4);
     }
     ;
@@ -258,7 +258,7 @@ reference:
     Identifier tail {
         $$ = new ReferenceTailNode($1, $2);
     }
-    | Identifier consecutive_mixed_tail {
+    | Identifier consecutive_access_tail {
         $$ = new ReferenceTailNode($1, $2);
     }
     ;
@@ -307,6 +307,11 @@ tail:
     | func_tail
     ;
 
+access_tail:
+    array_tail
+    | tuple_tail
+    ;
+
 array_tail:
     OpenBracket expression CloseBracket {
         $$ = new ArrayAccessNode($2);
@@ -340,38 +345,11 @@ consecutive_declarations:
     }
     ;
 
-consecutive_array_tail:
-    array_tail {
+consecutive_access_tail:
+    access_tail {
         $$ = new ASTListNode($1);
     }
-    | consecutive_array_tail array_tail {
-        $1.append($2);
-        $$ = $1;
-    }
-    ;
-
-consecutive_tuple_tail:
-    tuple_tail {
-        $$ = new ASTListNode($1);
-    }
-    | consecutive_tuple_tail tuple_tail {
-        $1.append($2);
-        $$ = $1;
-    }
-    ;
-
-consecutive_mixed_tail:
-    consecutive_array_tail {
-        $$ = new ASTListNode($1);
-    }
-    | consecutive_tuple_tail {
-        $$ = new ASTListNode($1);
-    }
-    | consecutive_array_tail tuple_tail {
-        $1.append($2);
-        $$ = $1;
-    }
-    | consecutive_tuple_tail consecutive_array_tail {
+    | consecutive_access_tail access_tail {
         $1.append($2);
         $$ = $1;
     }
