@@ -1,0 +1,120 @@
+ListNode {
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'n', literal: null, line: 2}
+    }
+    Literal {
+     Token{type: IntLiteral, lexeme: '3', literal: 3, line: 2}
+    }
+   }
+  }
+ }
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+    }
+    ContainerNode {
+     Array
+     ListNode {
+      Literal {
+       Token{type: IntLiteral, lexeme: '1', literal: 1, line: 3}
+      }
+      Literal {
+       Token{type: IntLiteral, lexeme: '2', literal: 2, line: 3}
+      }
+      Literal {
+       Token{type: IntLiteral, lexeme: '3', literal: 3, line: 3}
+      }
+     }
+    }
+   }
+  }
+ }
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'sum', literal: null, line: 4}
+    }
+    Literal {
+     Token{type: DoubleLiteral, lexeme: '0.0', literal: 0.0, line: 4}
+    }
+   }
+  }
+ }
+ Identifier Assign {
+  Identifier Token{type: Identifier, lexeme: 'i', literal: null, line: 5}
+  Literal {
+   Token{type: IntLiteral, lexeme: '1', literal: 1, line: 5}
+  }
+ }
+ While {
+  Binary Operation {
+   Left {
+    Reference Tail {
+     Identifier Token{type: Identifier, lexeme: 'i', literal: null, line: 6}
+    }
+   }
+   Token{type: LessEqual, lexeme: '<=', literal: null, line: 6}
+   Right {
+    Reference Tail {
+     Identifier Token{type: Identifier, lexeme: 'n', literal: null, line: 6}
+    }
+   }
+  }
+  Loop Body {
+   ListNode {
+    Identifier Assign {
+     Identifier Token{type: Identifier, lexeme: 'sum', literal: null, line: 7}
+     Binary Operation {
+      Left {
+       Reference Tail {
+        Identifier Token{type: Identifier, lexeme: 'sum', literal: null, line: 7}
+       }
+      }
+      Token{type: Plus, lexeme: '+', literal: null, line: 7}
+      Right {
+       Reference Tail {
+        Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 7}
+        ListNode {
+         Array Access {
+          Reference Tail {
+           Identifier Token{type: Identifier, lexeme: 'i', literal: null, line: 7}
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+    Identifier Assign {
+     Identifier Token{type: Identifier, lexeme: 'i', literal: null, line: 8}
+     Binary Operation {
+      Left {
+       Reference Tail {
+        Identifier Token{type: Identifier, lexeme: 'i', literal: null, line: 8}
+       }
+      }
+      Token{type: Plus, lexeme: '+', literal: null, line: 8}
+      Right {
+       Literal {
+        Token{type: IntLiteral, lexeme: '1', literal: 1, line: 8}
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+ Print {
+  ListNode {
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'sum', literal: null, line: 11}
+   }
+  }
+ }
+}

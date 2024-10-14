@@ -13,7 +13,7 @@ public class VarDeclNode extends ASTNode {
 
     public VarDeclNode(Token identifier, ASTNode initialValue) {
         this.identifiers = new TokenListNode(identifier);
-        this.initialValue = null;
+        this.initialValue = initialValue;
     }
 
     @Override

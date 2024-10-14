@@ -14,6 +14,6 @@ public class BinaryOpNode extends ASTNode {
 
     @Override
     public <R> R accept(ASTVisitor<R> visitor) {
-        return visitor.visitBinaryOpNode(this);
+        return visitor.visitBinaryOperation(this);
     }
 }

@@ -21,6 +21,7 @@ Token{type: Identifier, lexeme: 'endlessRecursion', literal: null, line: 5}
 Token{type: OpenParen, lexeme: '(', literal: null, line: 5}
 Token{type: IntLiteral, lexeme: '10', literal: 10, line: 5}
 Token{type: CloseParen, lexeme: ')', literal: null, line: 5}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 5}
 Token{type: EOF, lexeme: '', literal: null, line: 6}
 
 ERRORS

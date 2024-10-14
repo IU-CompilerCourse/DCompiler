@@ -49,6 +49,9 @@ Token{type: IntLiteral, lexeme: '2', literal: 2, line: 3}
 Token{type: CloseBracket, lexeme: ']', literal: null, line: 3}
 Token{type: Dot, lexeme: '.', literal: null, line: 3}
 Token{type: Identifier, lexeme: 'x', literal: null, line: 3}
+Token{type: OpenBracket, lexeme: '[', literal: null, line: 3}
+Token{type: IntLiteral, lexeme: '1', literal: 1, line: 3}
+Token{type: CloseBracket, lexeme: ']', literal: null, line: 3}
 Token{type: Comma, lexeme: ',', literal: null, line: 3}
 Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
 Token{type: OpenBracket, lexeme: '[', literal: null, line: 3}

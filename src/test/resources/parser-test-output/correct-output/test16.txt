@@ -1,0 +1,40 @@
+ListNode {
+ Declaration {
+  Token List {
+   Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
+   Token{type: Identifier, lexeme: 'b', literal: null, line: 1}
+   Token{type: Identifier, lexeme: 'c', literal: null, line: 1}
+  }
+ }
+ Read {
+  Token{type: ReadInt, lexeme: 'readInt', literal: null, line: 3}
+  Reference Tail {
+   Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 3}
+  }
+ }
+ Read {
+  Token{type: ReadString, lexeme: 'readString', literal: null, line: 4}
+  Reference Tail {
+   Identifier Token{type: Identifier, lexeme: 'b', literal: null, line: 4}
+  }
+ }
+ Read {
+  Token{type: ReadReal, lexeme: 'readReal', literal: null, line: 5}
+  Reference Tail {
+   Identifier Token{type: Identifier, lexeme: 'c', literal: null, line: 5}
+  }
+ }
+ Print {
+  ListNode {
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 7}
+   }
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'b', literal: null, line: 7}
+   }
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'c', literal: null, line: 7}
+   }
+  }
+ }
+}

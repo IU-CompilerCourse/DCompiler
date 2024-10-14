@@ -1,0 +1,257 @@
+ListNode {
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'arr', literal: null, line: 1}
+    }
+    ContainerNode {
+     Array
+     ListNode {
+      Literal {
+       Token{type: IntLiteral, lexeme: '1', literal: 1, line: 1}
+      }
+      Literal {
+       Token{type: IntLiteral, lexeme: '2', literal: 2, line: 1}
+      }
+      ContainerNode {
+       Array
+       ListNode {
+        Literal {
+         Token{type: StringLiteral, lexeme: '"apple"', literal: apple, line: 1}
+        }
+        ContainerNode {
+         Tuple
+         Tuple list {
+          Named element {
+           Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+           Literal {
+            Token{type: IntLiteral, lexeme: '3', literal: 3, line: 1}
+           }
+          }
+         }
+        }
+       }
+      }
+      Literal {
+       Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 1}
+      }
+     }
+    }
+   }
+  }
+ }
+ Print {
+  ListNode {
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+    ListNode {
+     Array Access {
+      Literal {
+       Token{type: IntLiteral, lexeme: '1', literal: 1, line: 3}
+      }
+     }
+    }
+   }
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+    ListNode {
+     Array Access {
+      Literal {
+       Token{type: IntLiteral, lexeme: '2', literal: 2, line: 3}
+      }
+     }
+    }
+   }
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+    ListNode {
+     Array Access {
+      Literal {
+       Token{type: IntLiteral, lexeme: '3', literal: 3, line: 3}
+      }
+     }
+     Array Access {
+      Literal {
+       Token{type: IntLiteral, lexeme: '1', literal: 1, line: 3}
+      }
+     }
+    }
+   }
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+    ListNode {
+     Array Access {
+      Literal {
+       Token{type: IntLiteral, lexeme: '3', literal: 3, line: 3}
+      }
+     }
+     Array Access {
+      Literal {
+       Token{type: IntLiteral, lexeme: '2', literal: 2, line: 3}
+      }
+     }
+     Tuple Access {
+      Token{type: Identifier, lexeme: 'x', literal: null, line: 3}
+      null
+     }
+     Array Access {
+      Literal {
+       Token{type: IntLiteral, lexeme: '1', literal: 1, line: 3}
+      }
+     }
+    }
+   }
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+    ListNode {
+     Array Access {
+      Literal {
+       Token{type: IntLiteral, lexeme: '4', literal: 4, line: 3}
+      }
+     }
+    }
+   }
+  }
+ }
+ Reference Assign {
+  Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 5}
+  Function literal {
+   Token List {
+    Token{type: Identifier, lexeme: 'x', literal: null, line: 5}
+   }
+   Binary Operation {
+    Left {
+     Reference Tail {
+      Identifier Token{type: Identifier, lexeme: 'x', literal: null, line: 5}
+     }
+    }
+    Token{type: Plus, lexeme: '+', literal: null, line: 5}
+    Right {
+     Literal {
+      Token{type: IntLiteral, lexeme: '1', literal: 1, line: 5}
+     }
+    }
+   }
+  }
+  ListNode {
+   Array Access {
+    Literal {
+     Token{type: IntLiteral, lexeme: '1', literal: 1, line: 5}
+    }
+   }
+  }
+ }
+ Reference Assign {
+  Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 6}
+  Literal {
+   Token{type: StringLiteral, lexeme: '"string"', literal: string, line: 6}
+  }
+  ListNode {
+   Array Access {
+    Literal {
+     Token{type: IntLiteral, lexeme: '2', literal: 2, line: 6}
+    }
+   }
+  }
+ }
+ Reference Assign {
+  Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 7}
+  Literal {
+   Token{type: BooleanLiteral, lexeme: 'false', literal: false, line: 7}
+  }
+  ListNode {
+   Array Access {
+    Literal {
+     Token{type: IntLiteral, lexeme: '3', literal: 3, line: 7}
+    }
+   }
+  }
+ }
+ Reference Assign {
+  Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 8}
+  ContainerNode {
+   Tuple
+   Tuple list {
+    Named element {
+     Token{type: Identifier, lexeme: 'a', literal: null, line: 8}
+     ContainerNode {
+      Array
+     }
+    }
+    Literal {
+     Token{type: IntLiteral, lexeme: '12', literal: 12, line: 8}
+    }
+   }
+  }
+  ListNode {
+   Array Access {
+    Literal {
+     Token{type: IntLiteral, lexeme: '4', literal: 4, line: 8}
+    }
+   }
+  }
+ }
+ Print {
+  ListNode {
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 10}
+    ListNode {
+     Array Access {
+      Literal {
+       Token{type: IntLiteral, lexeme: '1', literal: 1, line: 10}
+      }
+     }
+    }
+   }
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 10}
+    ListNode {
+     Array Access {
+      Literal {
+       Token{type: IntLiteral, lexeme: '2', literal: 2, line: 10}
+      }
+     }
+    }
+   }
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 10}
+    ListNode {
+     Array Access {
+      Literal {
+       Token{type: IntLiteral, lexeme: '3', literal: 3, line: 10}
+      }
+     }
+    }
+   }
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 10}
+    ListNode {
+     Array Access {
+      Literal {
+       Token{type: IntLiteral, lexeme: '4', literal: 4, line: 10}
+      }
+     }
+     Tuple Access {
+      Token{type: Identifier, lexeme: 'a', literal: null, line: 10}
+      null
+     }
+    }
+   }
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 10}
+    ListNode {
+     Array Access {
+      Literal {
+       Token{type: IntLiteral, lexeme: '4', literal: 4, line: 10}
+      }
+     }
+     Tuple Access {
+      null
+      Token{type: IntLiteral, lexeme: '2', literal: 2, line: 10}
+     }
+    }
+   }
+  }
+ }
+}

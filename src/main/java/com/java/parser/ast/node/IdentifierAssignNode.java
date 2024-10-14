@@ -13,6 +13,6 @@ public class IdentifierAssignNode extends ASTNode {
 
     @Override
     public <R> R accept(ASTVisitor<R> visitor) {
-        return visitor.visitAssignNode(this);
+        return visitor.visitIdentifierAssign(this);
     }
 }

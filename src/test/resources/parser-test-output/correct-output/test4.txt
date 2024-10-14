@@ -1,0 +1,132 @@
+ListNode {
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'add', literal: null, line: 1}
+    }
+    Function literal {
+     Token List {
+      Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+      Token{type: Identifier, lexeme: 'y', literal: null, line: 1}
+     }
+     Binary Operation {
+      Left {
+       Reference Tail {
+        Identifier Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+       }
+      }
+      Token{type: Plus, lexeme: '+', literal: null, line: 1}
+      Right {
+       Reference Tail {
+        Identifier Token{type: Identifier, lexeme: 'y', literal: null, line: 1}
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'result', literal: null, line: 2}
+    }
+    Reference Tail {
+     Identifier Token{type: Identifier, lexeme: 'add', literal: null, line: 2}
+     Function call {
+      ListNode {
+       Literal {
+        Token{type: IntLiteral, lexeme: '3', literal: 3, line: 2}
+       }
+       Literal {
+        Token{type: IntLiteral, lexeme: '4', literal: 4, line: 2}
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+ Print {
+  ListNode {
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'result', literal: null, line: 4}
+   }
+  }
+ }
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'multiply', literal: null, line: 6}
+    }
+    Function literal {
+     Token List {
+      Token{type: Identifier, lexeme: 'x', literal: null, line: 6}
+      Token{type: Identifier, lexeme: 'y', literal: null, line: 6}
+     }
+     ListNode {
+      Multiple Declarations {
+       ListNode {
+        Declaration {
+         Token List {
+          Token{type: Identifier, lexeme: 'res', literal: null, line: 7}
+         }
+         Binary Operation {
+          Left {
+           Reference Tail {
+            Identifier Token{type: Identifier, lexeme: 'x', literal: null, line: 7}
+           }
+          }
+          Token{type: Star, lexeme: '*', literal: null, line: 7}
+          Right {
+           Reference Tail {
+            Identifier Token{type: Identifier, lexeme: 'y', literal: null, line: 7}
+           }
+          }
+         }
+        }
+       }
+      }
+      Return {
+       Reference Tail {
+        Identifier Token{type: Identifier, lexeme: 'res', literal: null, line: 8}
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'product', literal: null, line: 11}
+    }
+    Reference Tail {
+     Identifier Token{type: Identifier, lexeme: 'multiply', literal: null, line: 11}
+     Function call {
+      ListNode {
+       Literal {
+        Token{type: IntLiteral, lexeme: '2', literal: 2, line: 11}
+       }
+       Literal {
+        Token{type: IntLiteral, lexeme: '5', literal: 5, line: 11}
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+ Print {
+  ListNode {
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'product', literal: null, line: 13}
+   }
+  }
+ }
+}

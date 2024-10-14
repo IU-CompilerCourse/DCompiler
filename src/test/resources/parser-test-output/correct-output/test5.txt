@@ -1,0 +1,112 @@
+ListNode {
+ Multiple Declarations {
+  ListNode {
+   Declaration {
+    Token List {
+     Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
+    }
+    Literal {
+     Token{type: IntLiteral, lexeme: '10', literal: 10, line: 1}
+    }
+   }
+  }
+ }
+ If Statement {
+  Binary Operation {
+   Left {
+    Reference Tail {
+     Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 3}
+    }
+   }
+   Token{type: Greater, lexeme: '>', literal: null, line: 3}
+   Right {
+    Literal {
+     Token{type: IntLiteral, lexeme: '5', literal: 5, line: 3}
+    }
+   }
+  }
+  ListNode {
+   Multiple Declarations {
+    ListNode {
+     Declaration {
+      Token List {
+       Token{type: Identifier, lexeme: 'a', literal: null, line: 4}
+      }
+      Literal {
+       Token{type: IntLiteral, lexeme: '20', literal: 20, line: 4}
+      }
+     }
+    }
+   }
+   Print {
+    ListNode {
+     Reference Tail {
+      Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 5}
+     }
+    }
+   }
+  }
+ }
+ Print {
+  ListNode {
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 8}
+   }
+  }
+ }
+ While {
+  Binary Operation {
+   Left {
+    Reference Tail {
+     Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 10}
+    }
+   }
+   Token{type: Less, lexeme: '<', literal: null, line: 10}
+   Right {
+    Literal {
+     Token{type: IntLiteral, lexeme: '15', literal: 15, line: 10}
+    }
+   }
+  }
+  Loop Body {
+   ListNode {
+    Multiple Declarations {
+     ListNode {
+      Declaration {
+       Token List {
+        Token{type: Identifier, lexeme: 'a', literal: null, line: 11}
+       }
+       Binary Operation {
+        Left {
+         Reference Tail {
+          Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 11}
+         }
+        }
+        Token{type: Plus, lexeme: '+', literal: null, line: 11}
+        Right {
+         Literal {
+          Token{type: IntLiteral, lexeme: '1', literal: 1, line: 11}
+         }
+        }
+       }
+      }
+     }
+    }
+    Print {
+     ListNode {
+      Reference Tail {
+       Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 12}
+      }
+     }
+    }
+   }
+  }
+ }
+ Print {
+  ListNode {
+   Reference Tail {
+    Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 15}
+   }
+  }
+ }
+}
