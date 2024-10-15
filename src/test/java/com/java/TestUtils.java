@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class TestUtils {
+    private static final String LINE_SEP = System.lineSeparator();
+
     public static Path makeDirIfNotExists(@NotNull Path dir) {
         if (!Files.isDirectory(dir)) {
             try {
@@ -64,14 +66,14 @@ public final class TestUtils {
     public static String lexerFormatOutput(@NotNull LexerOutput output) {
         StringBuilder sb = new StringBuilder();
 
-        sb.append("TOKENS\n\n");
+        sb.append("TOKENS").append(LINE_SEP.repeat(2));
         for (var token : output.tokens()) {
-            sb.append(token).append("\n");
+            sb.append(token).append(LINE_SEP);
         }
 
-        sb.append("\nERRORS\n\n");
+        sb.append(LINE_SEP).append("ERRORS").append(LINE_SEP.repeat(2));
         for (var error : output.lexingErrors()) {
-            sb.append(String.format("Found error: '%s' at line %d", error.error(), error.atLine())).append("\n");
+            sb.append(String.format("Found error: '%s' at line %d", error.error(), error.atLine())).append(LINE_SEP);
         }
 
         return sb.toString();
