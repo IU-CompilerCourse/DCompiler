@@ -150,13 +150,13 @@ print_statement:
 expression:
     relation
     | relation Or relation {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new LogicalOpNode($2, $1, $3);
     }
     | relation And relation {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new LogicalOpNode($2, $1, $3);
     }
     | relation Xor relation {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new LogicalOpNode($2, $1, $3);
     }
     | function_literal
     ;
@@ -164,22 +164,22 @@ expression:
 relation:
     factor
     | factor Less factor {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new ComparisonOpNode($2, $1, $3);
     }
     | factor LessEqual factor {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new ComparisonOpNode($2, $1, $3);
     }
     | factor Greater factor {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new ComparisonOpNode($2, $1, $3);
     }
     | factor GreaterEqual factor {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new ComparisonOpNode($2, $1, $3);
     }
     | factor Equal factor {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new ComparisonOpNode($2, $1, $3);
     }
     | factor NotEqual factor {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new ComparisonOpNode($2, $1, $3);
     }
     ;
 
@@ -266,19 +266,19 @@ reference:
 
 array:
     OpenBracket CloseBracket {
-        $$ = new ASTLiteralNode(ContainerType.Array, null);
+        $$ = new ArrayNode(null);
     }
     | OpenBracket array_data CloseBracket {
-        $$ = new ASTLiteralNode(ContainerType.Array, $2);
+        $$ = new ArrayNode($2);
     }
     ;
 
 tuple:
     OpenBrace CloseBrace {
-        $$ = new ASTLiteralNode(ContainerType.Tuple, null);
+        $$ = new TupleNode(null);
     }
     | OpenBrace tuple_data CloseBrace {
-        $$ = new ASTLiteralNode(ContainerType.Tuple, $2);
+        $$ = new TupleNode($2);
     }
     ;
 
