@@ -27,6 +27,8 @@ import com.java.parser.ast.node.TupleListNode;
 import com.java.parser.ast.node.UnaryOpNode;
 import com.java.parser.ast.node.VarDeclNode;
 import com.java.parser.ast.node.WhileNode;
+import com.java.parser.ast.node.EmptyFunctionArgsNode;
+import com.java.parser.ast.node.EmptyStatementListNode;
 
 @SuppressWarnings({"checkstyle:RegexpSinglelineJava", "checkstyle:MultipleStringLiterals"})
 public class PrintVisitor implements ASTVisitor<Object> {
@@ -297,6 +299,18 @@ public class PrintVisitor implements ASTVisitor<Object> {
             }
         }
         System.out.println(" ".repeat(ident) + "}");
+        return null;
+    }
+
+    @Override
+    public Object visitEmptyStatementList(EmptyStatementListNode emptyStatementListNode) {
+        System.out.println(" ".repeat(ident) + "Empty Statement List");
+        return null;
+    }
+
+    @Override
+    public Object visitEmptyFunctionArgs(EmptyFunctionArgsNode emptyFunctionArgsNode) {
+        System.out.println(" ".repeat(ident) + "Empty Function Arguments");
         return null;
     }
 }

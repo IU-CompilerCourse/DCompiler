@@ -27,6 +27,8 @@ import com.java.parser.ast.node.TupleListNode;
 import com.java.parser.ast.node.UnaryOpNode;
 import com.java.parser.ast.node.VarDeclNode;
 import com.java.parser.ast.node.WhileNode;
+import com.java.parser.ast.node.EmptyFunctionArgsNode;
+import com.java.parser.ast.node.EmptyStatementListNode;
 
 public interface ASTVisitor<R> {
     R visitAST(ASTree ast);
@@ -82,4 +84,8 @@ public interface ASTVisitor<R> {
     R visitEmptyTail(EmptyTailNode emptyTailNode);
 
     R visitTupleList(TupleListNode tupleListNode);
+
+    R visitEmptyStatementList(EmptyStatementListNode emptyStatementListNode);
+
+    R visitEmptyFunctionArgs(EmptyFunctionArgsNode emptyFunctionArgsNode);
 }
