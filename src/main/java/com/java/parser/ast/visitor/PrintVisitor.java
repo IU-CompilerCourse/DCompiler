@@ -1,34 +1,34 @@
 package com.java.parser.ast.visitor;
 
 import com.java.parser.ast.ASTree;
-import com.java.parser.ast.node.ASTListNode;
-import com.java.parser.ast.node.ASTLiteralNode;
-import com.java.parser.ast.node.ArrayAccessNode;
-import com.java.parser.ast.node.BinaryOpNode;
-import com.java.parser.ast.node.EmptyTailNode;
-import com.java.parser.ast.node.ExpressionStatementNode;
-import com.java.parser.ast.node.ForNode;
-import com.java.parser.ast.node.FunctionCallNode;
-import com.java.parser.ast.node.FunctionLiteralNode;
-import com.java.parser.ast.node.IdentifierAssignNode;
-import com.java.parser.ast.node.IfNode;
-import com.java.parser.ast.node.LoopBodyNode;
-import com.java.parser.ast.node.MultipleDeclarationNode;
-import com.java.parser.ast.node.PrintNode;
-import com.java.parser.ast.node.ReadStatementNode;
-import com.java.parser.ast.node.ReferenceAssignNode;
-import com.java.parser.ast.node.ReferenceTailNode;
-import com.java.parser.ast.node.ReferenceTypeNode;
-import com.java.parser.ast.node.ReturnNode;
-import com.java.parser.ast.node.TokenListNode;
-import com.java.parser.ast.node.TokenLiteralNode;
-import com.java.parser.ast.node.TupleAccessNode;
-import com.java.parser.ast.node.TupleListNode;
-import com.java.parser.ast.node.UnaryOpNode;
-import com.java.parser.ast.node.VarDeclNode;
-import com.java.parser.ast.node.WhileNode;
-import com.java.parser.ast.node.EmptyFunctionArgsNode;
-import com.java.parser.ast.node.EmptyStatementListNode;
+import com.java.parser.ast.node.ASTList;
+import com.java.parser.ast.node.ASTLiteral;
+import com.java.parser.ast.node.ArrayAccess;
+import com.java.parser.ast.node.BinaryOp;
+import com.java.parser.ast.node.EmptyTail;
+import com.java.parser.ast.node.ExpressionStatement;
+import com.java.parser.ast.node.For;
+import com.java.parser.ast.node.FunctionCall;
+import com.java.parser.ast.node.FunctionLiteral;
+import com.java.parser.ast.node.IdentifierAssign;
+import com.java.parser.ast.node.If;
+import com.java.parser.ast.node.LoopBody;
+import com.java.parser.ast.node.MultipleDeclaration;
+import com.java.parser.ast.node.Print;
+import com.java.parser.ast.node.ReadStatement;
+import com.java.parser.ast.node.ReferenceAssign;
+import com.java.parser.ast.node.ReferenceTail;
+import com.java.parser.ast.node.ReferenceType;
+import com.java.parser.ast.node.Return;
+import com.java.parser.ast.node.TokenList;
+import com.java.parser.ast.node.TokenLiteral;
+import com.java.parser.ast.node.TupleAccess;
+import com.java.parser.ast.node.TupleList;
+import com.java.parser.ast.node.UnaryOp;
+import com.java.parser.ast.node.VarDecl;
+import com.java.parser.ast.node.While;
+import com.java.parser.ast.node.EmptyFunctionArgs;
+import com.java.parser.ast.node.EmptyStatementList;
 
 @SuppressWarnings({"checkstyle:RegexpSinglelineJava", "checkstyle:MultipleStringLiterals"})
 public class PrintVisitor implements ASTVisitor<Object> {
@@ -45,7 +45,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitVarDeclNode(VarDeclNode node) {
+    public Object visitVarDecl(VarDecl node) {
         System.out.println(" ".repeat(ident) + "Declaration {");
         node.getIdentifiers().accept(new PrintVisitor(ident + 1));
         if (node.getInitialValue() != null) {
@@ -56,7 +56,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitLiteralNode(TokenLiteralNode node) {
+    public Object visitLiteral(TokenLiteral node) {
         System.out.println(" ".repeat(ident) + "Literal {");
         System.out.println(" ".repeat(ident + 1) + node.getValue());
         System.out.println(" ".repeat(ident) + "}");
@@ -64,7 +64,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitBinaryOperation(BinaryOpNode node) {
+    public Object visitBinaryOperation(BinaryOp node) {
         System.out.println(" ".repeat(ident) + "Binary Operation {");
         System.out.println(" ".repeat(ident + 1) + "Left {");
         node.getLeft().accept(new PrintVisitor(ident + 2));
@@ -78,7 +78,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitListNode(ASTListNode astListNode) {
+    public Object visitList(ASTList astListNode) {
         System.out.println(" ".repeat(ident) + "ListNode {");
         for (var node : astListNode.getNodes()) {
             node.accept(new PrintVisitor(ident + 1));
@@ -88,7 +88,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitAstLiteralNode(ASTLiteralNode astLiteralNode) {
+    public Object visitAstLiteral(ASTLiteral astLiteralNode) {
         System.out.println(" ".repeat(ident) + "ContainerNode {");
         System.out.println(" ".repeat(ident + 1) + astLiteralNode.getType());
         if (astLiteralNode.getValue() != null) {
@@ -99,7 +99,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitForNode(ForNode forNode) {
+    public Object visitFor(For forNode) {
         System.out.println(" ".repeat(ident) + "For Loop {");
         System.out.println(" ".repeat(ident + 1) + "Identifier " + forNode.getIdentifier());
         System.out.println(" ".repeat(ident + 1) + "Type Indicator " + forNode.getTypeIndicator());
@@ -109,7 +109,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitFunctionCall(FunctionCallNode funCall) {
+    public Object visitFunctionCall(FunctionCall funCall) {
         System.out.println(" ".repeat(ident) + "Function call {");
         funCall.getExpressionList().accept(new PrintVisitor(ident + 1));
         System.out.println(" ".repeat(ident) + "}");
@@ -117,7 +117,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitFunctionLiteral(FunctionLiteralNode funLiteral) {
+    public Object visitFunctionLiteral(FunctionLiteral funLiteral) {
         System.out.println(" ".repeat(ident) + "Function literal {");
         funLiteral.getParameters().accept(new PrintVisitor(ident + 1));
         funLiteral.getFunBody().accept(new PrintVisitor(ident + 1));
@@ -126,7 +126,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitIfNode(IfNode ifNode) {
+    public Object visitIf(If ifNode) {
         System.out.println(" ".repeat(ident) + "If Statement {");
         ifNode.getExpression().accept(new PrintVisitor(ident + 1));
         ifNode.getTrueBody().accept(new PrintVisitor(ident + 1));
@@ -138,7 +138,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitLoopBodyNode(LoopBodyNode loopBodyNode) {
+    public Object visitLoopBody(LoopBody loopBodyNode) {
         System.out.println(" ".repeat(ident) + "Loop Body {");
         loopBodyNode.getLoopBody().accept(new PrintVisitor(ident + 1));
         System.out.println(" ".repeat(ident) + "}");
@@ -146,7 +146,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitPrintNode(PrintNode printNode) {
+    public Object visitPrint(Print printNode) {
         System.out.println(" ".repeat(ident) + "Print {");
         printNode.getNode().accept(new PrintVisitor(ident + 1));
         System.out.println(" ".repeat(ident) + "}");
@@ -154,7 +154,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitReadStatementNode(ReadStatementNode readStatementNode) {
+    public Object visitReadStatement(ReadStatement readStatementNode) {
         System.out.println(" ".repeat(ident) + "Read {");
         System.out.println(" ".repeat(ident + 1) + readStatementNode.getReadType());
         readStatementNode.getDest().accept(new PrintVisitor(ident + 1));
@@ -163,7 +163,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitReturnNode(ReturnNode returnNode) {
+    public Object visitReturn(Return returnNode) {
         System.out.println(" ".repeat(ident) + "Return {");
         returnNode.getNode().accept(new PrintVisitor(ident + 1));
         System.out.println(" ".repeat(ident) + "}");
@@ -171,7 +171,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitTokenList(TokenListNode tokenListNode) {
+    public Object visitTokenList(TokenList tokenListNode) {
         System.out.println(" ".repeat(ident) + "Token List {");
         for (var node : tokenListNode.getTokens()) {
             System.out.println(" ".repeat(ident + 1) + node);
@@ -181,7 +181,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitTupleAccessNode(TupleAccessNode tupleAccess) {
+    public Object visitTupleAccess(TupleAccess tupleAccess) {
         System.out.println(" ".repeat(ident) + "Tuple Access {");
         System.out.println(" ".repeat(ident + 1) + tupleAccess.getIdentifier());
         System.out.println(" ".repeat(ident + 1) + tupleAccess.getLiteral());
@@ -190,7 +190,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitUnaryOperation(UnaryOpNode unaryOpNode) {
+    public Object visitUnaryOperation(UnaryOp unaryOpNode) {
         System.out.println(" ".repeat(ident) + "Unary Operator {");
 
         if (unaryOpNode.getOperator() != null) {
@@ -208,7 +208,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitWhileNode(WhileNode whileNode) {
+    public Object visitWhile(While whileNode) {
         System.out.println(" ".repeat(ident) + "While {");
         whileNode.getExpression().accept(new PrintVisitor(ident + 1));
         whileNode.getLoopBody().accept(new PrintVisitor(ident + 1));
@@ -217,7 +217,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitArrayAccess(ArrayAccessNode arrayAccessNode) {
+    public Object visitArrayAccess(ArrayAccess arrayAccessNode) {
         System.out.println(" ".repeat(ident) + "Array Access {");
         arrayAccessNode.getExpression().accept(new PrintVisitor(ident + 1));
         System.out.println(" ".repeat(ident) + "}");
@@ -225,7 +225,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitMultipleDeclarations(MultipleDeclarationNode multipleDeclarations) {
+    public Object visitMultipleDeclarations(MultipleDeclaration multipleDeclarations) {
         System.out.println(" ".repeat(ident) + "Multiple Declarations {");
         multipleDeclarations.getDeclarations().accept(new PrintVisitor(ident + 1));
         System.out.println(" ".repeat(ident) + "}");
@@ -233,7 +233,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitReferenceAssign(ReferenceAssignNode referenceAssignNode) {
+    public Object visitReferenceAssign(ReferenceAssign referenceAssignNode) {
         System.out.println(" ".repeat(ident) + "Reference Assign {");
         System.out.println(" ".repeat(ident + 1) + "Identifier " + referenceAssignNode.getIdentifier());
         referenceAssignNode.getExpression().accept(new PrintVisitor(ident + 1));
@@ -243,7 +243,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitIdentifierAssign(IdentifierAssignNode identifierAssignNode) {
+    public Object visitIdentifierAssign(IdentifierAssign identifierAssignNode) {
         System.out.println(" ".repeat(ident) + "Identifier Assign {");
         System.out.println(" ".repeat(ident + 1) + "Identifier " + identifierAssignNode.getIdentifier());
         identifierAssignNode.getExpression().accept(new PrintVisitor(ident + 1));
@@ -252,7 +252,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitExpressionStatement(ExpressionStatementNode expressionStatementNode) {
+    public Object visitExpressionStatement(ExpressionStatement expressionStatementNode) {
         System.out.println(" ".repeat(ident) + "Expression statement {");
         expressionStatementNode.getExpression().accept(new PrintVisitor(ident + 1));
         System.out.println(" ".repeat(ident) + "}");
@@ -260,7 +260,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitReferenceType(ReferenceTypeNode referenceTypeNode) {
+    public Object visitReferenceType(ReferenceType referenceTypeNode) {
         System.out.println(" ".repeat(ident) + "Reference Type {");
         referenceTypeNode.getReference().accept(new PrintVisitor(ident + 1));
         System.out.println(" ".repeat(ident + 1) + "Type " + referenceTypeNode.getType());
@@ -269,7 +269,7 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitReferenceTail(ReferenceTailNode referenceTail) {
+    public Object visitReferenceTail(ReferenceTail referenceTail) {
         System.out.println(" ".repeat(ident) + "Reference Tail {");
         System.out.println(" ".repeat(ident + 1) + "Identifier " + referenceTail.getIdentifier());
         referenceTail.getTail().accept(new PrintVisitor(ident + 1));
@@ -278,12 +278,12 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitEmptyTail(EmptyTailNode emptyTailNode) {
+    public Object visitEmptyTail(EmptyTail emptyTailNode) {
         return null;
     }
 
     @Override
-    public Object visitTupleList(TupleListNode tupleListNode) {
+    public Object visitTupleList(TupleList tupleListNode) {
         System.out.println(" ".repeat(ident) + "Tuple list {");
         int index = 0;
         for (var node : tupleListNode.getAllNodes()) {
@@ -303,14 +303,25 @@ public class PrintVisitor implements ASTVisitor<Object> {
     }
 
     @Override
-    public Object visitEmptyStatementList(EmptyStatementListNode emptyStatementListNode) {
+    public Object visitEmptyStatementList(EmptyStatementList emptyStatementListNode) {
         System.out.println(" ".repeat(ident) + "Empty Statement List");
         return null;
     }
 
     @Override
-    public Object visitEmptyFunctionArgs(EmptyFunctionArgsNode emptyFunctionArgsNode) {
+    public Object visitEmptyFunctionArgs(EmptyFunctionArgs emptyFunctionArgsNode) {
         System.out.println(" ".repeat(ident) + "Empty Function Arguments");
         return null;
     }
+
+    @Override
+    public Object visitIdentifierList(IdentifierList identifierList) {
+        System.out.println(" ".repeat(ident) + "Identifier List {");
+        for (var identifier : identifierList.getIdentifiers()) {
+            System.out.println(" ".repeat(ident + 1) + identifier);
+        }
+        System.out.println(" ".repeat(ident) + "}");
+        return null;
+    }
+
 }
