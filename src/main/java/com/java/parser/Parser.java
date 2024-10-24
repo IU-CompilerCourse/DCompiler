@@ -83,6 +83,7 @@ import java.text.MessageFormat;
 
 /* "Parser.java":54  */
 
+@SuppressWarnings("all")
 /**
  * A Bison parser, automatically generated from Parser.y.
  *
