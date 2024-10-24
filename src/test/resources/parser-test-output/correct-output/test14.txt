@@ -1,18 +1,14 @@
-ListNode {
- Multiple Declarations {
-  ListNode {
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
-    }
+Statements {
+ Declarations with values {
+  Declarations {
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
     Literal {
      Token{type: IntLiteral, lexeme: '5', literal: 5, line: 1}
     }
    }
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'b', literal: null, line: 1}
-    }
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'b', literal: null, line: 1}
     Literal {
      Token{type: IntLiteral, lexeme: '3', literal: 3, line: 1}
     }
@@ -20,26 +16,28 @@ ListNode {
   }
  }
  Print {
-  ListNode {
+  Expressions {
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 3}
+    Empty Tail {
+    }
    }
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'b', literal: null, line: 3}
+    Empty Tail {
+    }
    }
   }
  }
- If Statement {
+ If {
   Literal {
    Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 5}
   }
-  ListNode {
-   Multiple Declarations {
-    ListNode {
-     Declaration {
-      Token List {
-       Token{type: Identifier, lexeme: 'a', literal: null, line: 6}
-      }
+  Statements {
+   Declarations with values {
+    Declarations {
+     Identifier with value {
+      Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 6}
       Literal {
        Token{type: IntLiteral, lexeme: '10', literal: 10, line: 6}
       }
@@ -47,24 +45,32 @@ ListNode {
     }
    }
    Print {
-    ListNode {
+    Expressions {
      Reference Tail {
       Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 7}
+      Empty Tail {
+      }
      }
      Reference Tail {
       Identifier Token{type: Identifier, lexeme: 'b', literal: null, line: 7}
+      Empty Tail {
+      }
      }
     }
    }
   }
  }
  Print {
-  ListNode {
+  Expressions {
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 10}
+    Empty Tail {
+    }
    }
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'b', literal: null, line: 10}
+    Empty Tail {
+    }
    }
   }
  }

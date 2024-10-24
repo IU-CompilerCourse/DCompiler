@@ -1,22 +1,22 @@
-ListNode {
- Multiple Declarations {
-  ListNode {
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'factorial', literal: null, line: 2}
-    }
+Statements {
+ Declarations with values {
+  Declarations {
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'factorial', literal: null, line: 2}
     Function literal {
-     Token List {
+     Identifiers {
       Token{type: Identifier, lexeme: 'n', literal: null, line: 2}
      }
-     ListNode {
-      If Statement {
-       Binary Operation {
+     Statements {
+      If {
+       Logical Operation {
         Left {
-         Binary Operation {
+         Comparison Operation {
           Left {
            Reference Tail {
             Identifier Token{type: Identifier, lexeme: 'n', literal: null, line: 3}
+            Empty Tail {
+            }
            }
           }
           Token{type: Equal, lexeme: '=', literal: null, line: 3}
@@ -29,10 +29,12 @@ ListNode {
         }
         Token{type: Or, lexeme: 'or', literal: null, line: 3}
         Right {
-         Binary Operation {
+         Comparison Operation {
           Left {
            Reference Tail {
             Identifier Token{type: Identifier, lexeme: 'n', literal: null, line: 3}
+            Empty Tail {
+            }
            }
           }
           Token{type: Equal, lexeme: '=', literal: null, line: 3}
@@ -44,37 +46,43 @@ ListNode {
          }
         }
        }
-       ListNode {
+       Statements {
         Return {
          Literal {
           Token{type: IntLiteral, lexeme: '1', literal: 1, line: 4}
          }
         }
        }
-       ListNode {
+       Statements {
         Return {
          Binary Operation {
           Left {
            Reference Tail {
             Identifier Token{type: Identifier, lexeme: 'n', literal: null, line: 6}
+            Empty Tail {
+            }
            }
           }
           Token{type: Star, lexeme: '*', literal: null, line: 6}
           Right {
            Reference Tail {
             Identifier Token{type: Identifier, lexeme: 'factorial', literal: null, line: 6}
-            Function call {
-             ListNode {
-              Binary Operation {
-               Left {
-                Reference Tail {
-                 Identifier Token{type: Identifier, lexeme: 'n', literal: null, line: 6}
+            Tail {
+             Function call {
+              Expressions {
+               Binary Operation {
+                Left {
+                 Reference Tail {
+                  Identifier Token{type: Identifier, lexeme: 'n', literal: null, line: 6}
+                  Empty Tail {
+                  }
+                 }
                 }
-               }
-               Token{type: Minus, lexeme: '-', literal: null, line: 6}
-               Right {
-                Literal {
-                 Token{type: IntLiteral, lexeme: '1', literal: 1, line: 6}
+                Token{type: Minus, lexeme: '-', literal: null, line: 6}
+                Right {
+                 Literal {
+                  Token{type: IntLiteral, lexeme: '1', literal: 1, line: 6}
+                 }
                 }
                }
               }
@@ -91,18 +99,18 @@ ListNode {
    }
   }
  }
- Multiple Declarations {
-  ListNode {
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'factResult', literal: null, line: 10}
-    }
+ Declarations with values {
+  Declarations {
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'factResult', literal: null, line: 10}
     Reference Tail {
      Identifier Token{type: Identifier, lexeme: 'factorial', literal: null, line: 10}
-     Function call {
-      ListNode {
-       Literal {
-        Token{type: IntLiteral, lexeme: '5', literal: 5, line: 10}
+     Tail {
+      Function call {
+       Expressions {
+        Literal {
+         Token{type: IntLiteral, lexeme: '5', literal: 5, line: 10}
+        }
        }
       }
      }
@@ -111,9 +119,11 @@ ListNode {
   }
  }
  Print {
-  ListNode {
+  Expressions {
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'factResult', literal: null, line: 12}
+    Empty Tail {
+    }
    }
   }
  }

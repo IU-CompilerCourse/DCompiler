@@ -1,21 +1,21 @@
-ListNode {
- Multiple Declarations {
-  ListNode {
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
-    }
+Statements {
+ Declarations with values {
+  Declarations {
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
     Literal {
      Token{type: IntLiteral, lexeme: '10', literal: 10, line: 1}
     }
    }
   }
  }
- If Statement {
-  Binary Operation {
+ If {
+  Comparison Operation {
    Left {
     Reference Tail {
      Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 3}
+     Empty Tail {
+     }
     }
    }
    Token{type: Greater, lexeme: '>', literal: null, line: 3}
@@ -25,13 +25,11 @@ ListNode {
     }
    }
   }
-  ListNode {
-   Multiple Declarations {
-    ListNode {
-     Declaration {
-      Token List {
-       Token{type: Identifier, lexeme: 'a', literal: null, line: 4}
-      }
+  Statements {
+   Declarations with values {
+    Declarations {
+     Identifier with value {
+      Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 4}
       Literal {
        Token{type: IntLiteral, lexeme: '20', literal: 20, line: 4}
       }
@@ -39,26 +37,32 @@ ListNode {
     }
    }
    Print {
-    ListNode {
+    Expressions {
      Reference Tail {
       Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 5}
+      Empty Tail {
+      }
      }
     }
    }
   }
  }
  Print {
-  ListNode {
+  Expressions {
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 8}
+    Empty Tail {
+    }
    }
   }
  }
  While {
-  Binary Operation {
+  Comparison Operation {
    Left {
     Reference Tail {
      Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 10}
+     Empty Tail {
+     }
     }
    }
    Token{type: Less, lexeme: '<', literal: null, line: 10}
@@ -69,17 +73,17 @@ ListNode {
    }
   }
   Loop Body {
-   ListNode {
-    Multiple Declarations {
-     ListNode {
-      Declaration {
-       Token List {
-        Token{type: Identifier, lexeme: 'a', literal: null, line: 11}
-       }
+   Statements {
+    Declarations with values {
+     Declarations {
+      Identifier with value {
+       Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 11}
        Binary Operation {
         Left {
          Reference Tail {
           Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 11}
+          Empty Tail {
+          }
          }
         }
         Token{type: Plus, lexeme: '+', literal: null, line: 11}
@@ -93,9 +97,11 @@ ListNode {
      }
     }
     Print {
-     ListNode {
+     Expressions {
       Reference Tail {
        Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 12}
+       Empty Tail {
+       }
       }
      }
     }
@@ -103,9 +109,11 @@ ListNode {
   }
  }
  Print {
-  ListNode {
+  Expressions {
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 15}
+    Empty Tail {
+    }
    }
   }
  }

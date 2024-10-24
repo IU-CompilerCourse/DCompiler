@@ -1,6 +1,6 @@
-ListNode {
- Declaration {
-  Token List {
+Statements {
+ Declarations (identifiers only) {
+  Identifiers {
    Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
    Token{type: Identifier, lexeme: 'b', literal: null, line: 1}
    Token{type: Identifier, lexeme: 'c', literal: null, line: 1}
@@ -10,30 +10,42 @@ ListNode {
   Token{type: ReadInt, lexeme: 'readInt', literal: null, line: 3}
   Reference Tail {
    Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 3}
+   Empty Tail {
+   }
   }
  }
  Read {
   Token{type: ReadString, lexeme: 'readString', literal: null, line: 4}
   Reference Tail {
    Identifier Token{type: Identifier, lexeme: 'b', literal: null, line: 4}
+   Empty Tail {
+   }
   }
  }
  Read {
   Token{type: ReadReal, lexeme: 'readReal', literal: null, line: 5}
   Reference Tail {
    Identifier Token{type: Identifier, lexeme: 'c', literal: null, line: 5}
+   Empty Tail {
+   }
   }
  }
  Print {
-  ListNode {
+  Expressions {
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'a', literal: null, line: 7}
+    Empty Tail {
+    }
    }
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'b', literal: null, line: 7}
+    Empty Tail {
+    }
    }
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'c', literal: null, line: 7}
+    Empty Tail {
+    }
    }
   }
  }

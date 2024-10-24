@@ -1,25 +1,20 @@
-ListNode {
- Multiple Declarations {
-  ListNode {
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'n', literal: null, line: 2}
-    }
+Statements {
+ Declarations with values {
+  Declarations {
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'n', literal: null, line: 2}
     Literal {
      Token{type: IntLiteral, lexeme: '3', literal: 3, line: 2}
     }
    }
   }
  }
- Multiple Declarations {
-  ListNode {
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
-    }
-    ContainerNode {
-     Array
-     ListNode {
+ Declarations with values {
+  Declarations {
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+    Array {
+     Expressions {
       Literal {
        Token{type: IntLiteral, lexeme: '1', literal: 1, line: 3}
       }
@@ -34,56 +29,62 @@ ListNode {
    }
   }
  }
- Multiple Declarations {
-  ListNode {
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'sum', literal: null, line: 4}
-    }
+ Declarations with values {
+  Declarations {
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'sum', literal: null, line: 4}
     Literal {
      Token{type: DoubleLiteral, lexeme: '0.0', literal: 0.0, line: 4}
     }
    }
   }
  }
- Identifier Assign {
+ Assignment {
   Identifier Token{type: Identifier, lexeme: 'i', literal: null, line: 5}
   Literal {
    Token{type: IntLiteral, lexeme: '1', literal: 1, line: 5}
   }
  }
  While {
-  Binary Operation {
+  Comparison Operation {
    Left {
     Reference Tail {
      Identifier Token{type: Identifier, lexeme: 'i', literal: null, line: 6}
+     Empty Tail {
+     }
     }
    }
    Token{type: LessEqual, lexeme: '<=', literal: null, line: 6}
    Right {
     Reference Tail {
      Identifier Token{type: Identifier, lexeme: 'n', literal: null, line: 6}
+     Empty Tail {
+     }
     }
    }
   }
   Loop Body {
-   ListNode {
-    Identifier Assign {
+   Statements {
+    Assignment {
      Identifier Token{type: Identifier, lexeme: 'sum', literal: null, line: 7}
      Binary Operation {
       Left {
        Reference Tail {
         Identifier Token{type: Identifier, lexeme: 'sum', literal: null, line: 7}
+        Empty Tail {
+        }
        }
       }
       Token{type: Plus, lexeme: '+', literal: null, line: 7}
       Right {
        Reference Tail {
         Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 7}
-        ListNode {
+        Tail {
          Array Access {
           Reference Tail {
            Identifier Token{type: Identifier, lexeme: 'i', literal: null, line: 7}
+           Empty Tail {
+           }
           }
          }
         }
@@ -91,12 +92,14 @@ ListNode {
       }
      }
     }
-    Identifier Assign {
+    Assignment {
      Identifier Token{type: Identifier, lexeme: 'i', literal: null, line: 8}
      Binary Operation {
       Left {
        Reference Tail {
         Identifier Token{type: Identifier, lexeme: 'i', literal: null, line: 8}
+        Empty Tail {
+        }
        }
       }
       Token{type: Plus, lexeme: '+', literal: null, line: 8}
@@ -111,9 +114,11 @@ ListNode {
   }
  }
  Print {
-  ListNode {
+  Expressions {
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'sum', literal: null, line: 11}
+    Empty Tail {
+    }
    }
   }
  }

@@ -1,54 +1,54 @@
-ListNode {
- Multiple Declarations {
-  ListNode {
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
-    }
+Statements {
+ Declarations with values {
+  Declarations {
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
     Literal {
      Token{type: IntLiteral, lexeme: '10', literal: 10, line: 1}
     }
    }
   }
  }
- Multiple Declarations {
-  ListNode {
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'y', literal: null, line: 2}
-    }
+ Declarations with values {
+  Declarations {
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'y', literal: null, line: 2}
     Literal {
      Token{type: IntLiteral, lexeme: '20', literal: 20, line: 2}
     }
    }
   }
  }
- If Statement {
-  Binary Operation {
+ If {
+  Comparison Operation {
    Left {
     Reference Tail {
      Identifier Token{type: Identifier, lexeme: 'x', literal: null, line: 3}
+     Empty Tail {
+     }
     }
    }
    Token{type: Less, lexeme: '<', literal: null, line: 3}
    Right {
     Reference Tail {
      Identifier Token{type: Identifier, lexeme: 'y', literal: null, line: 3}
+     Empty Tail {
+     }
     }
    }
   }
-  ListNode {
+  Statements {
    Print {
-    ListNode {
+    Expressions {
      Literal {
       Token{type: StringLiteral, lexeme: '"x is less than y"', literal: x is less than y, line: 4}
      }
     }
    }
   }
-  ListNode {
+  Statements {
    Print {
-    ListNode {
+    Expressions {
      Literal {
       Token{type: StringLiteral, lexeme: '"x is not less than y"', literal: x is not less than y, line: 6}
      }

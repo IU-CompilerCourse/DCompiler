@@ -1,27 +1,22 @@
-ListNode {
- Multiple Declarations {
-  ListNode {
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'arr', literal: null, line: 1}
-    }
-    ContainerNode {
-     Array
-     ListNode {
+Statements {
+ Declarations with values {
+  Declarations {
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 1}
+    Array {
+     Expressions {
       Literal {
        Token{type: IntLiteral, lexeme: '1', literal: 1, line: 1}
       }
       Literal {
        Token{type: IntLiteral, lexeme: '2', literal: 2, line: 1}
       }
-      ContainerNode {
-       Array
-       ListNode {
+      Array {
+       Expressions {
         Literal {
          Token{type: StringLiteral, lexeme: '"apple"', literal: apple, line: 1}
         }
-        ContainerNode {
-         Tuple
+        Tuple {
          Tuple list {
           Named element {
            Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
@@ -42,10 +37,10 @@ ListNode {
   }
  }
  Print {
-  ListNode {
+  Expressions {
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
-    ListNode {
+    Tail {
      Array Access {
       Literal {
        Token{type: IntLiteral, lexeme: '1', literal: 1, line: 3}
@@ -55,7 +50,7 @@ ListNode {
    }
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
-    ListNode {
+    Tail {
      Array Access {
       Literal {
        Token{type: IntLiteral, lexeme: '2', literal: 2, line: 3}
@@ -65,7 +60,7 @@ ListNode {
    }
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
-    ListNode {
+    Tail {
      Array Access {
       Literal {
        Token{type: IntLiteral, lexeme: '3', literal: 3, line: 3}
@@ -80,7 +75,7 @@ ListNode {
    }
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
-    ListNode {
+    Tail {
      Array Access {
       Literal {
        Token{type: IntLiteral, lexeme: '3', literal: 3, line: 3}
@@ -100,11 +95,20 @@ ListNode {
        Token{type: IntLiteral, lexeme: '1', literal: 1, line: 3}
       }
      }
+     Function call {
+      Expressions {
+      }
+     }
+     Array Access {
+      Literal {
+       Token{type: IntLiteral, lexeme: '2', literal: 2, line: 3}
+      }
+     }
     }
    }
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
-    ListNode {
+    Tail {
      Array Access {
       Literal {
        Token{type: IntLiteral, lexeme: '4', literal: 4, line: 3}
@@ -117,13 +121,15 @@ ListNode {
  Reference Assign {
   Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 5}
   Function literal {
-   Token List {
+   Identifiers {
     Token{type: Identifier, lexeme: 'x', literal: null, line: 5}
    }
    Binary Operation {
     Left {
      Reference Tail {
       Identifier Token{type: Identifier, lexeme: 'x', literal: null, line: 5}
+      Empty Tail {
+      }
      }
     }
     Token{type: Plus, lexeme: '+', literal: null, line: 5}
@@ -134,7 +140,7 @@ ListNode {
     }
    }
   }
-  ListNode {
+  Tail {
    Array Access {
     Literal {
      Token{type: IntLiteral, lexeme: '1', literal: 1, line: 5}
@@ -147,7 +153,7 @@ ListNode {
   Literal {
    Token{type: StringLiteral, lexeme: '"string"', literal: string, line: 6}
   }
-  ListNode {
+  Tail {
    Array Access {
     Literal {
      Token{type: IntLiteral, lexeme: '2', literal: 2, line: 6}
@@ -160,7 +166,7 @@ ListNode {
   Literal {
    Token{type: BooleanLiteral, lexeme: 'false', literal: false, line: 7}
   }
-  ListNode {
+  Tail {
    Array Access {
     Literal {
      Token{type: IntLiteral, lexeme: '3', literal: 3, line: 7}
@@ -170,13 +176,13 @@ ListNode {
  }
  Reference Assign {
   Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 8}
-  ContainerNode {
-   Tuple
+  Tuple {
    Tuple list {
     Named element {
      Token{type: Identifier, lexeme: 'a', literal: null, line: 8}
-     ContainerNode {
-      Array
+     Array {
+      Expressions {
+      }
      }
     }
     Literal {
@@ -184,7 +190,7 @@ ListNode {
     }
    }
   }
-  ListNode {
+  Tail {
    Array Access {
     Literal {
      Token{type: IntLiteral, lexeme: '4', literal: 4, line: 8}
@@ -193,10 +199,10 @@ ListNode {
   }
  }
  Print {
-  ListNode {
+  Expressions {
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 10}
-    ListNode {
+    Tail {
      Array Access {
       Literal {
        Token{type: IntLiteral, lexeme: '1', literal: 1, line: 10}
@@ -206,7 +212,7 @@ ListNode {
    }
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 10}
-    ListNode {
+    Tail {
      Array Access {
       Literal {
        Token{type: IntLiteral, lexeme: '2', literal: 2, line: 10}
@@ -216,7 +222,7 @@ ListNode {
    }
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 10}
-    ListNode {
+    Tail {
      Array Access {
       Literal {
        Token{type: IntLiteral, lexeme: '3', literal: 3, line: 10}
@@ -226,7 +232,7 @@ ListNode {
    }
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 10}
-    ListNode {
+    Tail {
      Array Access {
       Literal {
        Token{type: IntLiteral, lexeme: '4', literal: 4, line: 10}
@@ -240,7 +246,7 @@ ListNode {
    }
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 10}
-    ListNode {
+    Tail {
      Array Access {
       Literal {
        Token{type: IntLiteral, lexeme: '4', literal: 4, line: 10}
