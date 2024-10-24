@@ -32,15 +32,15 @@ ListNode {
      Tuple
      Tuple list {
       Named element {
-       Token{type: Identifier, lexeme: 'b', literal: null, line: 2}
-       Literal {
-        Token{type: StringLiteral, lexeme: '"test"', literal: test, line: 2}
-       }
-      }
-      Named element {
        Token{type: Identifier, lexeme: 'a', literal: null, line: 2}
        Literal {
         Token{type: IntLiteral, lexeme: '5', literal: 5, line: 2}
+       }
+      }
+      Named element {
+       Token{type: Identifier, lexeme: 'b', literal: null, line: 2}
+       Literal {
+        Token{type: StringLiteral, lexeme: '"test"', literal: test, line: 2}
        }
       }
      }
