@@ -71,7 +71,9 @@ public interface ASTVisitor<R> {
 
     R visitIdentifiersCommaList(IdentifiersCommaList tokenListNode);
 
-    R visitIdentifiersWithValueDeclarationStatement(IdentifiersWithValueDeclarationStatement multipleDeclarationsStatement);
+    R visitIdentifiersWithValueDeclarationStatement(
+        IdentifiersWithValueDeclarationStatement multipleDeclarationsStatement
+    );
 
     R visitIfStatement(IfStatement ifStatementNode);
 
