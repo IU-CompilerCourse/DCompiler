@@ -35,6 +35,7 @@ import com.java.parser.ast.node.real.TupleAccess;
 import com.java.parser.ast.node.real.TupleList;
 import com.java.parser.ast.node.real.UnaryOp;
 import com.java.parser.ast.node.real.WhileStatement;
+import java.util.Comparator;
 
 @SuppressWarnings({"checkstyle:RegexpSinglelineJava", "checkstyle:MultipleStringLiterals"})
 public class PrintVisitor implements ASTVisitor<Object> {
@@ -372,7 +373,8 @@ public class PrintVisitor implements ASTVisitor<Object> {
         int index = 0;
         for (var node : tupleListNode.getAllExpressions()) {
             if (tupleListNode.getNamedExpressions().containsValue(node)) {
-                var entry = tupleListNode.getNamedExpressions().entrySet().stream().toList().get(index++);
+                var entry = tupleListNode.getNamedExpressions().entrySet().stream()
+                    .sorted(Comparator.comparing(o -> o.getKey().lexeme())).toList().get(index++); // temporarily
 
                 System.out.println(SEP.repeat(ident + 1) + "Named element {");
                 System.out.println(SEP.repeat(ident + 2) + entry.getKey());
