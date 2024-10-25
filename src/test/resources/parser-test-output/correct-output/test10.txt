@@ -1,21 +1,21 @@
-ListNode {
- Multiple Declarations {
-  ListNode {
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'num', literal: null, line: 1}
-    }
+Statements {
+ Declarations with values {
+  Declarations {
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'num', literal: null, line: 1}
     Literal {
      Token{type: DoubleLiteral, lexeme: '3.14', literal: 3.14, line: 1}
     }
    }
   }
  }
- If Statement {
-  Binary Operation {
+ If {
+  Comparison Operation {
    Left {
     Reference Tail {
      Identifier Token{type: Identifier, lexeme: 'num', literal: null, line: 3}
+     Empty Tail {
+     }
     }
    }
    Token{type: Greater, lexeme: '>', literal: null, line: 3}
@@ -25,11 +25,13 @@ ListNode {
     }
    }
   }
-  ListNode {
+  Statements {
    Print {
-    ListNode {
+    Expressions {
      Reference Tail {
       Identifier Token{type: Identifier, lexeme: 'num', literal: null, line: 4}
+      Empty Tail {
+      }
      }
      Literal {
       Token{type: StringLiteral, lexeme: '" is positive."', literal:  is positive., line: 4}
@@ -37,9 +39,9 @@ ListNode {
     }
    }
   }
-  ListNode {
+  Statements {
    Print {
-    ListNode {
+    Expressions {
      Literal {
       Token{type: StringLiteral, lexeme: '"is zero"', literal: is zero, line: 6}
      }

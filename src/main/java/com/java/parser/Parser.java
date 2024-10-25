@@ -38,42 +38,54 @@ package com.java.parser;
 
 import com.java.lexer.Token;
 import com.java.parser.ast.ASTree;
-import com.java.parser.ast.node.ASTListNode;
-import com.java.parser.ast.node.ASTLiteralNode;
-import com.java.parser.ast.node.ASTNode;
-import com.java.parser.ast.node.ArrayAccessNode;
-import com.java.parser.ast.node.BinaryOpNode;
-import com.java.parser.ast.node.EmptyTailNode;
-import com.java.parser.ast.node.ExpressionStatementNode;
-import com.java.parser.ast.node.ForNode;
-import com.java.parser.ast.node.FunctionCallNode;
-import com.java.parser.ast.node.FunctionLiteralNode;
-import com.java.parser.ast.node.IdentifierAssignNode;
-import com.java.parser.ast.node.IfNode;
-import com.java.parser.ast.node.LoopBodyNode;
-import com.java.parser.ast.node.MultipleDeclarationNode;
-import com.java.parser.ast.node.PrintNode;
-import com.java.parser.ast.node.ReadStatementNode;
-import com.java.parser.ast.node.ReferenceAssignNode;
-import com.java.parser.ast.node.ReferenceTailNode;
-import com.java.parser.ast.node.ReferenceTypeNode;
-import com.java.parser.ast.node.ReturnNode;
-import com.java.parser.ast.node.TokenListNode;
-import com.java.parser.ast.node.TokenLiteralNode;
-import com.java.parser.ast.node.TupleAccessNode;
-import com.java.parser.ast.node.TupleListNode;
-import com.java.parser.ast.node.UnaryOpNode;
-import com.java.parser.ast.node.VarDeclNode;
-import com.java.parser.ast.node.WhileNode;
-import com.java.parser.ast.node.type.ContainerType;
+import com.java.parser.ast.node.ephemeral.ExpressionEphemeral;
+import com.java.parser.ast.node.ephemeral.Factor;
+import com.java.parser.ast.node.ephemeral.Relation;
+import com.java.parser.ast.node.ephemeral.Statement;
+import com.java.parser.ast.node.ephemeral.Tail;
+import com.java.parser.ast.node.ephemeral.Term;
+import com.java.parser.ast.node.ephemeral.UnaryExpression;
+import com.java.parser.ast.node.real.AccessTailList;
+import com.java.parser.ast.node.real.Array;
+import com.java.parser.ast.node.real.ArrayAccess;
+import com.java.parser.ast.node.real.BinaryOp;
+import com.java.parser.ast.node.real.ComparisonOp;
+import com.java.parser.ast.node.real.DeclarationsCommaList;
+import com.java.parser.ast.node.real.EmptyTail;
+import com.java.parser.ast.node.real.ExpressionStatement;
+import com.java.parser.ast.node.real.ExpressionsCommaList;
+import com.java.parser.ast.node.real.ForStatement;
+import com.java.parser.ast.node.real.FunctionCall;
+import com.java.parser.ast.node.real.FunctionLiteral;
+import com.java.parser.ast.node.real.IdentifierAssign;
+import com.java.parser.ast.node.real.IdentifierWithValue;
+import com.java.parser.ast.node.real.IdentifiersCommaList;
+import com.java.parser.ast.node.real.IdentifiersWithValueDeclarationStatement;
+import com.java.parser.ast.node.real.IfStatement;
+import com.java.parser.ast.node.real.LogicalOp;
+import com.java.parser.ast.node.real.LoopBody;
+import com.java.parser.ast.node.real.OnlyIdentifiersDeclarationStatement;
+import com.java.parser.ast.node.real.PrintStatement;
+import com.java.parser.ast.node.real.ReadStatement;
+import com.java.parser.ast.node.real.ReferenceAssignStatement;
+import com.java.parser.ast.node.real.ReferenceTail;
+import com.java.parser.ast.node.real.ReferenceType;
+import com.java.parser.ast.node.real.ReturnStatement;
+import com.java.parser.ast.node.real.StatementsList;
+import com.java.parser.ast.node.real.TokenLiteral;
+import com.java.parser.ast.node.real.Tuple;
+import com.java.parser.ast.node.real.TupleAccess;
+import com.java.parser.ast.node.real.TupleList;
+import com.java.parser.ast.node.real.UnaryOp;
+import com.java.parser.ast.node.real.WhileStatement;
 import java.io.IOException;
 import java.text.MessageFormat;
 
-/* "Parser.java":53  */
+/* "Parser.java":54  */
 
 @SuppressWarnings("all")
 /**
- * A Bison parser, automatically generated from <tt>Parser.y</code>.
+ * A Bison parser, automatically generated from Parser.y.
  *
  * @author LALR (1) parser skeleton written by Paolo Bonzini.
  */
@@ -194,11 +206,10 @@ public final class Parser {
         S_consecutive_declarations(85), /* consecutive_declarations  */
         S_consecutive_access_tail(86), /* consecutive_access_tail  */
         S_expressions_comma(87),       /* expressions_comma  */
-        S_array_data(88),              /* array_data  */
-        S_tuple_data(89),              /* tuple_data  */
-        S_function_args(90),           /* function_args  */
-        S_parameters(91),              /* parameters  */
-        S_consecutive_statements(92);  /* consecutive_statements  */
+        S_tuple_data(88),              /* tuple_data  */
+        S_function_args(89),           /* function_args  */
+        S_identifiers_comma(90),       /* identifiers_comma  */
+        S_consecutive_statements(91);  /* consecutive_statements  */
 
         private final int yycode_;
 
@@ -295,10 +306,9 @@ public final class Parser {
             SymbolKind.S_consecutive_declarations,
             SymbolKind.S_consecutive_access_tail,
             SymbolKind.S_expressions_comma,
-            SymbolKind.S_array_data,
             SymbolKind.S_tuple_data,
             SymbolKind.S_function_args,
-            SymbolKind.S_parameters,
+            SymbolKind.S_identifiers_comma,
             SymbolKind.S_consecutive_statements
         };
 
@@ -334,8 +344,8 @@ public final class Parser {
                     "reference", "array", "tuple", "type_indicator", "read_type", "tail",
                     "access_tail", "array_tail", "tuple_tail", "func_tail",
                     "consecutive_declarations", "consecutive_access_tail",
-                    "expressions_comma", "array_data", "tuple_data", "function_args",
-                    "parameters", "consecutive_statements", null
+                    "expressions_comma", "tuple_data", "function_args", "identifiers_comma",
+                    "consecutive_statements", null
                 };
         }
 
@@ -347,7 +357,7 @@ public final class Parser {
 
     /**
      * Communication interface between the scanner and the Bison-generated
-     * parser <code>Parser</code>.
+     * parser Parser.
      */
     public interface Lexer {
         /* Token kinds.  */
@@ -581,13 +591,13 @@ public final class Parser {
 
     /**
      * Returned by a Bison action in order to stop the parsing process and
-     * return success (<code>true</code>).
+     * return success (true).
      */
     public static final int YYACCEPT = 0;
 
     /**
      * Returned by a Bison action in order to stop the parsing process and
-     * return failure (<code>false</code>).
+     * return failure (false).
      */
     public static final int YYABORT = 1;
 
@@ -646,583 +656,581 @@ public final class Parser {
         switch (yyn) {
             case 2: /* program: statements_list  */
                 if (yyn == 2)
-                    /* "Parser.y":57  */ {
-                    ast = new ASTree(((ASTListNode) (yystack.valueAt(0))));
+                    /* "Parser.y":81  */ {
+                    ast = new ASTree(((StatementsList) (yystack.valueAt(0))));
                 }
                 break;
 
             case 3: /* statements_list: %empty  */
                 if (yyn == 3)
-                    /* "Parser.y":63  */ {
-                    yyval = new ASTListNode();
+                    /* "Parser.y":87  */ {
+                    yyval = new StatementsList();
                 }
                 break;
 
             case 4: /* statements_list: statement statements_list  */
                 if (yyn == 4)
-                    /* "Parser.y":64  */ {
-                    yyval = new ASTListNode(((ASTNode) (yystack.valueAt(1))), ((ASTListNode) (yystack.valueAt(0))));
+                    /* "Parser.y":88  */ {
+                    yyval =
+                        new StatementsList(((Statement) (yystack.valueAt(1))), ((StatementsList) (yystack.valueAt(0))));
                 }
                 break;
 
             case 13: /* expression_statement: expression Semicolon  */
                 if (yyn == 13)
-                    /* "Parser.y":81  */ {
-                    yyval = new ExpressionStatementNode(((ASTNode) (yystack.valueAt(1))));
+                    /* "Parser.y":105  */ {
+                    yyval = new ExpressionStatement(((ExpressionEphemeral) (yystack.valueAt(1))));
                 }
                 break;
 
             case 14: /* assignment_statement: Identifier Assignment expression Semicolon  */
                 if (yyn == 14)
-                    /* "Parser.y":87  */ {
-                    yyval = new IdentifierAssignNode(((Token) (yystack.valueAt(3))), ((ASTNode) (yystack.valueAt(1))));
+                    /* "Parser.y":111  */ {
+                    yyval = new IdentifierAssign(
+                        ((Token) (yystack.valueAt(3))),
+                        ((ExpressionEphemeral) (yystack.valueAt(1)))
+                    );
                 }
                 break;
 
             case 15: /* assignment_statement: Identifier consecutive_access_tail Assignment expression Semicolon  */
                 if (yyn == 15)
-                    /* "Parser.y":90  */ {
-                    yyval = new ReferenceAssignNode(((Token) (yystack.valueAt(4))),
-                        ((ASTListNode) (yystack.valueAt(3))),
-                        ((ASTNode) (yystack.valueAt(1)))
+                    /* "Parser.y":114  */ {
+                    yyval = new ReferenceAssignStatement(((Token) (yystack.valueAt(4))),
+                        ((AccessTailList) (yystack.valueAt(3))),
+                        ((ExpressionEphemeral) (yystack.valueAt(1)))
                     );
                 }
                 break;
 
             case 16: /* var_declaration_statement: Var consecutive_declarations Semicolon  */
                 if (yyn == 16)
-                    /* "Parser.y":96  */ {
-                    yyval = new MultipleDeclarationNode(((ASTListNode) (yystack.valueAt(1))));
+                    /* "Parser.y":120  */ {
+                    yyval =
+                        new IdentifiersWithValueDeclarationStatement(((DeclarationsCommaList) (yystack.valueAt(1))));
                 }
                 break;
 
-            case 17: /* var_declaration_statement: Var parameters Semicolon  */
+            case 17: /* var_declaration_statement: Var identifiers_comma Semicolon  */
                 if (yyn == 17)
-                    /* "Parser.y":99  */ {
-                    yyval = new VarDeclNode(((TokenListNode) (yystack.valueAt(1))), null);
+                    /* "Parser.y":123  */ {
+                    yyval = new OnlyIdentifiersDeclarationStatement(((IdentifiersCommaList) (yystack.valueAt(1))));
                 }
                 break;
 
             case 18: /* if_statement: If expression Then consecutive_statements Else consecutive_statements End  */
                 if (yyn == 18)
-                    /* "Parser.y":105  */ {
-                    yyval = new IfNode(((ASTNode) (yystack.valueAt(5))),
-                        ((ASTListNode) (yystack.valueAt(3))),
-                        ((ASTListNode) (yystack.valueAt(1)))
+                    /* "Parser.y":129  */ {
+                    yyval = new IfStatement(((ExpressionEphemeral) (yystack.valueAt(5))),
+                        ((StatementsList) (yystack.valueAt(3))),
+                        ((StatementsList) (yystack.valueAt(1)))
                     );
                 }
                 break;
 
             case 19: /* if_statement: If expression Then consecutive_statements End  */
                 if (yyn == 19)
-                    /* "Parser.y":108  */ {
-                    yyval = new IfNode(((ASTNode) (yystack.valueAt(3))), ((ASTListNode) (yystack.valueAt(1))), null);
+                    /* "Parser.y":132  */ {
+                    yyval = new IfStatement(((ExpressionEphemeral) (yystack.valueAt(3))),
+                        ((StatementsList) (yystack.valueAt(1))),
+                        null
+                    );
                 }
                 break;
 
             case 20: /* loop_statement: While expression loop_body  */
                 if (yyn == 20)
-                    /* "Parser.y":114  */ {
-                    yyval = new WhileNode(((ASTNode) (yystack.valueAt(1))), ((ASTNode) (yystack.valueAt(0))));
+                    /* "Parser.y":138  */ {
+                    yyval = new WhileStatement(
+                        ((ExpressionEphemeral) (yystack.valueAt(1))),
+                        ((LoopBody) (yystack.valueAt(0)))
+                    );
                 }
                 break;
 
             case 21: /* loop_statement: For Identifier In Identifier loop_body  */
                 if (yyn == 21)
-                    /* "Parser.y":117  */ {
-                    yyval = new ForNode(((Token) (yystack.valueAt(3))),
+                    /* "Parser.y":141  */ {
+                    yyval = new ForStatement(((Token) (yystack.valueAt(3))),
                         ((Token) (yystack.valueAt(1))),
-                        ((ASTNode) (yystack.valueAt(0)))
+                        ((LoopBody) (yystack.valueAt(0)))
                     );
                 }
                 break;
 
             case 22: /* loop_body: Loop consecutive_statements End  */
                 if (yyn == 22)
-                    /* "Parser.y":123  */ {
-                    yyval = new LoopBodyNode(((ASTListNode) (yystack.valueAt(1))));
+                    /* "Parser.y":147  */ {
+                    yyval = new LoopBody(((StatementsList) (yystack.valueAt(1))));
                 }
                 break;
 
             case 23: /* return_statement: Return expression Semicolon  */
                 if (yyn == 23)
-                    /* "Parser.y":128  */ {
-                    yyval = new ReturnNode(((ASTNode) (yystack.valueAt(1))));
+                    /* "Parser.y":152  */ {
+                    yyval = new ReturnStatement(((ExpressionEphemeral) (yystack.valueAt(1))));
                 }
                 break;
 
             case 24: /* return_statement: Return Semicolon  */
                 if (yyn == 24)
-                    /* "Parser.y":131  */ {
-                    yyval = new ReturnNode(null);
+                    /* "Parser.y":155  */ {
+                    yyval = new ReturnStatement(null);
                 }
                 break;
 
             case 25: /* read_statement: read_type expression Semicolon  */
                 if (yyn == 25)
-                    /* "Parser.y":137  */ {
-                    yyval = new ReadStatementNode(((Token) (yystack.valueAt(2))), ((ASTNode) (yystack.valueAt(1))));
+                    /* "Parser.y":161  */ {
+                    yyval =
+                        new ReadStatement(((Token) (yystack.valueAt(2))), ((ExpressionEphemeral) (yystack.valueAt(1))));
                 }
                 break;
 
             case 26: /* print_statement: Print expressions_comma Semicolon  */
                 if (yyn == 26)
-                    /* "Parser.y":143  */ {
-                    yyval = new PrintNode(((ASTListNode) (yystack.valueAt(1))));
+                    /* "Parser.y":167  */ {
+                    yyval = new PrintStatement(((ExpressionsCommaList) (yystack.valueAt(1))));
                 }
                 break;
 
             case 28: /* expression: relation Or relation  */
                 if (yyn == 28)
-                    /* "Parser.y":152  */ {
-                    yyval = new BinaryOpNode(((Token) (yystack.valueAt(1))),
-                        ((ASTNode) (yystack.valueAt(2))),
-                        ((ASTNode) (yystack.valueAt(0)))
+                    /* "Parser.y":176  */ {
+                    yyval = new LogicalOp(((Token) (yystack.valueAt(1))),
+                        ((Relation) (yystack.valueAt(2))),
+                        ((Relation) (yystack.valueAt(0)))
                     );
                 }
                 break;
 
             case 29: /* expression: relation And relation  */
                 if (yyn == 29)
-                    /* "Parser.y":155  */ {
-                    yyval = new BinaryOpNode(((Token) (yystack.valueAt(1))),
-                        ((ASTNode) (yystack.valueAt(2))),
-                        ((ASTNode) (yystack.valueAt(0)))
+                    /* "Parser.y":179  */ {
+                    yyval = new LogicalOp(((Token) (yystack.valueAt(1))),
+                        ((Relation) (yystack.valueAt(2))),
+                        ((Relation) (yystack.valueAt(0)))
                     );
                 }
                 break;
 
             case 30: /* expression: relation Xor relation  */
                 if (yyn == 30)
-                    /* "Parser.y":158  */ {
-                    yyval = new BinaryOpNode(((Token) (yystack.valueAt(1))),
-                        ((ASTNode) (yystack.valueAt(2))),
-                        ((ASTNode) (yystack.valueAt(0)))
+                    /* "Parser.y":182  */ {
+                    yyval = new LogicalOp(((Token) (yystack.valueAt(1))),
+                        ((Relation) (yystack.valueAt(2))),
+                        ((Relation) (yystack.valueAt(0)))
                     );
                 }
                 break;
 
             case 33: /* relation: factor Less factor  */
                 if (yyn == 33)
-                    /* "Parser.y":166  */ {
-                    yyval = new BinaryOpNode(((Token) (yystack.valueAt(1))),
-                        ((ASTNode) (yystack.valueAt(2))),
-                        ((ASTNode) (yystack.valueAt(0)))
+                    /* "Parser.y":190  */ {
+                    yyval = new ComparisonOp(((Token) (yystack.valueAt(1))),
+                        ((Factor) (yystack.valueAt(2))),
+                        ((Factor) (yystack.valueAt(0)))
                     );
                 }
                 break;
 
             case 34: /* relation: factor LessEqual factor  */
                 if (yyn == 34)
-                    /* "Parser.y":169  */ {
-                    yyval = new BinaryOpNode(((Token) (yystack.valueAt(1))),
-                        ((ASTNode) (yystack.valueAt(2))),
-                        ((ASTNode) (yystack.valueAt(0)))
+                    /* "Parser.y":193  */ {
+                    yyval = new ComparisonOp(((Token) (yystack.valueAt(1))),
+                        ((Factor) (yystack.valueAt(2))),
+                        ((Factor) (yystack.valueAt(0)))
                     );
                 }
                 break;
 
             case 35: /* relation: factor Greater factor  */
                 if (yyn == 35)
-                    /* "Parser.y":172  */ {
-                    yyval = new BinaryOpNode(((Token) (yystack.valueAt(1))),
-                        ((ASTNode) (yystack.valueAt(2))),
-                        ((ASTNode) (yystack.valueAt(0)))
+                    /* "Parser.y":196  */ {
+                    yyval = new ComparisonOp(((Token) (yystack.valueAt(1))),
+                        ((Factor) (yystack.valueAt(2))),
+                        ((Factor) (yystack.valueAt(0)))
                     );
                 }
                 break;
 
             case 36: /* relation: factor GreaterEqual factor  */
                 if (yyn == 36)
-                    /* "Parser.y":175  */ {
-                    yyval = new BinaryOpNode(((Token) (yystack.valueAt(1))),
-                        ((ASTNode) (yystack.valueAt(2))),
-                        ((ASTNode) (yystack.valueAt(0)))
+                    /* "Parser.y":199  */ {
+                    yyval = new ComparisonOp(((Token) (yystack.valueAt(1))),
+                        ((Factor) (yystack.valueAt(2))),
+                        ((Factor) (yystack.valueAt(0)))
                     );
                 }
                 break;
 
             case 37: /* relation: factor Equal factor  */
                 if (yyn == 37)
-                    /* "Parser.y":178  */ {
-                    yyval = new BinaryOpNode(((Token) (yystack.valueAt(1))),
-                        ((ASTNode) (yystack.valueAt(2))),
-                        ((ASTNode) (yystack.valueAt(0)))
+                    /* "Parser.y":202  */ {
+                    yyval = new ComparisonOp(((Token) (yystack.valueAt(1))),
+                        ((Factor) (yystack.valueAt(2))),
+                        ((Factor) (yystack.valueAt(0)))
                     );
                 }
                 break;
 
             case 38: /* relation: factor NotEqual factor  */
                 if (yyn == 38)
-                    /* "Parser.y":181  */ {
-                    yyval = new BinaryOpNode(((Token) (yystack.valueAt(1))),
-                        ((ASTNode) (yystack.valueAt(2))),
-                        ((ASTNode) (yystack.valueAt(0)))
+                    /* "Parser.y":205  */ {
+                    yyval = new ComparisonOp(((Token) (yystack.valueAt(1))),
+                        ((Factor) (yystack.valueAt(2))),
+                        ((Factor) (yystack.valueAt(0)))
                     );
                 }
                 break;
 
             case 41: /* second_order_algebraic: second_order_algebraic Plus first_order_algebraic  */
                 if (yyn == 41)
-                    /* "Parser.y":192  */ {
-                    yyval = new BinaryOpNode(((Token) (yystack.valueAt(1))),
-                        ((ASTNode) (yystack.valueAt(2))),
-                        ((ASTNode) (yystack.valueAt(0)))
+                    /* "Parser.y":216  */ {
+                    yyval = new BinaryOp(((Token) (yystack.valueAt(1))),
+                        ((Factor) (yystack.valueAt(2))),
+                        ((Factor) (yystack.valueAt(0)))
                     );
                 }
                 break;
 
             case 42: /* second_order_algebraic: second_order_algebraic Minus first_order_algebraic  */
                 if (yyn == 42)
-                    /* "Parser.y":195  */ {
-                    yyval = new BinaryOpNode(((Token) (yystack.valueAt(1))),
-                        ((ASTNode) (yystack.valueAt(2))),
-                        ((ASTNode) (yystack.valueAt(0)))
+                    /* "Parser.y":219  */ {
+                    yyval = new BinaryOp(((Token) (yystack.valueAt(1))),
+                        ((Factor) (yystack.valueAt(2))),
+                        ((Factor) (yystack.valueAt(0)))
                     );
                 }
                 break;
 
             case 44: /* first_order_algebraic: first_order_algebraic Star unary_expression  */
                 if (yyn == 44)
-                    /* "Parser.y":202  */ {
-                    yyval = new BinaryOpNode(((Token) (yystack.valueAt(1))),
-                        ((ASTNode) (yystack.valueAt(2))),
-                        ((ASTNode) (yystack.valueAt(0)))
+                    /* "Parser.y":226  */ {
+                    yyval = new BinaryOp(((Token) (yystack.valueAt(1))),
+                        ((Factor) (yystack.valueAt(2))),
+                        ((UnaryExpression) (yystack.valueAt(0)))
                     );
                 }
                 break;
 
             case 45: /* first_order_algebraic: first_order_algebraic Slash unary_expression  */
                 if (yyn == 45)
-                    /* "Parser.y":205  */ {
-                    yyval = new BinaryOpNode(((Token) (yystack.valueAt(1))),
-                        ((ASTNode) (yystack.valueAt(2))),
-                        ((ASTNode) (yystack.valueAt(0)))
+                    /* "Parser.y":229  */ {
+                    yyval = new BinaryOp(((Token) (yystack.valueAt(1))),
+                        ((Factor) (yystack.valueAt(2))),
+                        ((UnaryExpression) (yystack.valueAt(0)))
                     );
                 }
                 break;
 
             case 47: /* unary_expression: OpenParen second_order_algebraic CloseParen  */
                 if (yyn == 47)
-                    /* "Parser.y":212  */ {
-                    yyval = new UnaryOpNode(null, ((ASTNode) (yystack.valueAt(1))));
+                    /* "Parser.y":236  */ {
+                    yyval = new UnaryOp(null, ((Factor) (yystack.valueAt(1))));
                 }
                 break;
 
             case 48: /* unary_expression: Plus term  */
                 if (yyn == 48)
-                    /* "Parser.y":215  */ {
-                    yyval = new UnaryOpNode(((Token) (yystack.valueAt(1))), ((ASTNode) (yystack.valueAt(0))));
+                    /* "Parser.y":239  */ {
+                    yyval = new UnaryOp(((Token) (yystack.valueAt(1))), ((Term) (yystack.valueAt(0))));
                 }
                 break;
 
             case 49: /* unary_expression: Minus term  */
                 if (yyn == 49)
-                    /* "Parser.y":218  */ {
-                    yyval = new UnaryOpNode(((Token) (yystack.valueAt(1))), ((ASTNode) (yystack.valueAt(0))));
+                    /* "Parser.y":242  */ {
+                    yyval = new UnaryOp(((Token) (yystack.valueAt(1))), ((Term) (yystack.valueAt(0))));
                 }
                 break;
 
             case 50: /* unary_expression: Not term  */
                 if (yyn == 50)
-                    /* "Parser.y":221  */ {
-                    yyval = new UnaryOpNode(((Token) (yystack.valueAt(1))), ((ASTNode) (yystack.valueAt(0))));
+                    /* "Parser.y":245  */ {
+                    yyval = new UnaryOp(((Token) (yystack.valueAt(1))), ((Term) (yystack.valueAt(0))));
                 }
                 break;
 
-            case 51: /* function_literal: Func OpenParen parameters CloseParen Is consecutive_statements End  */
+            case 51: /* function_literal: Func OpenParen identifiers_comma CloseParen Is consecutive_statements End  */
                 if (yyn == 51)
-                    /* "Parser.y":227  */ {
-                    yyval = new FunctionLiteralNode(
-                        ((TokenListNode) (yystack.valueAt(4))),
-                        ((ASTListNode) (yystack.valueAt(1)))
+                    /* "Parser.y":251  */ {
+                    yyval = new FunctionLiteral(
+                        ((IdentifiersCommaList) (yystack.valueAt(4))),
+                        ((StatementsList) (yystack.valueAt(1)))
                     );
                 }
                 break;
 
-            case 52: /* function_literal: Func OpenParen parameters CloseParen Arrow expression  */
+            case 52: /* function_literal: Func OpenParen identifiers_comma CloseParen Arrow expression  */
                 if (yyn == 52)
-                    /* "Parser.y":230  */ {
-                    yyval = new FunctionLiteralNode(
-                        ((TokenListNode) (yystack.valueAt(3))),
-                        ((ASTNode) (yystack.valueAt(0)))
+                    /* "Parser.y":254  */ {
+                    yyval = new FunctionLiteral(
+                        ((IdentifiersCommaList) (yystack.valueAt(3))),
+                        ((ExpressionEphemeral) (yystack.valueAt(0)))
                     );
                 }
                 break;
 
             case 53: /* term: IntLiteral  */
                 if (yyn == 53)
-                    /* "Parser.y":238  */ {
-                    yyval = new TokenLiteralNode(((Token) (yystack.valueAt(0))));
+                    /* "Parser.y":262  */ {
+                    yyval = new TokenLiteral(((Token) (yystack.valueAt(0))));
                 }
                 break;
 
             case 54: /* term: DoubleLiteral  */
                 if (yyn == 54)
-                    /* "Parser.y":241  */ {
-                    yyval = new TokenLiteralNode(((Token) (yystack.valueAt(0))));
+                    /* "Parser.y":265  */ {
+                    yyval = new TokenLiteral(((Token) (yystack.valueAt(0))));
                 }
                 break;
 
             case 55: /* term: StringLiteral  */
                 if (yyn == 55)
-                    /* "Parser.y":244  */ {
-                    yyval = new TokenLiteralNode(((Token) (yystack.valueAt(0))));
+                    /* "Parser.y":268  */ {
+                    yyval = new TokenLiteral(((Token) (yystack.valueAt(0))));
                 }
                 break;
 
             case 56: /* term: BooleanLiteral  */
                 if (yyn == 56)
-                    /* "Parser.y":247  */ {
-                    yyval = new TokenLiteralNode(((Token) (yystack.valueAt(0))));
+                    /* "Parser.y":271  */ {
+                    yyval = new TokenLiteral(((Token) (yystack.valueAt(0))));
                 }
                 break;
 
             case 58: /* term: reference Is type_indicator  */
                 if (yyn == 58)
-                    /* "Parser.y":251  */ {
-                    yyval = new ReferenceTypeNode(((ASTNode) (yystack.valueAt(2))), ((Token) (yystack.valueAt(0))));
+                    /* "Parser.y":275  */ {
+                    yyval = new ReferenceType(((ReferenceTail) (yystack.valueAt(2))), ((Token) (yystack.valueAt(0))));
                 }
                 break;
 
             case 61: /* reference: Identifier tail  */
                 if (yyn == 61)
-                    /* "Parser.y":259  */ {
-                    yyval = new ReferenceTailNode(((Token) (yystack.valueAt(1))), ((ASTNode) (yystack.valueAt(0))));
+                    /* "Parser.y":283  */ {
+                    yyval = new ReferenceTail(((Token) (yystack.valueAt(1))), ((Tail) (yystack.valueAt(0))));
                 }
                 break;
 
             case 62: /* reference: Identifier consecutive_access_tail  */
                 if (yyn == 62)
-                    /* "Parser.y":262  */ {
-                    yyval = new ReferenceTailNode(((Token) (yystack.valueAt(1))), ((ASTListNode) (yystack.valueAt(0))));
+                    /* "Parser.y":286  */ {
+                    yyval = new ReferenceTail(((Token) (yystack.valueAt(1))), ((AccessTailList) (yystack.valueAt(0))));
                 }
                 break;
 
             case 63: /* array: OpenBracket CloseBracket  */
                 if (yyn == 63)
-                    /* "Parser.y":268  */ {
-                    yyval = new ASTLiteralNode(ContainerType.Array, null);
+                    /* "Parser.y":292  */ {
+                    yyval = new Array(new ExpressionsCommaList());
                 }
                 break;
 
-            case 64: /* array: OpenBracket array_data CloseBracket  */
+            case 64: /* array: OpenBracket expressions_comma CloseBracket  */
                 if (yyn == 64)
-                    /* "Parser.y":271  */ {
-                    yyval = new ASTLiteralNode(ContainerType.Array, ((ASTListNode) (yystack.valueAt(1))));
+                    /* "Parser.y":295  */ {
+                    yyval = new Array(((ExpressionsCommaList) (yystack.valueAt(1))));
                 }
                 break;
 
             case 65: /* tuple: OpenBrace CloseBrace  */
                 if (yyn == 65)
-                    /* "Parser.y":277  */ {
-                    yyval = new ASTLiteralNode(ContainerType.Tuple, null);
+                    /* "Parser.y":301  */ {
+                    yyval = new Tuple(new TupleList());
                 }
                 break;
 
             case 66: /* tuple: OpenBrace tuple_data CloseBrace  */
                 if (yyn == 66)
-                    /* "Parser.y":280  */ {
-                    yyval = new ASTLiteralNode(ContainerType.Tuple, ((TupleListNode) (yystack.valueAt(1))));
+                    /* "Parser.y":304  */ {
+                    yyval = new Tuple(((TupleList) (yystack.valueAt(1))));
                 }
                 break;
 
             case 76: /* tail: %empty  */
                 if (yyn == 76)
-                    /* "Parser.y":305  */ {
-                    yyval = new EmptyTailNode();
+                    /* "Parser.y":329  */ {
+                    yyval = new EmptyTail();
                 }
                 break;
 
             case 80: /* array_tail: OpenBracket expression CloseBracket  */
                 if (yyn == 80)
-                    /* "Parser.y":317  */ {
-                    yyval = new ArrayAccessNode(((ASTNode) (yystack.valueAt(1))));
+                    /* "Parser.y":341  */ {
+                    yyval = new ArrayAccess(((ExpressionEphemeral) (yystack.valueAt(1))));
                 }
                 break;
 
             case 81: /* tuple_tail: Dot IntLiteral  */
                 if (yyn == 81)
-                    /* "Parser.y":323  */ {
-                    yyval = new TupleAccessNode(((Token) (yystack.valueAt(0))), null);
+                    /* "Parser.y":347  */ {
+                    yyval = new TupleAccess(((Token) (yystack.valueAt(0))), null);
                 }
                 break;
 
             case 82: /* tuple_tail: Dot Identifier  */
                 if (yyn == 82)
-                    /* "Parser.y":326  */ {
-                    yyval = new TupleAccessNode(null, ((Token) (yystack.valueAt(0))));
+                    /* "Parser.y":350  */ {
+                    yyval = new TupleAccess(null, ((Token) (yystack.valueAt(0))));
                 }
                 break;
 
             case 83: /* func_tail: OpenParen function_args CloseParen  */
                 if (yyn == 83)
-                    /* "Parser.y":332  */ {
-                    yyval = new FunctionCallNode(((ASTListNode) (yystack.valueAt(1))));
+                    /* "Parser.y":356  */ {
+                    yyval = new FunctionCall(((ExpressionsCommaList) (yystack.valueAt(1))));
                 }
                 break;
 
             case 84: /* consecutive_declarations: Identifier Assignment expression  */
                 if (yyn == 84)
-                    /* "Parser.y":340  */ {
-                    yyval = new ASTListNode(new VarDeclNode(
+                    /* "Parser.y":364  */ {
+                    yyval = new DeclarationsCommaList(new IdentifierWithValue(
                         ((Token) (yystack.valueAt(2))),
-                        ((ASTNode) (yystack.valueAt(0)))
+                        ((ExpressionEphemeral) (yystack.valueAt(0)))
                     ));
                 }
                 break;
 
             case 85: /* consecutive_declarations: consecutive_declarations Comma Identifier Assignment expression  */
                 if (yyn == 85)
-                    /* "Parser.y":343  */ {
-                    ((ASTListNode) (yystack.valueAt(4))).append(new VarDeclNode(
-                        ((Token) (yystack.valueAt(2))),
-                        ((ASTNode) (yystack.valueAt(0)))
-                    ));
+                    /* "Parser.y":367  */ {
+                    ((DeclarationsCommaList) (yystack.valueAt(4))).append(new IdentifierWithValue(((Token) (yystack.valueAt(
+                        2))), ((ExpressionEphemeral) (yystack.valueAt(0)))));
                     yyval = yystack.valueAt(4);
                 }
                 break;
 
             case 86: /* consecutive_access_tail: access_tail  */
                 if (yyn == 86)
-                    /* "Parser.y":350  */ {
-                    yyval = new ASTListNode(((ASTNode) (yystack.valueAt(0))));
+                    /* "Parser.y":374  */ {
+                    yyval = new AccessTailList(((Tail) (yystack.valueAt(0))));
                 }
                 break;
 
             case 87: /* consecutive_access_tail: consecutive_access_tail access_tail  */
                 if (yyn == 87)
-                    /* "Parser.y":353  */ {
-                    ((ASTListNode) (yystack.valueAt(1))).append(((ASTNode) (yystack.valueAt(0))));
+                    /* "Parser.y":377  */ {
+                    ((AccessTailList) (yystack.valueAt(1))).append(((Tail) (yystack.valueAt(0))));
                     yyval = yystack.valueAt(1);
                 }
                 break;
 
             case 88: /* expressions_comma: expression  */
                 if (yyn == 88)
-                    /* "Parser.y":360  */ {
-                    yyval = new ASTListNode(((ASTNode) (yystack.valueAt(0))));
+                    /* "Parser.y":384  */ {
+                    yyval = new ExpressionsCommaList(((ExpressionEphemeral) (yystack.valueAt(0))));
                 }
                 break;
 
             case 89: /* expressions_comma: expressions_comma Comma expression  */
                 if (yyn == 89)
-                    /* "Parser.y":363  */ {
-                    ((ASTListNode) (yystack.valueAt(2))).append(((ASTNode) (yystack.valueAt(0))));
+                    /* "Parser.y":387  */ {
+                    ((ExpressionsCommaList) (yystack.valueAt(2))).append(((ExpressionEphemeral) (yystack.valueAt(0))));
                     yyval = yystack.valueAt(2);
                 }
                 break;
 
-            case 90: /* array_data: expression  */
+            case 90: /* tuple_data: expression  */
                 if (yyn == 90)
-                    /* "Parser.y":370  */ {
-                    yyval = new ASTListNode(((ASTNode) (yystack.valueAt(0))));
+                    /* "Parser.y":394  */ {
+                    yyval = new TupleList(((ExpressionEphemeral) (yystack.valueAt(0))));
                 }
                 break;
 
-            case 91: /* array_data: array_data Comma expression  */
+            case 91: /* tuple_data: Identifier Assignment expression  */
                 if (yyn == 91)
-                    /* "Parser.y":373  */ {
-                    ((ASTListNode) (yystack.valueAt(2))).append(((ASTNode) (yystack.valueAt(0))));
-                    yyval = yystack.valueAt(2);
-                }
-                break;
-
-            case 92: /* tuple_data: expression  */
-                if (yyn == 92)
-                    /* "Parser.y":380  */ {
-                    yyval = new TupleListNode(((ASTNode) (yystack.valueAt(0))));
-                }
-                break;
-
-            case 93: /* tuple_data: Identifier Assignment expression  */
-                if (yyn == 93)
-                    /* "Parser.y":383  */ {
-                    yyval = new TupleListNode(((Token) (yystack.valueAt(2))), ((ASTNode) (yystack.valueAt(0))));
-                }
-                break;
-
-            case 94: /* tuple_data: tuple_data Comma expression  */
-                if (yyn == 94)
-                    /* "Parser.y":386  */ {
-                    ((TupleListNode) (yystack.valueAt(2))).append(((ASTNode) (yystack.valueAt(0))));
-                    yyval = yystack.valueAt(2);
-                }
-                break;
-
-            case 95: /* tuple_data: tuple_data Comma Identifier Assignment expression  */
-                if (yyn == 95)
-                    /* "Parser.y":390  */ {
-                    ((TupleListNode) (yystack.valueAt(4))).append(
+                    /* "Parser.y":397  */ {
+                    yyval = new TupleList(new IdentifierAssign(
                         ((Token) (yystack.valueAt(2))),
-                        ((ASTNode) (yystack.valueAt(0)))
-                    );
+                        ((ExpressionEphemeral) (yystack.valueAt(0)))
+                    ));
+                }
+                break;
+
+            case 92: /* tuple_data: tuple_data Comma expression  */
+                if (yyn == 92)
+                    /* "Parser.y":400  */ {
+                    ((TupleList) (yystack.valueAt(2))).append(((ExpressionEphemeral) (yystack.valueAt(0))));
+                    yyval = yystack.valueAt(2);
+                }
+                break;
+
+            case 93: /* tuple_data: tuple_data Comma Identifier Assignment expression  */
+                if (yyn == 93)
+                    /* "Parser.y":404  */ {
+                    ((TupleList) (yystack.valueAt(4))).append(new IdentifierAssign(
+                        ((Token) (yystack.valueAt(2))),
+                        ((ExpressionEphemeral) (yystack.valueAt(0)))
+                    ));
                     yyval = yystack.valueAt(4);
                 }
                 break;
 
-            case 96: /* function_args: %empty  */
+            case 94: /* function_args: %empty  */
+                if (yyn == 94)
+                    /* "Parser.y":411  */ {
+                    yyval = new ExpressionsCommaList();
+                }
+                break;
+
+            case 95: /* function_args: expression  */
+                if (yyn == 95)
+                    /* "Parser.y":414  */ {
+                    yyval = new ExpressionsCommaList(((ExpressionEphemeral) (yystack.valueAt(0))));
+                }
+                break;
+
+            case 96: /* function_args: function_args Comma expression  */
                 if (yyn == 96)
-                    /* "Parser.y":397  */ {
-                    yyval = new ASTListNode();
+                    /* "Parser.y":417  */ {
+                    ((ExpressionsCommaList) (yystack.valueAt(2))).append(((ExpressionEphemeral) (yystack.valueAt(0))));
+                    yyval = yystack.valueAt(2);
                 }
                 break;
 
-            case 97: /* function_args: expression  */
+            case 97: /* identifiers_comma: %empty  */
                 if (yyn == 97)
-                    /* "Parser.y":400  */ {
-                    yyval = new ASTListNode(((ASTNode) (yystack.valueAt(0))));
+                    /* "Parser.y":424  */ {
+                    yyval = new IdentifiersCommaList();
                 }
                 break;
 
-            case 98: /* function_args: function_args Comma expression  */
+            case 98: /* identifiers_comma: Identifier  */
                 if (yyn == 98)
-                    /* "Parser.y":403  */ {
-                    ((ASTListNode) (yystack.valueAt(2))).append(((ASTNode) (yystack.valueAt(0))));
-                    yyval = yystack.valueAt(2);
+                    /* "Parser.y":427  */ {
+                    yyval = new IdentifiersCommaList(((Token) (yystack.valueAt(0))));
                 }
                 break;
 
-            case 99: /* parameters: %empty  */
+            case 99: /* identifiers_comma: identifiers_comma Comma Identifier  */
                 if (yyn == 99)
-                    /* "Parser.y":410  */ {
-                    yyval = new TokenListNode();
-                }
-                break;
-
-            case 100: /* parameters: Identifier  */
-                if (yyn == 100)
-                    /* "Parser.y":413  */ {
-                    yyval = new TokenListNode(((Token) (yystack.valueAt(0))));
-                }
-                break;
-
-            case 101: /* parameters: parameters Comma Identifier  */
-                if (yyn == 101)
-                    /* "Parser.y":416  */ {
-                    ((TokenListNode) (yystack.valueAt(2))).append(((Token) (yystack.valueAt(0))));
+                    /* "Parser.y":430  */ {
+                    ((IdentifiersCommaList) (yystack.valueAt(2))).append(((Token) (yystack.valueAt(0))));
                     yyval = yystack.valueAt(2);
                 }
                 break;
 
-            case 102: /* consecutive_statements: statement  */
-                if (yyn == 102)
-                    /* "Parser.y":423  */ {
-                    yyval = new ASTListNode(((ASTNode) (yystack.valueAt(0))));
+            case 100: /* consecutive_statements: statement  */
+                if (yyn == 100)
+                    /* "Parser.y":437  */ {
+                    yyval = new StatementsList(((Statement) (yystack.valueAt(0))));
                 }
                 break;
 
-            case 103: /* consecutive_statements: consecutive_statements statement  */
-                if (yyn == 103)
-                    /* "Parser.y":426  */ {
-                    ((ASTListNode) (yystack.valueAt(1))).append(((ASTNode) (yystack.valueAt(0))));
+            case 101: /* consecutive_statements: consecutive_statements statement  */
+                if (yyn == 101)
+                    /* "Parser.y":440  */ {
+                    ((StatementsList) (yystack.valueAt(1))).append(((Statement) (yystack.valueAt(0))));
                     yyval = yystack.valueAt(1);
                 }
                 break;
 
 
 
-            /* "Parser.java":1296  */
+            /* "Parser.java":1276  */
 
             default:
                 break;
@@ -1240,7 +1248,7 @@ public final class Parser {
      * Parse input from the scanner that was specified at object construction
      * time.  Return whether the end of the input was reached successfully.
      *
-     * @return <code>true</code> if the parsing succeeds.  Note that this does not
+     * @return true if the parsing succeeds.  Note that this does not
      *     imply that there were no syntax errors.
      */
     public boolean parse() throws java.io.IOException {
@@ -1625,7 +1633,7 @@ public final class Parser {
         return yyvalue == yytable_ninf_;
     }
 
-    private static final short yypact_ninf_ = -112;
+    private static final short yypact_ninf_ = -110;
     private static final short yytable_ninf_ = -1;
 
     /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
@@ -1635,25 +1643,24 @@ public final class Parser {
     private static short[] yypact_init() {
         return new short[]
             {
-                225, -20, -20, -20, -1, 339, 9, 263, 3, -112,
-                -112, -112, 301, 271, 301, 301, 10, -112, -112, -112,
-                -112, 17, 104, -112, 225, -112, -112, -112, -112, -112,
-                -112, -112, -112, 51, 7, 163, 6, 33, -112, -112,
-                -112, 64, -112, -112, 301, 81, -112, -112, -112, 40,
-                -4, -112, 93, -112, 22, -112, -112, 13, 88, 30,
-                65, -112, 130, -112, 87, 77, 105, 66, 18, 301,
-                301, 301, -112, -112, -112, -112, -112, 116, -112, -112,
-                -112, 339, 339, 339, 339, 339, 339, 339, 339, 339,
-                339, 339, 339, 339, 181, 102, -6, -112, 73, -112,
-                301, 309, -112, 301, -112, 301, 123, -112, 128, -112,
-                301, -112, -112, 225, 225, -112, 138, -112, -112, 152,
-                -112, 76, 176, 301, -112, -112, -112, -112, -112, -112,
-                -112, -112, -112, -112, 33, 33, -112, -112, -112, -112,
-                -112, -112, -112, -112, -112, -112, -3, -112, 121, -112,
-                -112, -112, 164, -112, -112, -112, 39, 92, 105, -112,
-                301, -112, -112, 170, 225, 301, 301, 301, 225, -112,
-                -112, -112, -112, -112, -112, 149, -112, -112, -112, 187,
-                -112, -112
+                222, -20, -20, -20, -1, 336, 9, 260, -17, -110,
+                -110, -110, 298, 268, 298, 298, 17, -110, -110, -110,
+                -110, 16, 53, -110, 222, -110, -110, -110, -110, -110,
+                -110, -110, -110, 58, 2, 162, 41, 74, -110, -110,
+                -110, 81, -110, -110, 298, 39, -110, -110, -110, 51,
+                -4, -110, 84, -110, 23, -110, -110, -7, 99, 71,
+                87, 93, -110, 90, 64, 100, 76, -31, 298, 298,
+                298, -110, -110, -110, -110, -110, 92, -110, -110, -110,
+                336, 336, 336, 336, 336, 336, 336, 336, 336, 336,
+                336, 336, 336, 178, 129, 39, -110, -9, -110, 298,
+                306, -110, 298, -110, 298, 108, -110, 110, -110, -110,
+                -110, 222, 222, -110, 118, -110, -110, 151, -110, 75,
+                144, 298, -110, -110, -110, -110, -110, -110, -110, -110,
+                -110, -110, 74, 74, -110, -110, -110, -110, -110, -110,
+                -110, -110, -110, -110, 26, -110, 131, -110, -110, -110,
+                161, -110, -110, 38, 91, 100, -110, 298, -110, -110,
+                166, 222, 298, 298, 298, 222, -110, -110, -110, -110,
+                -110, -110, 146, -110, -110, -110, 184, -110, -110
             };
     }
 
@@ -1665,25 +1672,24 @@ public final class Parser {
     private static byte[] yydefact_init() {
         return new byte[]
             {
-                3, 0, 0, 0, 0, 0, 0, 0, 99, 73,
+                3, 0, 0, 0, 0, 0, 0, 0, 97, 73,
                 74, 75, 0, 0, 0, 0, 0, 55, 54, 53,
                 56, 76, 0, 2, 3, 5, 6, 7, 8, 9,
                 10, 11, 12, 0, 27, 32, 39, 40, 43, 31,
-                46, 57, 59, 60, 0, 76, 48, 49, 50, 99,
-                0, 65, 76, 92, 0, 63, 90, 0, 100, 0,
-                0, 88, 0, 24, 0, 0, 0, 0, 0, 0,
-                96, 0, 61, 86, 78, 79, 77, 62, 1, 4,
-                13, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 62, 100, 0, 47,
-                0, 0, 66, 0, 64, 0, 0, 16, 0, 17,
-                0, 26, 23, 0, 0, 20, 0, 81, 82, 0,
-                97, 0, 0, 0, 87, 29, 28, 30, 33, 34,
-                35, 36, 37, 38, 41, 42, 45, 44, 67, 68,
-                69, 70, 71, 72, 58, 25, 0, 93, 76, 94,
-                91, 84, 0, 101, 89, 102, 0, 0, 0, 14,
-                0, 83, 80, 0, 0, 0, 0, 0, 0, 19,
-                103, 22, 21, 98, 15, 0, 52, 95, 85, 0,
-                51, 18
+                46, 57, 59, 60, 0, 76, 48, 49, 50, 97,
+                0, 65, 76, 90, 0, 63, 88, 0, 98, 0,
+                0, 0, 24, 0, 0, 0, 0, 0, 0, 94,
+                0, 61, 86, 77, 78, 79, 62, 1, 4, 13,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 62, 98, 0, 47, 0,
+                0, 66, 0, 64, 0, 0, 16, 0, 17, 26,
+                23, 0, 0, 20, 0, 81, 82, 0, 95, 0,
+                0, 0, 87, 29, 28, 30, 33, 34, 35, 36,
+                37, 38, 41, 42, 45, 44, 67, 68, 69, 70,
+                71, 72, 58, 25, 0, 91, 76, 92, 89, 84,
+                0, 99, 100, 0, 0, 0, 14, 0, 83, 80,
+                0, 0, 0, 0, 0, 0, 19, 101, 22, 21,
+                96, 15, 0, 52, 93, 85, 0, 51, 18
             };
     }
 
@@ -1693,10 +1699,10 @@ public final class Parser {
     private static short[] yypgoto_init() {
         return new short[]
             {
-                -112, -112, 188, 0, -112, -112, -112, -112, -112, 53,
-                -112, -112, -112, -5, 34, 158, 208, 82, 71, -112,
-                145, -112, -112, -112, -112, -112, -112, -73, -112, -112,
-                -112, -112, 193, -112, -112, -112, -112, 168, -111
+                -110, -110, 165, 0, -110, -110, -110, -110, -110, 55,
+                -110, -110, -110, -5, 65, 156, 209, 44, 47, -110,
+                206, -110, -110, -110, -110, -110, -110, -72, -110, -110,
+                -110, -110, 190, 204, -110, -110, 169, -109
             };
     }
 
@@ -1706,10 +1712,10 @@ public final class Parser {
     private static short[] yydefgoto_init() {
         return new short[]
             {
-                0, 22, 23, 155, 25, 26, 27, 28, 29, 115,
+                0, 22, 23, 152, 25, 26, 27, 28, 29, 113,
                 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
-                40, 41, 42, 43, 144, 44, 72, 73, 74, 75,
-                76, 59, 96, 62, 57, 54, 121, 60, 156
+                40, 41, 42, 43, 142, 44, 71, 72, 73, 74,
+                75, 59, 95, 57, 54, 119, 60, 153
             };
     }
 
@@ -1721,46 +1727,45 @@ public final class Parser {
     private static short[] yytable_init() {
         return new short[]
             {
-                24, 53, 56, 157, 124, 90, 91, 61, 64, 65,
-                66, 6, 68, 7, 164, 90, 91, 165, 1, 2,
-                81, 82, 83, 124, 24, 3, 99, 71, 49, 17,
-                18, 19, 20, 45, 103, 68, 69, 4, 5, 95,
-                6, 51, 7, 101, 92, 93, 70, 104, 1, 2,
-                71, 106, 107, 175, 102, 3, 58, 179, 17, 18,
-                19, 20, 52, 67, 119, 120, 122, 4, 5, 117,
-                6, 118, 7, 80, 8, 9, 10, 11, 12, 13,
-                14, 94, 168, 169, 15, 16, 108, 109, 17, 18,
-                19, 20, 21, 97, 108, 147, 149, 160, 150, 68,
-                151, 1, 2, 146, 78, 154, 161, 105, 3, 112,
-                70, 68, 100, 116, 71, 125, 126, 127, 163, 113,
-                4, 5, 70, 6, 145, 7, 71, 8, 9, 10,
-                11, 12, 13, 14, 68, 123, 171, 15, 16, 68,
-                166, 17, 18, 19, 20, 21, 46, 47, 48, 71,
-                70, 110, 111, 114, 71, 173, 170, 170, 1, 2,
-                176, 177, 178, 136, 137, 3, 84, 85, 86, 87,
-                88, 89, 134, 135, 159, 170, 152, 4, 5, 170,
-                6, 153, 7, 167, 8, 9, 10, 11, 12, 13,
-                14, 158, 174, 180, 15, 16, 1, 2, 17, 18,
-                19, 20, 21, 3, 138, 139, 140, 141, 142, 143,
-                162, 172, 79, 50, 77, 4, 5, 98, 6, 0,
-                7, 0, 8, 9, 10, 11, 12, 13, 14, 0,
-                0, 181, 15, 16, 1, 2, 17, 18, 19, 20,
-                21, 3, 128, 129, 130, 131, 132, 133, 0, 0,
-                0, 0, 0, 4, 5, 0, 6, 0, 7, 0,
-                8, 9, 10, 11, 12, 13, 14, 0, 0, 0,
-                15, 16, 1, 2, 17, 18, 19, 20, 21, 3,
-                1, 2, 0, 0, 0, 0, 0, 3, 0, 0,
-                0, 4, 5, 63, 6, 0, 7, 55, 0, 4,
-                5, 0, 6, 0, 7, 0, 0, 0, 0, 0,
-                1, 2, 17, 18, 19, 20, 45, 3, 1, 2,
-                17, 18, 19, 20, 45, 3, 0, 0, 0, 4,
-                5, 0, 6, 0, 7, 0, 0, 4, 5, 0,
-                6, 0, 7, 0, 0, 0, 0, 0, 1, 2,
-                17, 18, 19, 20, 45, 3, 0, 0, 17, 18,
-                19, 20, 148, 0, 0, 0, 0, 0, 5, 0,
-                6, 0, 7, 0, 0, 0, 0, 0, 0, 0,
-                0, 0, 0, 0, 0, 0, 0, 0, 17, 18,
-                19, 20, 45
+                24, 53, 56, 154, 122, 89, 90, 56, 63, 64,
+                65, 6, 107, 7, 102, 80, 81, 82, 1, 2,
+                115, 144, 116, 122, 24, 3, 98, 103, 49, 17,
+                18, 19, 20, 45, 67, 68, 58, 4, 5, 94,
+                6, 51, 7, 161, 100, 69, 162, 1, 2, 70,
+                89, 90, 172, 77, 3, 101, 176, 67, 17, 18,
+                19, 20, 52, 117, 118, 120, 4, 5, 69, 6,
+                66, 7, 70, 8, 9, 10, 11, 12, 13, 14,
+                79, 165, 166, 15, 16, 91, 92, 17, 18, 19,
+                20, 21, 105, 106, 145, 147, 157, 148, 93, 149,
+                1, 2, 67, 99, 96, 158, 111, 3, 107, 108,
+                67, 121, 110, 69, 102, 109, 160, 70, 104, 4,
+                5, 69, 6, 114, 7, 70, 8, 9, 10, 11,
+                12, 13, 14, 132, 133, 168, 15, 16, 134, 135,
+                17, 18, 19, 20, 21, 123, 124, 125, 112, 67,
+                163, 143, 170, 167, 167, 1, 2, 173, 174, 175,
+                69, 150, 3, 151, 70, 83, 84, 85, 86, 87,
+                88, 155, 167, 156, 4, 5, 167, 6, 159, 7,
+                164, 8, 9, 10, 11, 12, 13, 14, 171, 78,
+                177, 15, 16, 1, 2, 17, 18, 19, 20, 21,
+                3, 136, 137, 138, 139, 140, 141, 46, 47, 48,
+                169, 76, 4, 5, 50, 6, 61, 7, 97, 8,
+                9, 10, 11, 12, 13, 14, 0, 0, 178, 15,
+                16, 1, 2, 17, 18, 19, 20, 21, 3, 126,
+                127, 128, 129, 130, 131, 0, 0, 0, 0, 0,
+                4, 5, 0, 6, 0, 7, 0, 8, 9, 10,
+                11, 12, 13, 14, 0, 0, 0, 15, 16, 1,
+                2, 17, 18, 19, 20, 21, 3, 1, 2, 0,
+                0, 0, 0, 0, 3, 0, 0, 0, 4, 5,
+                62, 6, 0, 7, 55, 0, 4, 5, 0, 6,
+                0, 7, 0, 0, 0, 0, 0, 1, 2, 17,
+                18, 19, 20, 45, 3, 1, 2, 17, 18, 19,
+                20, 45, 3, 0, 0, 0, 4, 5, 0, 6,
+                0, 7, 0, 0, 4, 5, 0, 6, 0, 7,
+                0, 0, 0, 0, 0, 1, 2, 17, 18, 19,
+                20, 45, 3, 0, 0, 17, 18, 19, 20, 146,
+                0, 0, 0, 0, 0, 5, 0, 6, 0, 7,
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0, 0, 0, 0, 0, 17, 18, 19, 20, 45
             };
     }
 
@@ -1769,46 +1774,45 @@ public final class Parser {
     private static short[] yycheck_init() {
         return new short[]
             {
-                0, 6, 7, 114, 77, 9, 10, 12, 13, 14,
-                15, 31, 18, 33, 17, 9, 10, 20, 9, 10,
-                13, 14, 15, 96, 24, 16, 30, 33, 29, 49,
-                50, 51, 52, 53, 21, 18, 19, 28, 29, 44,
-                31, 32, 33, 21, 11, 12, 29, 34, 9, 10,
-                33, 21, 22, 164, 32, 16, 53, 168, 49, 50,
-                51, 52, 53, 53, 69, 70, 71, 28, 29, 51,
-                31, 53, 33, 22, 35, 36, 37, 38, 39, 40,
-                41, 17, 43, 44, 45, 46, 21, 22, 49, 50,
-                51, 52, 53, 53, 21, 100, 101, 21, 103, 18,
-                105, 9, 10, 30, 0, 110, 30, 19, 16, 22,
-                29, 18, 19, 47, 33, 81, 82, 83, 123, 42,
-                28, 29, 29, 31, 22, 33, 33, 35, 36, 37,
-                38, 39, 40, 41, 18, 19, 44, 45, 46, 18,
-                19, 49, 50, 51, 52, 53, 1, 2, 3, 33,
-                29, 21, 22, 48, 33, 160, 156, 157, 9, 10,
-                165, 166, 167, 92, 93, 16, 3, 4, 5, 6,
-                7, 8, 90, 91, 22, 175, 53, 28, 29, 179,
-                31, 53, 33, 19, 35, 36, 37, 38, 39, 40,
-                41, 53, 22, 44, 45, 46, 9, 10, 49, 50,
-                51, 52, 53, 16, 23, 24, 25, 26, 27, 28,
-                34, 158, 24, 5, 21, 28, 29, 49, 31, -1,
-                33, -1, 35, 36, 37, 38, 39, 40, 41, -1,
-                -1, 44, 45, 46, 9, 10, 49, 50, 51, 52,
-                53, 16, 84, 85, 86, 87, 88, 89, -1, -1,
-                -1, -1, -1, 28, 29, -1, 31, -1, 33, -1,
-                35, 36, 37, 38, 39, 40, 41, -1, -1, -1,
-                45, 46, 9, 10, 49, 50, 51, 52, 53, 16,
-                9, 10, -1, -1, -1, -1, -1, 16, -1, -1,
-                -1, 28, 29, 22, 31, -1, 33, 34, -1, 28,
-                29, -1, 31, -1, 33, -1, -1, -1, -1, -1,
-                9, 10, 49, 50, 51, 52, 53, 16, 9, 10,
-                49, 50, 51, 52, 53, 16, -1, -1, -1, 28,
-                29, -1, 31, -1, 33, -1, -1, 28, 29, -1,
-                31, -1, 33, -1, -1, -1, -1, -1, 9, 10,
-                49, 50, 51, 52, 53, 16, -1, -1, 49, 50,
-                51, 52, 53, -1, -1, -1, -1, -1, 29, -1,
-                31, -1, 33, -1, -1, -1, -1, -1, -1, -1,
-                -1, -1, -1, -1, -1, -1, -1, -1, 49, 50,
-                51, 52, 53
+                0, 6, 7, 112, 76, 9, 10, 12, 13, 14,
+                15, 31, 21, 33, 21, 13, 14, 15, 9, 10,
+                51, 30, 53, 95, 24, 16, 30, 34, 29, 49,
+                50, 51, 52, 53, 18, 19, 53, 28, 29, 44,
+                31, 32, 33, 17, 21, 29, 20, 9, 10, 33,
+                9, 10, 161, 0, 16, 32, 165, 18, 49, 50,
+                51, 52, 53, 68, 69, 70, 28, 29, 29, 31,
+                53, 33, 33, 35, 36, 37, 38, 39, 40, 41,
+                22, 43, 44, 45, 46, 11, 12, 49, 50, 51,
+                52, 53, 21, 22, 99, 100, 21, 102, 17, 104,
+                9, 10, 18, 19, 53, 30, 42, 16, 21, 22,
+                18, 19, 22, 29, 21, 22, 121, 33, 19, 28,
+                29, 29, 31, 47, 33, 33, 35, 36, 37, 38,
+                39, 40, 41, 89, 90, 44, 45, 46, 91, 92,
+                49, 50, 51, 52, 53, 80, 81, 82, 48, 18,
+                19, 22, 157, 153, 154, 9, 10, 162, 163, 164,
+                29, 53, 16, 53, 33, 3, 4, 5, 6, 7,
+                8, 53, 172, 22, 28, 29, 176, 31, 34, 33,
+                19, 35, 36, 37, 38, 39, 40, 41, 22, 24,
+                44, 45, 46, 9, 10, 49, 50, 51, 52, 53,
+                16, 23, 24, 25, 26, 27, 28, 1, 2, 3,
+                155, 21, 28, 29, 5, 31, 12, 33, 49, 35,
+                36, 37, 38, 39, 40, 41, -1, -1, 44, 45,
+                46, 9, 10, 49, 50, 51, 52, 53, 16, 83,
+                84, 85, 86, 87, 88, -1, -1, -1, -1, -1,
+                28, 29, -1, 31, -1, 33, -1, 35, 36, 37,
+                38, 39, 40, 41, -1, -1, -1, 45, 46, 9,
+                10, 49, 50, 51, 52, 53, 16, 9, 10, -1,
+                -1, -1, -1, -1, 16, -1, -1, -1, 28, 29,
+                22, 31, -1, 33, 34, -1, 28, 29, -1, 31,
+                -1, 33, -1, -1, -1, -1, -1, 9, 10, 49,
+                50, 51, 52, 53, 16, 9, 10, 49, 50, 51,
+                52, 53, 16, -1, -1, -1, 28, 29, -1, 31,
+                -1, 33, -1, -1, 28, 29, -1, 31, -1, 33,
+                -1, -1, -1, -1, -1, 9, 10, 49, 50, 51,
+                52, 53, 16, -1, -1, 49, 50, 51, 52, 53,
+                -1, -1, -1, -1, -1, 29, -1, 31, -1, 33,
+                -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+                -1, -1, -1, -1, -1, 49, 50, 51, 52, 53
             };
     }
 
@@ -1824,20 +1828,19 @@ public final class Parser {
                 52, 53, 55, 56, 57, 58, 59, 60, 61, 62,
                 64, 65, 66, 67, 68, 69, 70, 71, 72, 73,
                 74, 75, 76, 77, 79, 53, 74, 74, 74, 29,
-                70, 32, 53, 67, 89, 34, 67, 88, 53, 85,
-                91, 67, 87, 22, 67, 67, 67, 53, 18, 19,
-                29, 33, 80, 81, 82, 83, 84, 86, 0, 56,
-                22, 13, 14, 15, 3, 4, 5, 6, 7, 8,
-                9, 10, 11, 12, 17, 67, 86, 53, 91, 30,
-                19, 21, 32, 21, 34, 19, 21, 22, 21, 22,
-                21, 22, 22, 42, 48, 63, 47, 51, 53, 67,
-                67, 90, 67, 19, 81, 68, 68, 68, 69, 69,
-                69, 69, 69, 69, 71, 71, 72, 72, 23, 24,
-                25, 26, 27, 28, 78, 22, 30, 67, 53, 67,
-                67, 67, 53, 53, 67, 57, 92, 92, 53, 22,
-                21, 30, 34, 67, 17, 20, 19, 19, 43, 44,
-                57, 44, 63, 67, 22, 92, 67, 67, 67, 92,
-                44, 44
+                70, 32, 53, 67, 88, 34, 67, 87, 53, 85,
+                90, 87, 22, 67, 67, 67, 53, 18, 19, 29,
+                33, 80, 81, 82, 83, 84, 86, 0, 56, 22,
+                13, 14, 15, 3, 4, 5, 6, 7, 8, 9,
+                10, 11, 12, 17, 67, 86, 53, 90, 30, 19,
+                21, 32, 21, 34, 19, 21, 22, 21, 22, 22,
+                22, 42, 48, 63, 47, 51, 53, 67, 67, 89,
+                67, 19, 81, 68, 68, 68, 69, 69, 69, 69,
+                69, 69, 71, 71, 72, 72, 23, 24, 25, 26,
+                27, 28, 78, 22, 30, 67, 53, 67, 67, 67,
+                53, 53, 57, 91, 91, 53, 22, 21, 30, 34,
+                67, 17, 20, 19, 19, 43, 44, 57, 44, 63,
+                67, 22, 91, 67, 67, 67, 91, 44, 44
             };
     }
 
@@ -1854,10 +1857,10 @@ public final class Parser {
                 70, 70, 70, 71, 71, 71, 72, 72, 72, 72,
                 72, 73, 73, 74, 74, 74, 74, 74, 74, 74,
                 74, 75, 75, 76, 76, 77, 77, 78, 78, 78,
-                78, 78, 78, 79, 79, 79, 80, 80, 81, 81,
+                78, 78, 78, 79, 79, 79, 80, 81, 81, 81,
                 82, 83, 83, 84, 85, 85, 86, 86, 87, 87,
-                88, 88, 89, 89, 89, 89, 90, 90, 90, 91,
-                91, 91, 92, 92
+                88, 88, 88, 88, 89, 89, 89, 90, 90, 90,
+                91, 91
             };
     }
 
@@ -1876,8 +1879,8 @@ public final class Parser {
                 1, 2, 2, 2, 3, 2, 3, 1, 1, 1,
                 1, 1, 1, 1, 1, 1, 0, 1, 1, 1,
                 3, 2, 2, 3, 3, 5, 1, 2, 1, 3,
-                1, 3, 1, 3, 3, 5, 0, 1, 3, 0,
-                1, 3, 1, 2
+                1, 3, 3, 5, 0, 1, 3, 0, 1, 3,
+                1, 2
             };
     }
 
@@ -1934,13 +1937,13 @@ public final class Parser {
             };
     }
 
-    private static final int YYLAST_ = 392;
+    private static final int YYLAST_ = 389;
     private static final int YYEMPTY_ = -2;
-    private static final int YYFINAL_ = 78;
+    private static final int YYFINAL_ = 77;
     private static final int YYNTOKENS_ = 54;
 
     /* Unqualified %code blocks.  */
-    /* "Parser.y":9  */
+    /* "Parser.y":10  */
 
     private static ASTree ast;
 
@@ -1951,8 +1954,8 @@ public final class Parser {
         return ast;
     }
 
-    /* "Parser.java":2036  */
+    /* "Parser.java":2012  */
 
 }
-/* "Parser.y":432  */
+/* "Parser.y":446  */
 

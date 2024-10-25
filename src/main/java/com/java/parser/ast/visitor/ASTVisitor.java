@@ -1,85 +1,111 @@
 package com.java.parser.ast.visitor;
 
 import com.java.parser.ast.ASTree;
-import com.java.parser.ast.node.ASTListNode;
-import com.java.parser.ast.node.ASTLiteralNode;
-import com.java.parser.ast.node.ArrayAccessNode;
-import com.java.parser.ast.node.BinaryOpNode;
-import com.java.parser.ast.node.EmptyTailNode;
-import com.java.parser.ast.node.ExpressionStatementNode;
-import com.java.parser.ast.node.ForNode;
-import com.java.parser.ast.node.FunctionCallNode;
-import com.java.parser.ast.node.FunctionLiteralNode;
-import com.java.parser.ast.node.IdentifierAssignNode;
-import com.java.parser.ast.node.IfNode;
-import com.java.parser.ast.node.LoopBodyNode;
-import com.java.parser.ast.node.MultipleDeclarationNode;
-import com.java.parser.ast.node.PrintNode;
-import com.java.parser.ast.node.ReadStatementNode;
-import com.java.parser.ast.node.ReferenceAssignNode;
-import com.java.parser.ast.node.ReferenceTailNode;
-import com.java.parser.ast.node.ReferenceTypeNode;
-import com.java.parser.ast.node.ReturnNode;
-import com.java.parser.ast.node.TokenListNode;
-import com.java.parser.ast.node.TokenLiteralNode;
-import com.java.parser.ast.node.TupleAccessNode;
-import com.java.parser.ast.node.TupleListNode;
-import com.java.parser.ast.node.UnaryOpNode;
-import com.java.parser.ast.node.VarDeclNode;
-import com.java.parser.ast.node.WhileNode;
+import com.java.parser.ast.node.real.AccessTailList;
+import com.java.parser.ast.node.real.Array;
+import com.java.parser.ast.node.real.ArrayAccess;
+import com.java.parser.ast.node.real.BinaryOp;
+import com.java.parser.ast.node.real.ComparisonOp;
+import com.java.parser.ast.node.real.DeclarationsCommaList;
+import com.java.parser.ast.node.real.EmptyTail;
+import com.java.parser.ast.node.real.Expression;
+import com.java.parser.ast.node.real.ExpressionStatement;
+import com.java.parser.ast.node.real.ExpressionsCommaList;
+import com.java.parser.ast.node.real.ForStatement;
+import com.java.parser.ast.node.real.FunctionCall;
+import com.java.parser.ast.node.real.FunctionLiteral;
+import com.java.parser.ast.node.real.IdentifierAssign;
+import com.java.parser.ast.node.real.IdentifierWithValue;
+import com.java.parser.ast.node.real.IdentifiersCommaList;
+import com.java.parser.ast.node.real.IdentifiersWithValueDeclarationStatement;
+import com.java.parser.ast.node.real.IfStatement;
+import com.java.parser.ast.node.real.LogicalOp;
+import com.java.parser.ast.node.real.LoopBody;
+import com.java.parser.ast.node.real.OnlyIdentifiersDeclarationStatement;
+import com.java.parser.ast.node.real.PrintStatement;
+import com.java.parser.ast.node.real.ReadStatement;
+import com.java.parser.ast.node.real.ReferenceAssignStatement;
+import com.java.parser.ast.node.real.ReferenceTail;
+import com.java.parser.ast.node.real.ReferenceType;
+import com.java.parser.ast.node.real.ReturnStatement;
+import com.java.parser.ast.node.real.StatementsList;
+import com.java.parser.ast.node.real.TokenLiteral;
+import com.java.parser.ast.node.real.Tuple;
+import com.java.parser.ast.node.real.TupleAccess;
+import com.java.parser.ast.node.real.TupleList;
+import com.java.parser.ast.node.real.UnaryOp;
+import com.java.parser.ast.node.real.WhileStatement;
 
 public interface ASTVisitor<R> {
     R visitAST(ASTree ast);
 
-    R visitVarDeclNode(VarDeclNode node);
+    R visitAccessTailList(AccessTailList accessTailList);
 
-    R visitLiteralNode(TokenLiteralNode node);
+    R visitArrayAccess(ArrayAccess arrayAccessNode);
 
-    R visitBinaryOperation(BinaryOpNode node);
+    R visitArray(Array array);
 
-    R visitListNode(ASTListNode astListNode);
+    R visitBinaryOperation(BinaryOp node);
 
-    R visitAstLiteralNode(ASTLiteralNode astLiteralNode);
+    R visitComparisonOp(ComparisonOp comparisonOp);
 
-    R visitForNode(ForNode forNode);
+    R visitDeclarationsCommaList(DeclarationsCommaList declarationsCommaList);
 
-    R visitFunctionCall(FunctionCallNode funCall);
+    R visitEmptyTail(EmptyTail emptyTailNode);
 
-    R visitFunctionLiteral(FunctionLiteralNode funLiteral);
+    R visitExpression(Expression expression);
 
-    R visitIfNode(IfNode ifNode);
+    R visitExpressionStatement(ExpressionStatement expressionStatementNode);
 
-    R visitLoopBodyNode(LoopBodyNode loopBodyNode);
+    R visitExpressionsCommaList(ExpressionsCommaList expressionsCommaList);
 
-    R visitPrintNode(PrintNode printNode);
+    R visitForStatement(ForStatement forStatementNode);
 
-    R visitReadStatementNode(ReadStatementNode readNode);
+    R visitFunctionCall(FunctionCall funCall);
 
-    R visitReturnNode(ReturnNode returnNode);
+    R visitFunctionLiteral(FunctionLiteral funLiteral);
 
-    R visitTokenList(TokenListNode tokenListNode);
+    R visitIdentifierAssign(IdentifierAssign identifierAssignNode);
 
-    R visitTupleAccessNode(TupleAccessNode tupleAccess);
+    R visitIdentifierWithValue(IdentifierWithValue identifierWithValue);
 
-    R visitUnaryOperation(UnaryOpNode unaryOpNode);
+    R visitIdentifiersCommaList(IdentifiersCommaList tokenListNode);
 
-    R visitWhileNode(WhileNode whileNode);
+    R visitIdentifiersWithValueDeclarationStatement(
+        IdentifiersWithValueDeclarationStatement multipleDeclarationsStatement
+    );
 
-    R visitArrayAccess(ArrayAccessNode arrayAccessNode);
+    R visitIfStatement(IfStatement ifStatementNode);
 
-    R visitMultipleDeclarations(MultipleDeclarationNode multipleDeclarations);
+    R visitLogicalOp(LogicalOp logicalOp);
 
-    R visitReferenceAssign(ReferenceAssignNode referenceAssignNode);
+    R visitLoopBody(LoopBody loopBodyNode);
 
-    R visitIdentifierAssign(IdentifierAssignNode identifierAssignNode);
+    R visitOnlyIdentifiersDeclarationStatement(OnlyIdentifiersDeclarationStatement node);
 
-    R visitExpressionStatement(ExpressionStatementNode expressionStatementNode);
+    R visitPrintStatement(PrintStatement printStatementNode);
 
-    R visitReferenceType(ReferenceTypeNode referenceTypeNode);
+    R visitReadStatement(ReadStatement readNode);
 
-    R visitReferenceTail(ReferenceTailNode referenceTail);
+    R visitReferenceAssignStatement(ReferenceAssignStatement referenceAssignStatementNode);
 
-    R visitEmptyTail(EmptyTailNode emptyTailNode);
+    R visitReferenceTail(ReferenceTail referenceTail);
 
-    R visitTupleList(TupleListNode tupleListNode);
+    R visitReferenceType(ReferenceType referenceTypeNode);
+
+    R visitReturnStatement(ReturnStatement returnStatementNode);
+
+    R visitStatementsList(StatementsList statementsList);
+
+    R visitTokenLiteral(TokenLiteral node);
+
+    R visitTuple(Tuple tuple);
+
+    R visitTupleAccess(TupleAccess tupleAccess);
+
+    R visitTupleList(TupleList tupleListNode);
+
+    R visitUnaryOp(UnaryOp unaryOpNode);
+
+    R visitWhileStatement(WhileStatement whileStatementNode);
 }

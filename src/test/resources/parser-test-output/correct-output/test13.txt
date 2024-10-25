@@ -1,13 +1,10 @@
-ListNode {
- Multiple Declarations {
-  ListNode {
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'arr', literal: null, line: 1}
-    }
-    ContainerNode {
-     Array
-     ListNode {
+Statements {
+ Declarations with values {
+  Declarations {
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 1}
+    Array {
+     Expressions {
       Literal {
        Token{type: IntLiteral, lexeme: '1', literal: 1, line: 1}
       }
@@ -26,32 +23,36 @@ ListNode {
   Identifier Token{type: Identifier, lexeme: 'item', literal: null, line: 3}
   Type Indicator Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
   Loop Body {
-   ListNode {
-    Multiple Declarations {
-     ListNode {
-      Declaration {
-       Token List {
-        Token{type: Identifier, lexeme: 'x', literal: null, line: 4}
-       }
+   Statements {
+    Declarations with values {
+     Declarations {
+      Identifier with value {
+       Identifier Token{type: Identifier, lexeme: 'x', literal: null, line: 4}
        Reference Tail {
         Identifier Token{type: Identifier, lexeme: 'item', literal: null, line: 4}
+        Empty Tail {
+        }
        }
       }
      }
     }
     Print {
-     ListNode {
-      Unary Operator {
+     Expressions {
+      Unary Operation {
        Binary Operation {
         Left {
          Reference Tail {
           Identifier Token{type: Identifier, lexeme: 'x', literal: null, line: 5}
+          Empty Tail {
+          }
          }
         }
         Token{type: Star, lexeme: '*', literal: null, line: 5}
         Right {
          Reference Tail {
           Identifier Token{type: Identifier, lexeme: 'x', literal: null, line: 5}
+          Empty Tail {
+          }
          }
         }
        }

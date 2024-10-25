@@ -1,13 +1,15 @@
 %code imports {
   import java.io.IOException;
   import com.java.parser.ast.ASTree;
-  import com.java.parser.ast.node.*;
+  import com.java.parser.ast.node.ephemeral.*;
+  import com.java.parser.ast.node.real.*;
   import com.java.lexer.Token;
   import com.java.parser.ast.node.type.*;
 }
 
 %code {
 	private static ASTree ast;
+
     public static ASTree makeAST(com.java.lexer.Lexer lexer) throws IOException {
 		LexerAdapter lexerAdapter = new LexerAdapter(lexer);
 		Parser p = new Parser(lexerAdapter);
@@ -39,15 +41,37 @@
 
 // Non-Terminals Declarations
 
-%type <ASTNode> program statement
-%type <ASTNode> assignment_statement var_declaration_statement print_statement return_statement if_statement loop_statement
-%type <ASTNode> expression relation factor term tail read_statement access_tail
-%type <ASTNode> loop_body function_literal array array_tail tuple_tail reference tuple
-%type <ASTNode> expression_statement func_tail unary_expression second_order_algebraic first_order_algebraic
-%type <ASTListNode> consecutive_statements function_args expressions_comma statements_list array_data
-%type <ASTListNode> consecutive_declarations consecutive_access_tail
-%type <TokenListNode> parameters
-%type <TupleListNode> tuple_data
+%type <ASTree> program
+%type <Tail> access_tail
+%type <Tuple> tuple
+%type <Array> array
+%type <ReferenceTail> reference
+%type <AccessTailList> consecutive_access_tail
+%type <DeclarationsCommaList> consecutive_declarations
+%type <FunctionCall> func_tail
+%type <TupleAccess> tuple_tail
+%type <ArrayAccess> array_tail
+%type <Term> term // can be so much types, hard to make typed
+%type <Tail> tail
+%type <FunctionLiteral> function_literal
+%type <Factor> factor first_order_algebraic second_order_algebraic
+%type <UnaryExpression> unary_expression
+%type <Relation> relation
+%type <ExpressionsCommaList> expressions_comma function_args
+%type <PrintStatement> print_statement
+%type <ReadStatement> read_statement
+%type <ReturnStatement> return_statement
+%type <StatementsList> statements_list consecutive_statements
+%type <LoopStatement> loop_statement
+%type <LoopBody> loop_body
+%type <IfStatement> if_statement
+%type <DeclarationStatement> var_declaration_statement
+%type <AssignmentStatement> assignment_statement
+%type <ExpressionStatement> expression_statement
+%type <Statement> statement
+%type <ExpressionEphemeral> expression
+%type <IdentifiersCommaList> identifiers_comma
+%type <TupleList> tuple_data
 
 %start program
 
@@ -60,8 +84,8 @@ program:
 // Statements
 
 statements_list:
-    %empty { $$ = new ASTListNode(); }
-    | statement statements_list {$$ = new ASTListNode($1, $2); }
+    %empty { $$ = new StatementsList(); }
+    | statement statements_list {$$ = new StatementsList($1, $2); }
     ;
 
 statement:
@@ -79,69 +103,69 @@ statement:
 
 expression_statement:
     expression Semicolon {
-        $$ = new ExpressionStatementNode($1);
+        $$ = new ExpressionStatement($1);
     }
     ;
 
 assignment_statement:
     Identifier Assignment expression Semicolon {
-        $$ = new IdentifierAssignNode($1, $3);
+        $$ = new IdentifierAssign($1, $3);
     }
     | Identifier consecutive_access_tail Assignment expression Semicolon {
-        $$ = new ReferenceAssignNode($1, $2, $4);
+        $$ = new ReferenceAssignStatement($1, $2, $4);
     }
     ;
 
 var_declaration_statement:
     Var consecutive_declarations Semicolon {
-        $$ = new MultipleDeclarationNode($2);
+        $$ = new IdentifiersWithValueDeclarationStatement($2);
     }
-    | Var parameters Semicolon {
-        $$ = new VarDeclNode($2, null);
+    | Var identifiers_comma Semicolon {
+        $$ = new OnlyIdentifiersDeclarationStatement($2);
     }
     ;
 
 if_statement:
     If expression Then consecutive_statements Else consecutive_statements End {
-        $$ = new IfNode($2, $4, $6);
+        $$ = new IfStatement($2, $4, $6);
     }
     | If expression Then consecutive_statements End {
-        $$ = new IfNode($2, $4, null);
+        $$ = new IfStatement($2, $4, null);
     }
     ;
 
 loop_statement:
     While expression loop_body {
-        $$ = new WhileNode($2, $3);
+        $$ = new WhileStatement($2, $3);
     }
     | For Identifier In Identifier loop_body {
-        $$ = new ForNode($2, $4, $5);
+        $$ = new ForStatement($2, $4, $5);
     }
     ;
 
 loop_body:
     Loop consecutive_statements End {
-        $$ = new LoopBodyNode($2);
+        $$ = new LoopBody($2);
     }
 
 return_statement:
     Return expression Semicolon {
-        $$ = new ReturnNode($2);
+        $$ = new ReturnStatement($2);
     }
     | Return Semicolon {
-        $$ = new ReturnNode(null);
+        $$ = new ReturnStatement(null);
     }
     ;
 
 read_statement:
     read_type expression Semicolon {
-        $$ = new ReadStatementNode($1, $2);
+        $$ = new ReadStatement($1, $2);
     }
     ;
 
 print_statement:
     Print expressions_comma Semicolon {
-        $$ = new PrintNode($2);
+        $$ = new PrintStatement($2);
     }
     ;
 
@@ -150,36 +174,36 @@ print_statement:
 expression:
     relation
     | relation Or relation {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new LogicalOp($2, $1, $3);
     }
     | relation And relation {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new LogicalOp($2, $1, $3);
     }
     | relation Xor relation {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new LogicalOp($2, $1, $3);
     }
-    | function_literal
+    | function_literal // to make it easy, in the code hierarchy, we assume that function_literal is relation too
     ;
 
 relation:
     factor
     | factor Less factor {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new ComparisonOp($2, $1, $3);
     }
     | factor LessEqual factor {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new ComparisonOp($2, $1, $3);
     }
     | factor Greater factor {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new ComparisonOp($2, $1, $3);
     }
     | factor GreaterEqual factor {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new ComparisonOp($2, $1, $3);
     }
     | factor Equal factor {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new ComparisonOp($2, $1, $3);
     }
     | factor NotEqual factor {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new ComparisonOp($2, $1, $3);
     }
     ;
 
@@ -190,45 +214,45 @@ factor:
 second_order_algebraic:
     first_order_algebraic
     | second_order_algebraic Plus first_order_algebraic {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new BinaryOp($2, $1, $3);
     }
     | second_order_algebraic Minus first_order_algebraic {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new BinaryOp($2, $1, $3);
     }
     ;
 
 first_order_algebraic:
     unary_expression
     | first_order_algebraic Star unary_expression {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new BinaryOp($2, $1, $3);
     }
     | first_order_algebraic Slash unary_expression {
-        $$ = new BinaryOpNode($2, $1, $3);
+        $$ = new BinaryOp($2, $1, $3);
     }
     ;
 
 unary_expression:
     term
     | OpenParen second_order_algebraic CloseParen {
-        $$ = new UnaryOpNode(null, $2);
+        $$ = new UnaryOp(null, $2);
     }
     | Plus term {
-        $$ = new UnaryOpNode($1, $2);
+        $$ = new UnaryOp($1, $2);
     }
     | Minus term {
-        $$ = new UnaryOpNode($1, $2);
+        $$ = new UnaryOp($1, $2);
     }
     | Not term {
-        $$ = new UnaryOpNode($1, $2);
+        $$ = new UnaryOp($1, $2);
     }
     ;
 
 function_literal:
-    Func OpenParen parameters CloseParen Is consecutive_statements End {
-        $$ = new FunctionLiteralNode($3, $6);
+    Func OpenParen identifiers_comma CloseParen Is consecutive_statements End {
+        $$ = new FunctionLiteral($3, $6);
     }
-    | Func OpenParen parameters CloseParen Arrow expression {
-        $$ = new FunctionLiteralNode($3, $6);
+    | Func OpenParen identifiers_comma CloseParen Arrow expression {
+        $$ = new FunctionLiteral($3, $6);
     }
     ;
 
@@ -236,20 +260,20 @@ function_literal:
 
 term:
     IntLiteral {
-        $$ = new TokenLiteralNode($1);
+        $$ = new TokenLiteral($1);
     }
     | DoubleLiteral {
-        $$ = new TokenLiteralNode($1);
+        $$ = new TokenLiteral($1);
     }
     | StringLiteral {
-        $$ = new TokenLiteralNode($1);
+        $$ = new TokenLiteral($1);
     }
     | BooleanLiteral {
-        $$ = new TokenLiteralNode($1);
+        $$ = new TokenLiteral($1);
     }
     | reference
     | reference Is type_indicator {
-        $$ = new ReferenceTypeNode($1, $3);
+        $$ = new ReferenceType($1, $3);
     }
     | array
     | tuple
@@ -257,28 +281,28 @@ term:
 
 reference:
     Identifier tail {
-        $$ = new ReferenceTailNode($1, $2);
+        $$ = new ReferenceTail($1, $2);
     }
     | Identifier consecutive_access_tail {
-        $$ = new ReferenceTailNode($1, $2);
+        $$ = new ReferenceTail($1, $2);
     }
     ;
 
 array:
     OpenBracket CloseBracket {
-        $$ = new ASTLiteralNode(ContainerType.Array, null);
+        $$ = new Array(new ExpressionsCommaList());
     }
-    | OpenBracket array_data CloseBracket {
-        $$ = new ASTLiteralNode(ContainerType.Array, $2);
+    | OpenBracket expressions_comma CloseBracket {
+        $$ = new Array($2);
     }
     ;
 
 tuple:
     OpenBrace CloseBrace {
-        $$ = new ASTLiteralNode(ContainerType.Tuple, null);
+        $$ = new Tuple(new TupleList());
     }
     | OpenBrace tuple_data CloseBrace {
-        $$ = new ASTLiteralNode(ContainerType.Tuple, $2);
+        $$ = new Tuple($2);
     }
     ;
 
@@ -303,34 +327,34 @@ read_type:
 
 tail:
     %empty {
-        $$ = new EmptyTailNode();
+        $$ = new EmptyTail();
     }
-    | func_tail
     ;
 
 access_tail:
     array_tail
     | tuple_tail
+    | func_tail
     ;
 
 array_tail:
     OpenBracket expression CloseBracket {
-        $$ = new ArrayAccessNode($2);
+        $$ = new ArrayAccess($2);
     }
     ;
 
 tuple_tail:
     Dot IntLiteral {
-        $$ = new TupleAccessNode($2, null);
+        $$ = new TupleAccess($2, null);
     }
     | Dot Identifier {
-        $$ = new TupleAccessNode(null, $2);
+        $$ = new TupleAccess(null, $2);
     }
     ;
 
 func_tail:
     OpenParen function_args CloseParen {
-        $$ = new FunctionCallNode($2);
+        $$ = new FunctionCall($2);
     }
     ;
 
@@ -338,17 +362,17 @@ func_tail:
 
 consecutive_declarations:
     Identifier Assignment expression {
-        $$ = new ASTListNode(new VarDeclNode($1, $3));
+        $$ = new DeclarationsCommaList(new IdentifierWithValue($1, $3));
     }
     | consecutive_declarations Comma Identifier Assignment expression {
-        $1.append(new VarDeclNode($3, $5));
+        $1.append(new IdentifierWithValue($3, $5));
         $$ = $1;
     }
     ;
 
 consecutive_access_tail:
     access_tail {
-        $$ = new ASTListNode($1);
+        $$ = new AccessTailList($1);
     }
     | consecutive_access_tail access_tail {
         $1.append($2);
@@ -358,7 +382,7 @@ consecutive_access_tail:
 
 expressions_comma:
     expression {
-        $$ = new ASTListNode($1);
+        $$ = new ExpressionsCommaList($1);
     }
     | expressions_comma Comma expression {
         $1.append($3);
@@ -366,39 +390,29 @@ expressions_comma:
     }
     ;
 
-array_data:
-    expression {
-        $$ = new ASTListNode($1);
-    }
-    | array_data Comma expression {
-        $1.append($3);
-        $$ = $1;
-    }
-    ;
-
 tuple_data:
     expression {
-        $$ = new TupleListNode($1);
+        $$ = new TupleList($1);
     }
     | Identifier Assignment expression {
-        $$ = new TupleListNode($1, $3);
+        $$ = new TupleList(new IdentifierAssign($1, $3));
     }
     | tuple_data Comma expression {
         $1.append($3);
         $$ = $1;
     }
     | tuple_data Comma Identifier Assignment expression {
-        $1.append($3, $5);
+        $1.append(new IdentifierAssign($3, $5));
         $$ = $1;
     }
     ;
 
 function_args:
     %empty {
-        $$ = new ASTListNode();
+        $$ = new ExpressionsCommaList();
     }
     | expression {
-        $$ = new ASTListNode($1);
+        $$ = new ExpressionsCommaList($1);
     }
     | function_args Comma expression {
         $1.append($3);
@@ -406,14 +420,14 @@ function_args:
     }
     ;
 
-parameters:
+identifiers_comma:
     %empty {
-        $$ = new TokenListNode();
+        $$ = new IdentifiersCommaList();
     }
     | Identifier {
-        $$ = new TokenListNode($1);
+        $$ = new IdentifiersCommaList($1);
     }
-    | parameters Comma Identifier {
+    | identifiers_comma Comma Identifier {
         $1.append($3);
         $$ = $1;
     }
@@ -421,7 +435,7 @@ parameters:
 
 consecutive_statements:
     statement {
-        $$ = new ASTListNode($1);
+        $$ = new StatementsList($1);
     }
     | consecutive_statements statement {
         $1.append($2);

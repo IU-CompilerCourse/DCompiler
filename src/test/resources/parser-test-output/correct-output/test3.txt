@@ -1,13 +1,10 @@
-ListNode {
- Multiple Declarations {
-  ListNode {
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'arr', literal: null, line: 1}
-    }
-    ContainerNode {
-     Array
-     ListNode {
+Statements {
+ Declarations with values {
+  Declarations {
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 1}
+    Array {
+     Expressions {
       Literal {
        Token{type: IntLiteral, lexeme: '1', literal: 1, line: 1}
       }
@@ -22,25 +19,22 @@ ListNode {
    }
   }
  }
- Multiple Declarations {
-  ListNode {
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'tup', literal: null, line: 2}
-    }
-    ContainerNode {
-     Tuple
+ Declarations with values {
+  Declarations {
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'tup', literal: null, line: 2}
+    Tuple {
      Tuple list {
-      Named element {
-       Token{type: Identifier, lexeme: 'b', literal: null, line: 2}
-       Literal {
-        Token{type: StringLiteral, lexeme: '"test"', literal: test, line: 2}
-       }
-      }
       Named element {
        Token{type: Identifier, lexeme: 'a', literal: null, line: 2}
        Literal {
         Token{type: IntLiteral, lexeme: '5', literal: 5, line: 2}
+       }
+      }
+      Named element {
+       Token{type: Identifier, lexeme: 'b', literal: null, line: 2}
+       Literal {
+        Token{type: StringLiteral, lexeme: '"test"', literal: test, line: 2}
        }
       }
      }
@@ -53,7 +47,7 @@ ListNode {
   Literal {
    Token{type: IntLiteral, lexeme: '4', literal: 4, line: 4}
   }
-  ListNode {
+  Tail {
    Array Access {
     Literal {
      Token{type: IntLiteral, lexeme: '4', literal: 4, line: 4}
@@ -61,18 +55,19 @@ ListNode {
    }
   }
  }
- Identifier Assign {
+ Assignment {
   Identifier Token{type: Identifier, lexeme: 'tup', literal: null, line: 5}
   Binary Operation {
    Left {
     Reference Tail {
      Identifier Token{type: Identifier, lexeme: 'tup', literal: null, line: 5}
+     Empty Tail {
+     }
     }
    }
    Token{type: Plus, lexeme: '+', literal: null, line: 5}
    Right {
-    ContainerNode {
-     Tuple
+    Tuple {
      Tuple list {
       Named element {
        Token{type: Identifier, lexeme: 'c', literal: null, line: 5}
@@ -85,15 +80,13 @@ ListNode {
    }
   }
  }
- Multiple Declarations {
-  ListNode {
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'val1', literal: null, line: 7}
-    }
+ Declarations with values {
+  Declarations {
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'val1', literal: null, line: 7}
     Reference Tail {
      Identifier Token{type: Identifier, lexeme: 'arr', literal: null, line: 7}
-     ListNode {
+     Tail {
       Array Access {
        Literal {
         Token{type: IntLiteral, lexeme: '4', literal: 4, line: 7}
@@ -104,15 +97,13 @@ ListNode {
    }
   }
  }
- Multiple Declarations {
-  ListNode {
-   Declaration {
-    Token List {
-     Token{type: Identifier, lexeme: 'val2', literal: null, line: 8}
-    }
+ Declarations with values {
+  Declarations {
+   Identifier with value {
+    Identifier Token{type: Identifier, lexeme: 'val2', literal: null, line: 8}
     Reference Tail {
      Identifier Token{type: Identifier, lexeme: 'tup', literal: null, line: 8}
-     ListNode {
+     Tail {
       Tuple Access {
        Token{type: Identifier, lexeme: 'c', literal: null, line: 8}
        null
@@ -123,12 +114,16 @@ ListNode {
   }
  }
  Print {
-  ListNode {
+  Expressions {
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'val1', literal: null, line: 10}
+    Empty Tail {
+    }
    }
    Reference Tail {
     Identifier Token{type: Identifier, lexeme: 'val2', literal: null, line: 10}
+    Empty Tail {
+    }
    }
   }
  }
