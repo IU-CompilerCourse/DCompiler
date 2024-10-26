@@ -5,9 +5,11 @@ import com.java.parser.ast.node.real.StatementsList;
 import com.java.parser.ast.visitor.ASTVisitor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @RequiredArgsConstructor
 @Getter
+@Setter
 public class ASTree extends ASTNode {
     private final StatementsList nodes;
 
