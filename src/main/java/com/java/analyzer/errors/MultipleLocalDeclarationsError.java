@@ -2,10 +2,17 @@ package com.java.analyzer.errors;
 
 import com.java.lexer.Token;
 
-public class MultipleLocalDeclarationsError extends UsageCheckError {
+public class MultipleLocalDeclarationsError extends Error {
+
+    int line;
+
+    public final int atLine() {
+        return line;
+    }
+
     private final Token undeclared;
     public MultipleLocalDeclarationsError(Token tkn) {
-        super(tkn.line());
+        line = tkn.line();
         undeclared = tkn;
     }
 

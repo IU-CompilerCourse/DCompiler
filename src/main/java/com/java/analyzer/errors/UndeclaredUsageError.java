@@ -2,10 +2,16 @@ package com.java.analyzer.errors;
 
 import com.java.lexer.Token;
 
-public class UndeclaredUsageError extends UsageCheckError {
+public class UndeclaredUsageError extends Error {
     private final Token undeclared;
+    int line;
+
+    public final int atLine() {
+        return line;
+    }
+
     public UndeclaredUsageError(Token tkn) {
-        super(tkn.line());
+        line = tkn.line();
         undeclared = tkn;
     }
 
