@@ -13,13 +13,17 @@ import java.io.IOException;
 public class Analyzer {
     public static void main(String[] args) throws IOException {
         var program = """
-                var i := 0, n := 10;
-                while i <= n loop
-                    print a;
-                    var sum := 5;
-                    var sum := 10;
-                    print sum;
-                end
+                var factorial := func(n) is
+                    if n = 0 or n = 1 then
+                        return 1;
+                    else
+                        return n * factorial(n - 1);
+                    end
+                end;
+
+                var factResult := factorial(5), z := 5, a := z;
+
+                var funcVal := func(x) => funcVal(a) + 1;
                 """;
         var p = Parser.makeAST(new Lexer(program));
         p.accept(new PrintVisitor(0));

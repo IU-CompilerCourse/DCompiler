@@ -53,7 +53,11 @@ public class UsageChecksVisitor implements ASTVisitor<List<UsageCheckError>> {
 
     @Override
     public List<UsageCheckError> visitAccessTailList(AccessTailList accessTailList) {
-        return new LinkedList<>();
+        var errors = new LinkedList<UsageCheckError>();
+        for (var t: accessTailList.getTails()) {
+            errors.addAll(t.accept(this));
+        }
+        return errors;
     }
 
     @Override
@@ -143,6 +147,7 @@ public class UsageChecksVisitor implements ASTVisitor<List<UsageCheckError>> {
             }
             scopedDeclarations.getLast().add(param.lexeme());
         }
+        errors.addAll(funLiteral.getFunBody().accept(this));
         scopedDeclarations.removeLast();
         return errors;
     }
@@ -164,8 +169,13 @@ public class UsageChecksVisitor implements ASTVisitor<List<UsageCheckError>> {
         if (isDeclaredLocally(identifierWithValue.getIdentifier().lexeme())) {
             errors.add(new MultipleLocalDeclarationsError(identifierWithValue.getIdentifier()));
         }
+        if (identifierWithValue.getValue() instanceof FunctionLiteral) {
+            scopedDeclarations.getLast().add(identifierWithValue.getIdentifier().lexeme());
+        }
         errors.addAll(identifierWithValue.getValue().accept(this));
-        scopedDeclarations.getLast().add(identifierWithValue.getIdentifier().lexeme());
+        if (!(identifierWithValue.getValue() instanceof FunctionLiteral)) {
+            scopedDeclarations.getLast().add(identifierWithValue.getIdentifier().lexeme());
+        }
         return errors;
     }
 
@@ -240,6 +250,9 @@ public class UsageChecksVisitor implements ASTVisitor<List<UsageCheckError>> {
         var errors = new LinkedList<UsageCheckError>();
         if (!isDeclared(referenceTail.getIdentifier().lexeme())) {
             errors.add(new UndeclaredUsageError(referenceTail.getIdentifier()));
+        }
+        if (referenceTail.getTail() != null) {
+            errors.addAll(referenceTail.getTail().accept(this));
         }
         return errors; // TODO: не чекать весь хвост
     }
