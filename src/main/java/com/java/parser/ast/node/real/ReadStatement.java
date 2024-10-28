@@ -4,14 +4,16 @@ import com.java.lexer.Token;
 import com.java.parser.ast.node.ephemeral.ExpressionEphemeral;
 import com.java.parser.ast.node.ephemeral.Statement;
 import com.java.parser.ast.visitor.ASTVisitor;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
+@Setter
 public class ReadStatement extends Statement {
     private final Token readType;
-    private final ExpressionEphemeral dest;
+    private ExpressionEphemeral dest;
 
     @Override
     public <R> R accept(ASTVisitor<R> visitor) {
