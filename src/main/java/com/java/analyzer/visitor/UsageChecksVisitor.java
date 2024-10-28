@@ -193,7 +193,8 @@ public class UsageChecksVisitor implements ASTVisitor<List<Error>> {
     }
 
     @Override
-    public List<Error> visitIdentifiersWithValueDeclarationStatement(IdentifiersWithValueDeclarationStatement multipleDeclarationsStatement) {
+    public List<Error> visitIdentifiersWithValueDeclarationStatement(
+        IdentifiersWithValueDeclarationStatement multipleDeclarationsStatement) {
         return multipleDeclarationsStatement.getDeclarations().accept(this);
     }
 

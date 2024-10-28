@@ -173,7 +173,8 @@ public class ContextCheckerVisitor implements ASTVisitor<List<ReturnContextError
     }
 
     @Override
-    public List<ReturnContextError> visitReferenceAssignStatement(ReferenceAssignStatement referenceAssignStatementNode) {
+    public List<ReturnContextError> visitReferenceAssignStatement(
+        ReferenceAssignStatement referenceAssignStatementNode) {
         return new LinkedList<>();
     }
 
