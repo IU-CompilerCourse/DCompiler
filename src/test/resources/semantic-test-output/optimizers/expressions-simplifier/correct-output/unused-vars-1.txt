@@ -1,0 +1,39 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
+				LITERAL
+					Token{type: IntLiteral, lexeme: '1', literal: 1, line: 1}
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'b', literal: null, line: 1}
+				LITERAL
+					Token{type: IntLiteral, lexeme: '2', literal: 2, line: 1}
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'c', literal: null, line: 1}
+				LITERAL
+					Token{type: IntLiteral, lexeme: '3', literal: 3, line: 1}
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'd', literal: null, line: 2}
+				BINARY EXPRESSION
+					LEFT
+						REFERENCE TAIL
+							IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 2}
+							EMPTY TAIL
+					Token{type: Plus, lexeme: '+', literal: null, line: 2}
+					RIGHT
+						LITERAL
+							Token{type: IntLiteral, lexeme: '1', literal: 1, line: 2}
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'd', literal: null, line: 3}
+				EMPTY TAIL
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'c', literal: null, line: 3}
+				EMPTY TAIL
+
+ExpressionsSimplifier:
+

@@ -1,0 +1,41 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 1}
+				ARRAY
+					EXPRESSIONS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '1', literal: 1, line: 1}
+						LITERAL
+							Token{type: IntLiteral, lexeme: '2', literal: 2, line: 1}
+						LITERAL
+							Token{type: IntLiteral, lexeme: '3', literal: 3, line: 1}
+	FOR
+		IDENT Token{type: Identifier, lexeme: 'item', literal: null, line: 3}
+		TYPE IDToken{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+		LOOP BODY
+			STATEMENTS
+				DECLARATIONS (with values)
+					DECLARATIONS
+						IDENT (with value)
+							IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 4}
+							REFERENCE TAIL
+								IDENT Token{type: Identifier, lexeme: 'item', literal: null, line: 4}
+								EMPTY TAIL
+				PRINT
+					EXPRESSIONS
+						UNARY EXPRESSION
+							BINARY EXPRESSION
+								LEFT
+									REFERENCE TAIL
+										IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 5}
+										EMPTY TAIL
+								Token{type: Star, lexeme: '*', literal: null, line: 5}
+								RIGHT
+									REFERENCE TAIL
+										IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 5}
+										EMPTY TAIL
+
+ExpressionsSimplifier:
+

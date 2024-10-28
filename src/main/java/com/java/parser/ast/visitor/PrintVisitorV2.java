@@ -58,7 +58,6 @@ public class PrintVisitorV2 implements ASTVisitor<Object> {
         for (var node : accessTailList.getTails()) {
             node.accept(new PrintVisitorV2(ident + 1));
         }
-        System.out.println(SEP.repeat(ident) + "}");
         return null;
     }
 
@@ -113,14 +112,18 @@ public class PrintVisitorV2 implements ASTVisitor<Object> {
     public Object visitFunctionLiteral(FunctionLiteral funLiteral) {
         System.out.println(SEP.repeat(ident) + "FUNCTION LITERAL");
         funLiteral.getParameters().accept(new PrintVisitorV2(ident + 1));
-        funLiteral.getFunBody().accept(new PrintVisitorV2(ident + 1));
+        if (funLiteral.getFunBody() != null) {
+            funLiteral.getFunBody().accept(new PrintVisitorV2(ident + 1));
+        }
         return null;
     }
 
     @Override
     public Object visitIfStatement(IfStatement ifStatementNode) {
         System.out.println(SEP.repeat(ident) + "IF");
-        ifStatementNode.getExpression().accept(new PrintVisitorV2(ident + 1));
+        if (ifStatementNode.getExpression() != null) {
+            ifStatementNode.getExpression().accept(new PrintVisitorV2(ident + 1));
+        }
         ifStatementNode.getTrueBody().accept(new PrintVisitorV2(ident + 1));
         if (ifStatementNode.getFalseBody() != null) {
             ifStatementNode.getFalseBody().accept(new PrintVisitorV2(ident + 1));
@@ -233,7 +236,9 @@ public class PrintVisitorV2 implements ASTVisitor<Object> {
     @Override
     public Object visitWhileStatement(WhileStatement whileStatementNode) {
         System.out.println(SEP.repeat(ident) + "WHILE");
-        whileStatementNode.getExpression().accept(new PrintVisitorV2(ident + 1));
+        if (whileStatementNode.getExpression() != null) {
+            whileStatementNode.getExpression().accept(new PrintVisitorV2(ident + 1));
+        }
         whileStatementNode.getLoopBody().accept(new PrintVisitorV2(ident + 1));
         return null;
     }
@@ -256,7 +261,9 @@ public class PrintVisitorV2 implements ASTVisitor<Object> {
     public Object visitIdentifierAssign(IdentifierAssign identifierAssignNode) {
         System.out.println(SEP.repeat(ident) + "IDENT ASSIGNMENT");
         System.out.println(SEP.repeat(ident + 1) + "IDENT " + identifierAssignNode.getIdentifier());
-        identifierAssignNode.getExpression().accept(new PrintVisitorV2(ident + 1));
+        if (identifierAssignNode.getExpression() != null) {
+            identifierAssignNode.getExpression().accept(new PrintVisitorV2(ident + 1));
+        }
         return null;
     }
 

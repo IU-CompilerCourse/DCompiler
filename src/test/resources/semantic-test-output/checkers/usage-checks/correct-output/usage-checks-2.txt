@@ -1,0 +1,31 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'f', literal: null, line: 1}
+				FUNCTION LITERAL
+					IDENT
+						Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
+					BINARY EXPRESSION
+						LEFT
+							REFERENCE TAIL
+								IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
+								EMPTY TAIL
+						Token{type: Plus, lexeme: '+', literal: null, line: 1}
+						RIGHT
+							REFERENCE TAIL
+								IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+								EMPTY TAIL
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'f', literal: null, line: 2}
+				TAIL
+					CALL
+						EXPRESSIONS
+							LITERAL
+								Token{type: IntLiteral, lexeme: '5', literal: 5, line: 2}
+
+UsageChecksVisitor:
+-- ERROR -- Usage of undeclared name `x`
+

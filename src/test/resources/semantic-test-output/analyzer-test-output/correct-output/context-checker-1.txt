@@ -1,0 +1,25 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+				BINARY EXPRESSION
+					LEFT
+						LITERAL
+							Token{type: IntLiteral, lexeme: '5', literal: 5, line: 1}
+					Token{type: Star, lexeme: '*', literal: null, line: 1}
+					RIGHT
+						REFERENCE TAIL
+							IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+							EMPTY TAIL
+	RETURN
+		REFERENCE TAIL
+			IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 2}
+			EMPTY TAIL
+
+UsageChecksVisitor:
+-- ERROR -- Usage of undeclared name `x`
+
+ContextCheckerVisitor:
+-- ERROR -- 'return' keyword is used not in the context of function body
+

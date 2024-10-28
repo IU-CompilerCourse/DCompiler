@@ -1,0 +1,51 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'f', literal: null, line: 1}
+				FUNCTION LITERAL
+					IDENT
+						Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+					STATEMENTS
+						DECLARATIONS (with values)
+							DECLARATIONS
+								IDENT (with value)
+									IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 2}
+									ARRAY
+										EXPRESSIONS
+											LITERAL
+												Token{type: IntLiteral, lexeme: '1', literal: 1, line: 2}
+											LITERAL
+												Token{type: IntLiteral, lexeme: '2', literal: 2, line: 2}
+											LITERAL
+												Token{type: IntLiteral, lexeme: '3', literal: 3, line: 2}
+						FOR
+							IDENT Token{type: Identifier, lexeme: 'item', literal: null, line: 3}
+							TYPE IDToken{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+							LOOP BODY
+								STATEMENTS
+									IF
+										STATEMENTS
+											RETURN
+									RETURN
+										LITERAL
+											Token{type: IntLiteral, lexeme: '10', literal: 10, line: 8}
+						RETURN
+							LITERAL
+								Token{type: IntLiteral, lexeme: '5', literal: 5, line: 10}
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'f', literal: null, line: 15}
+				TAIL
+					CALL
+						EXPRESSIONS
+							LITERAL
+								Token{type: IntLiteral, lexeme: '5', literal: 5, line: 15}
+
+ExpressionsSimplifier:
+
+UsageChecksVisitor:
+
+ContextCheckerVisitor:
+

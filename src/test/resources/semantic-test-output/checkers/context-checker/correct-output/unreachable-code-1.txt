@@ -1,0 +1,77 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'f', literal: null, line: 1}
+				FUNCTION LITERAL
+					IDENT
+						Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+					STATEMENTS
+						DECLARATIONS (with values)
+							DECLARATIONS
+								IDENT (with value)
+									IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 2}
+									ARRAY
+										EXPRESSIONS
+											LITERAL
+												Token{type: IntLiteral, lexeme: '1', literal: 1, line: 2}
+											LITERAL
+												Token{type: IntLiteral, lexeme: '2', literal: 2, line: 2}
+											LITERAL
+												Token{type: IntLiteral, lexeme: '3', literal: 3, line: 2}
+						FOR
+							IDENT Token{type: Identifier, lexeme: 'item', literal: null, line: 3}
+							TYPE IDToken{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+							LOOP BODY
+								STATEMENTS
+									IF
+										COMPARISON
+											LEFT
+												REFERENCE TAIL
+													IDENT Token{type: Identifier, lexeme: 'item', literal: null, line: 4}
+													EMPTY TAIL
+											Token{type: Equal, lexeme: '=', literal: null, line: 4}
+											RIGHT
+												LITERAL
+													Token{type: IntLiteral, lexeme: '2', literal: 2, line: 4}
+										STATEMENTS
+											RETURN
+												BINARY EXPRESSION
+													LEFT
+														LITERAL
+															Token{type: IntLiteral, lexeme: '2', literal: 2, line: 5}
+													Token{type: Star, lexeme: '*', literal: null, line: 5}
+													RIGHT
+														REFERENCE TAIL
+															IDENT Token{type: Identifier, lexeme: 'item', literal: null, line: 5}
+															EMPTY TAIL
+											PRINT
+												EXPRESSIONS
+													REFERENCE TAIL
+														IDENT Token{type: Identifier, lexeme: 'item', literal: null, line: 6}
+														EMPTY TAIL
+									RETURN
+										LITERAL
+											Token{type: IntLiteral, lexeme: '10', literal: 10, line: 8}
+						RETURN
+							LITERAL
+								Token{type: IntLiteral, lexeme: '5', literal: 5, line: 10}
+						PRINT
+							EXPRESSIONS
+								LITERAL
+									Token{type: StringLiteral, lexeme: '"OK!"', literal: OK!, line: 11}
+						RETURN
+							LITERAL
+								Token{type: IntLiteral, lexeme: '11', literal: 11, line: 12}
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'f', literal: null, line: 15}
+				TAIL
+					CALL
+						EXPRESSIONS
+							LITERAL
+								Token{type: IntLiteral, lexeme: '5', literal: 5, line: 15}
+
+ContextCheckerVisitor:
+

@@ -26,16 +26,15 @@ public final class TestUtils {
         return dir;
     }
 
-    public static Map<Integer, String> readAllFilesToMemory(@NotNull File[] files) {
-        Map<Integer, String> map = new HashMap<>();
+    public static Map<String, String> readAllFilesToMemory(@NotNull File[] files) {
+        Map<String, String> map = new HashMap<>();
 
         Arrays.stream(files)
             .forEach(file -> {
                 var filename = file.getName();
-                int testNum = Integer.parseInt(filename.substring("test".length(), filename.lastIndexOf('.')));
 
                 try {
-                    map.put(testNum, Files.readString(file.toPath()));
+                    map.put(filename, Files.readString(file.toPath()));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -44,8 +43,8 @@ public final class TestUtils {
         return map;
     }
 
-    public static void writeToFile(@NotNull Path dir, int testNum, @NotBlank String content) {
-        var file = dir.resolve("test" + testNum + ".txt");
+    public static void writeToFile(@NotNull Path dir, String filename, @NotBlank String content) {
+        var file = dir.resolve(filename);
         var fileExists = Files.exists(file);
 
         if (!fileExists) {

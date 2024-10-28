@@ -1,0 +1,16 @@
+TOKENS
+
+Token{type: Var, lexeme: 'var', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 1}
+Token{type: IntLiteral, lexeme: '5', literal: 5, line: 1}
+Token{type: Star, lexeme: '*', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 1}
+Token{type: Return, lexeme: 'return', literal: null, line: 2}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 2}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 2}
+Token{type: EOF, lexeme: ';', literal: null, line: 2}
+
+ERRORS
+

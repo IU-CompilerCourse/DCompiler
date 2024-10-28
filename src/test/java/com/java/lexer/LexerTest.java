@@ -10,9 +10,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class LexerTest {
-    private static final HashMap<Integer, String> TESTCASES_INPUT = new HashMap<>();
-    private static final HashMap<Integer, String> TESTCASES_CORRECT_OUTPUT = new HashMap<>();
-    private static final HashMap<Integer, String> TESTCASES_ACTUAL_OUTPUT = new HashMap<>();
+    private static final HashMap<String, String> TESTCASES_INPUT = new HashMap<>();
+    private static final HashMap<String, String> TESTCASES_CORRECT_OUTPUT = new HashMap<>();
+    private static final HashMap<String, String> TESTCASES_ACTUAL_OUTPUT = new HashMap<>();
     private static Path actualOutputDirectory;
 
     @BeforeAll
@@ -37,13 +37,13 @@ public class LexerTest {
         });
     }
 
-    private static void assertHashMapsEqual(Map<Integer, String> mapA, Map<Integer, String> mapB) {
+    private static void assertHashMapsEqual(Map<String, String> mapA, Map<String, String> mapB) {
         try {
             Assertions.assertThat(mapA).containsExactlyInAnyOrderEntriesOf(mapB);
             System.out.println("The maps are equal.");
         } catch (AssertionError e) {
-            for (Map.Entry<Integer, String> entry : mapA.entrySet()) {
-                Integer key = entry.getKey();
+            for (Map.Entry<String, String> entry : mapA.entrySet()) {
+                String key = entry.getKey();
                 String valueA = entry.getValue();
                 String valueB = mapB.get(key);
 

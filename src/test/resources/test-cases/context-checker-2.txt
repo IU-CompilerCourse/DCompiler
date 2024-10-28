@@ -1,0 +1,4 @@
+var f := func(x) is
+    return x * x;
+end;
+print f(5);

@@ -1,0 +1,39 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'factorial', literal: null, line: 2}
+				FUNCTION LITERAL
+					IDENT
+						Token{type: Identifier, lexeme: 'n', literal: null, line: 2}
+					STATEMENTS
+						IF
+							STATEMENTS
+								RETURN
+									LITERAL
+										Token{type: IntLiteral, lexeme: '1', literal: 1, line: 4}
+							STATEMENTS
+								RETURN
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'factResult', literal: null, line: 10}
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'factorial', literal: null, line: 10}
+					TAIL
+						CALL
+							EXPRESSIONS
+								LITERAL
+									Token{type: IntLiteral, lexeme: '5', literal: 5, line: 10}
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'factResult', literal: null, line: 12}
+				EMPTY TAIL
+
+ExpressionsSimplifier:
+
+UsageChecksVisitor:
+
+ContextCheckerVisitor:
+

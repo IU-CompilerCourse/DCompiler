@@ -1,0 +1,59 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
+				LITERAL
+					Token{type: IntLiteral, lexeme: '5', literal: 5, line: 1}
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'b', literal: null, line: 2}
+				LITERAL
+					Token{type: DoubleLiteral, lexeme: '10.5', literal: 10.5, line: 2}
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'c', literal: null, line: 3}
+				LITERAL
+					Token{type: StringLiteral, lexeme: '"Hello"', literal: Hello, line: 3}
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'd', literal: null, line: 4}
+				LITERAL
+					Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 4}
+	IDENT ASSIGNMENT
+		IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 6}
+	IDENT ASSIGNMENT
+		IDENT Token{type: Identifier, lexeme: 'b', literal: null, line: 7}
+	IDENT ASSIGNMENT
+		IDENT Token{type: Identifier, lexeme: 'c', literal: null, line: 8}
+	IDENT ASSIGNMENT
+		IDENT Token{type: Identifier, lexeme: 'd', literal: null, line: 9}
+		UNARY EXPRESSION
+			Token{type: Not, lexeme: 'not', literal: null, line: 9}
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'd', literal: null, line: 9}
+				EMPTY TAIL
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 11}
+				EMPTY TAIL
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'b', literal: null, line: 11}
+				EMPTY TAIL
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'c', literal: null, line: 11}
+				EMPTY TAIL
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'd', literal: null, line: 11}
+				EMPTY TAIL
+
+ExpressionsSimplifier:
+
+UsageChecksVisitor:
+
+ContextCheckerVisitor:
+

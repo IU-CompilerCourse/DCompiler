@@ -1,0 +1,2 @@
+var arr := [true and true, "2" + 3, 3*8, (25 + 32 - 48) * 0 = 0]; // should be error
+var temp := arr[1 + 5];

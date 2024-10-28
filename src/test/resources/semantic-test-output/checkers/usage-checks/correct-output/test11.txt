@@ -1,0 +1,97 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'intVal', literal: null, line: 1}
+				LITERAL
+					Token{type: IntLiteral, lexeme: '5', literal: 5, line: 1}
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'realVal', literal: null, line: 1}
+				LITERAL
+					Token{type: DoubleLiteral, lexeme: '1.23', literal: 1.23, line: 1}
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'boolVal', literal: null, line: 1}
+				LITERAL
+					Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 1}
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'stringVal', literal: null, line: 2}
+				LITERAL
+					Token{type: StringLiteral, lexeme: '"string"', literal: string, line: 2}
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'arrayVal', literal: null, line: 2}
+				ARRAY
+					EXPRESSIONS
+						ARRAY
+							EXPRESSIONS
+								LITERAL
+									Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 2}
+								LITERAL
+									Token{type: IntLiteral, lexeme: '2', literal: 2, line: 2}
+						ARRAY
+							EXPRESSIONS
+								LITERAL
+									Token{type: DoubleLiteral, lexeme: '1.23', literal: 1.23, line: 2}
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'tupleVal', literal: null, line: 2}
+				TUPLE
+					TUPLE LIST
+						NAMED ITEM
+							Token{type: Identifier, lexeme: 'x', literal: null, line: 2}
+							LITERAL
+								Token{type: IntLiteral, lexeme: '2', literal: 2, line: 2}
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'funcVal', literal: null, line: 3}
+				FUNCTION LITERAL
+					IDENT
+						Token{type: Identifier, lexeme: 'x', literal: null, line: 3}
+					BINARY EXPRESSION
+						LEFT
+							REFERENCE TAIL
+								IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 3}
+								EMPTY TAIL
+						Token{type: Plus, lexeme: '+', literal: null, line: 3}
+						RIGHT
+							LITERAL
+								Token{type: IntLiteral, lexeme: '1', literal: 1, line: 3}
+	DECLARATIONS (only id)
+		IDENT
+			Token{type: Identifier, lexeme: 'nullVal', literal: null, line: 4}
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'intVal', literal: null, line: 6}
+				EMPTY TAIL
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'realVal', literal: null, line: 6}
+				EMPTY TAIL
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'boolVal', literal: null, line: 6}
+				EMPTY TAIL
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'stringVal', literal: null, line: 7}
+				EMPTY TAIL
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'arrayVal', literal: null, line: 7}
+				EMPTY TAIL
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'tupleVal', literal: null, line: 7}
+				EMPTY TAIL
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'funcVal', literal: null, line: 8}
+				EMPTY TAIL
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'nullVal', literal: null, line: 9}
+				EMPTY TAIL
+
+UsageChecksVisitor:
+

@@ -11,15 +11,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import com.java.parser.ast.visitor.PrintVisitorV2;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class ParserTest {
-    private static final HashMap<Integer, String> TESTCASES_INPUT = new HashMap<>();
-    private static final HashMap<Integer, String> TESTCASES_CORRECT_OUTPUT = new HashMap<>();
-    private static final HashMap<Integer, String> TESTCASES_ACTUAL_OUTPUT = new HashMap<>();
+    private static final HashMap<String, String> TESTCASES_INPUT = new HashMap<>();
+    private static final HashMap<String, String> TESTCASES_CORRECT_OUTPUT = new HashMap<>();
+    private static final HashMap<String, String> TESTCASES_ACTUAL_OUTPUT = new HashMap<>();
     private static Path actualOutputDirectory;
 
     @BeforeAll
@@ -42,13 +43,13 @@ public class ParserTest {
         TESTCASES_ACTUAL_OUTPUT.forEach((key, entry) -> TestUtils.writeToFile(actualOutputDirectory, key, entry));
     }
 
-    private static void assertHashMapsEqual(Map<Integer, String> mapA, Map<Integer, String> mapB) {
+    private static void assertHashMapsEqual(Map<String, String> mapA, Map<String, String> mapB) {
         try {
             Assertions.assertThat(mapA).containsExactlyInAnyOrderEntriesOf(mapB);
             System.out.println("The maps are equal.");
         } catch (AssertionError e) {
-            for (Map.Entry<Integer, String> entry : mapA.entrySet()) {
-                Integer key = entry.getKey();
+            for (Map.Entry<String, String> entry : mapA.entrySet()) {
+                String key = entry.getKey();
                 String valueA = entry.getValue();
                 String valueB = mapB.get(key);
 
@@ -88,13 +89,16 @@ public class ParserTest {
                     PrintStream ps = new PrintStream(fos);
                     System.setOut(ps);
 
-                    ast.accept(new PrintVisitor(0));
+                    ast.accept(new PrintVisitorV2(0));
 
                     ps.close();
                     fos.close();
                     System.setOut(origOut);
 
-                    TESTCASES_ACTUAL_OUTPUT.put(key, Files.readString(Path.of("output.txt")));
+                    Path tempOutputFile = Path.of("output.txt");
+
+                    TESTCASES_ACTUAL_OUTPUT.put(key, Files.readString(tempOutputFile));
+                    Files.deleteIfExists(tempOutputFile);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

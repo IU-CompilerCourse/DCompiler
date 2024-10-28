@@ -1,0 +1,79 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'add', literal: null, line: 1}
+				FUNCTION LITERAL
+					IDENT
+						Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+						Token{type: Identifier, lexeme: 'y', literal: null, line: 1}
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'result', literal: null, line: 2}
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'add', literal: null, line: 2}
+					TAIL
+						CALL
+							EXPRESSIONS
+								LITERAL
+									Token{type: IntLiteral, lexeme: '3', literal: 3, line: 2}
+								LITERAL
+									Token{type: IntLiteral, lexeme: '4', literal: 4, line: 2}
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'result', literal: null, line: 4}
+				EMPTY TAIL
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'multiply', literal: null, line: 6}
+				FUNCTION LITERAL
+					IDENT
+						Token{type: Identifier, lexeme: 'x', literal: null, line: 6}
+						Token{type: Identifier, lexeme: 'y', literal: null, line: 6}
+					STATEMENTS
+						DECLARATIONS (with values)
+							DECLARATIONS
+								IDENT (with value)
+									IDENT Token{type: Identifier, lexeme: 'res', literal: null, line: 7}
+									BINARY EXPRESSION
+										LEFT
+											REFERENCE TAIL
+												IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 7}
+												EMPTY TAIL
+										Token{type: Star, lexeme: '*', literal: null, line: 7}
+										RIGHT
+											REFERENCE TAIL
+												IDENT Token{type: Identifier, lexeme: 'y', literal: null, line: 7}
+												EMPTY TAIL
+						RETURN
+							REFERENCE TAIL
+								IDENT Token{type: Identifier, lexeme: 'res', literal: null, line: 8}
+								EMPTY TAIL
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'product', literal: null, line: 11}
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'multiply', literal: null, line: 11}
+					TAIL
+						CALL
+							EXPRESSIONS
+								LITERAL
+									Token{type: IntLiteral, lexeme: '2', literal: 2, line: 11}
+								LITERAL
+									Token{type: IntLiteral, lexeme: '5', literal: 5, line: 11}
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'product', literal: null, line: 13}
+				EMPTY TAIL
+
+ExpressionsSimplifier:
+
+UsageChecksVisitor:
+
+ContextCheckerVisitor:
+

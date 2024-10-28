@@ -1,0 +1,54 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
+				LITERAL
+					Token{type: IntLiteral, lexeme: '10', literal: 10, line: 1}
+	IF
+		STATEMENTS
+			DECLARATIONS (with values)
+				DECLARATIONS
+					IDENT (with value)
+						IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 4}
+						LITERAL
+							Token{type: IntLiteral, lexeme: '20', literal: 20, line: 4}
+			PRINT
+				EXPRESSIONS
+					REFERENCE TAIL
+						IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 5}
+						EMPTY TAIL
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 8}
+				EMPTY TAIL
+	WHILE
+		LOOP BODY
+			STATEMENTS
+				DECLARATIONS (with values)
+					DECLARATIONS
+						IDENT (with value)
+							IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 11}
+							BINARY EXPRESSION
+								LEFT
+									REFERENCE TAIL
+										IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 11}
+										EMPTY TAIL
+								Token{type: Plus, lexeme: '+', literal: null, line: 11}
+								RIGHT
+									LITERAL
+										Token{type: IntLiteral, lexeme: '1', literal: 1, line: 11}
+				PRINT
+					EXPRESSIONS
+						REFERENCE TAIL
+							IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 12}
+							EMPTY TAIL
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 15}
+				EMPTY TAIL
+
+ExpressionsSimplifier:
+

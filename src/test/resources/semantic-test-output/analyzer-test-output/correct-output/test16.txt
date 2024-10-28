@@ -1,0 +1,39 @@
+STATEMENTS
+	DECLARATIONS (only id)
+		IDENT
+			Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
+			Token{type: Identifier, lexeme: 'b', literal: null, line: 1}
+			Token{type: Identifier, lexeme: 'c', literal: null, line: 1}
+	READ
+		Token{type: ReadInt, lexeme: 'readInt', literal: null, line: 3}
+		REFERENCE TAIL
+			IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 3}
+			EMPTY TAIL
+	READ
+		Token{type: ReadString, lexeme: 'readString', literal: null, line: 4}
+		REFERENCE TAIL
+			IDENT Token{type: Identifier, lexeme: 'b', literal: null, line: 4}
+			EMPTY TAIL
+	READ
+		Token{type: ReadReal, lexeme: 'readReal', literal: null, line: 5}
+		REFERENCE TAIL
+			IDENT Token{type: Identifier, lexeme: 'c', literal: null, line: 5}
+			EMPTY TAIL
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 7}
+				EMPTY TAIL
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'b', literal: null, line: 7}
+				EMPTY TAIL
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'c', literal: null, line: 7}
+				EMPTY TAIL
+
+ExpressionsSimplifier:
+
+UsageChecksVisitor:
+
+ContextCheckerVisitor:
+

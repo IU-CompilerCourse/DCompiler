@@ -1,0 +1,27 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+				LITERAL
+					Token{type: IntLiteral, lexeme: '10', literal: 10, line: 1}
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'y', literal: null, line: 2}
+				LITERAL
+					Token{type: IntLiteral, lexeme: '20', literal: 20, line: 2}
+	IF
+		STATEMENTS
+			PRINT
+				EXPRESSIONS
+					LITERAL
+						Token{type: StringLiteral, lexeme: '"x is less than y"', literal: x is less than y, line: 4}
+		STATEMENTS
+			PRINT
+				EXPRESSIONS
+					LITERAL
+						Token{type: StringLiteral, lexeme: '"x is not less than y"', literal: x is not less than y, line: 6}
+
+ExpressionsSimplifier:
+

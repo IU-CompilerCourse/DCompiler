@@ -1,0 +1,33 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'num', literal: null, line: 1}
+				LITERAL
+					Token{type: DoubleLiteral, lexeme: '3.14', literal: 3.14, line: 1}
+	IF
+		COMPARISON
+			LEFT
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'num', literal: null, line: 3}
+					EMPTY TAIL
+			Token{type: Greater, lexeme: '>', literal: null, line: 3}
+			RIGHT
+				LITERAL
+					Token{type: IntLiteral, lexeme: '0', literal: 0, line: 3}
+		STATEMENTS
+			PRINT
+				EXPRESSIONS
+					REFERENCE TAIL
+						IDENT Token{type: Identifier, lexeme: 'num', literal: null, line: 4}
+						EMPTY TAIL
+					LITERAL
+						Token{type: StringLiteral, lexeme: '" is positive."', literal:  is positive., line: 4}
+		STATEMENTS
+			PRINT
+				EXPRESSIONS
+					LITERAL
+						Token{type: StringLiteral, lexeme: '"is zero"', literal: is zero, line: 6}
+
+UsageChecksVisitor:
+

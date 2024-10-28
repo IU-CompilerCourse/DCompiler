@@ -1,0 +1,31 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 1}
+				ARRAY
+					EXPRESSIONS
+						LITERAL
+							Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 1}
+						BINARY EXPRESSION
+							LEFT
+								LITERAL
+									Token{type: StringLiteral, lexeme: '"2"', literal: 2, line: 1}
+							Token{type: Plus, lexeme: '+', literal: null, line: 1}
+							RIGHT
+								LITERAL
+									Token{type: IntLiteral, lexeme: '3', literal: 3, line: 1}
+						LITERAL
+							Token{type: IntLiteral, lexeme: '24', literal: 24, line: 1}
+						LITERAL
+							Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 1}
+	DECLARATIONS (with values)
+		DECLARATIONS
+
+ExpressionsSimplifier:
+-- ERROR -- Sign 'Plus' is used incorrectly: Left={"2"} - Right{3} - Final Type{null}
+
+UsageChecksVisitor:
+
+ContextCheckerVisitor:
+

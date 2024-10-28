@@ -1,0 +1,28 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 1}
+				ARRAY
+					EXPRESSIONS
+						LITERAL
+							Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 1}
+						LITERAL
+							Token{type: StringLiteral, lexeme: '23', literal: 23, line: 1}
+						LITERAL
+							Token{type: IntLiteral, lexeme: '24', literal: 24, line: 1}
+						LITERAL
+							Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 1}
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'temp', literal: null, line: 2}
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 2}
+					TAIL
+						ARRAY ACCESS
+							LITERAL
+								Token{type: IntLiteral, lexeme: '6', literal: 6, line: 2}
+
+ExpressionsSimplifier:
+
