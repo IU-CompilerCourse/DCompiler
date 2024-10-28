@@ -32,9 +32,7 @@ public class LexerTest {
 
     @AfterAll
     static void tearDown() {
-        TESTCASES_ACTUAL_OUTPUT.forEach((key, entry) -> {
-            TestUtils.writeToFile(actualOutputDirectory, key, entry);
-        });
+        TESTCASES_ACTUAL_OUTPUT.forEach((key, entry) -> TestUtils.writeToFile(actualOutputDirectory, key, entry));
     }
 
     private static void assertHashMapsEqual(Map<String, String> mapA, Map<String, String> mapB) {
