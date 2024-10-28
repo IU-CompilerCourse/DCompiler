@@ -132,14 +132,15 @@ public class ContextCheckerVisitor implements ASTVisitor<List<ReturnContextError
     }
 
     @Override
-    public List<ReturnContextError> visitIdentifiersWithValueDeclarationStatement(IdentifiersWithValueDeclarationStatement multipleDeclarationsStatement) {
+    public List<ReturnContextError> visitIdentifiersWithValueDeclarationStatement(
+        IdentifiersWithValueDeclarationStatement multipleDeclarationsStatement
+    ) {
         return new LinkedList<>();
     }
 
     @Override
     public List<ReturnContextError> visitIfStatement(IfStatement ifStatementNode) {
-        var errors = new LinkedList<ReturnContextError>();
-        errors.addAll(ifStatementNode.getTrueBody().accept(this));
+        var errors = new LinkedList<>(ifStatementNode.getTrueBody().accept(this));
         if (ifStatementNode.getFalseBody() != null) {
             errors.addAll(ifStatementNode.getFalseBody().accept(this));
         }
@@ -172,7 +173,8 @@ public class ContextCheckerVisitor implements ASTVisitor<List<ReturnContextError
     }
 
     @Override
-    public List<ReturnContextError> visitReferenceAssignStatement(ReferenceAssignStatement referenceAssignStatementNode) {
+    public List<ReturnContextError> visitReferenceAssignStatement(
+        ReferenceAssignStatement referenceAssignStatementNode) {
         return new LinkedList<>();
     }
 
@@ -199,7 +201,7 @@ public class ContextCheckerVisitor implements ASTVisitor<List<ReturnContextError
     @Override
     public List<ReturnContextError> visitStatementsList(StatementsList statementsList) {
         var errors = new LinkedList<ReturnContextError>();
-        for (var stmt: statementsList.getStatements()) {
+        for (var stmt : statementsList.getStatements()) {
             errors.addAll(stmt.accept(this));
         }
         return errors;

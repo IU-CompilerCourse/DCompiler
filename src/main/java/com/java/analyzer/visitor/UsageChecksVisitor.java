@@ -1,8 +1,8 @@
 package com.java.analyzer.visitor;
 
+import com.java.analyzer.errors.Error;
 import com.java.analyzer.errors.MultipleLocalDeclarationsError;
 import com.java.analyzer.errors.UndeclaredUsageError;
-import com.java.analyzer.errors.Error;
 import com.java.parser.ast.ASTree;
 import com.java.parser.ast.node.real.AccessTailList;
 import com.java.parser.ast.node.real.Array;
@@ -46,6 +46,7 @@ import java.util.Set;
 
 public class UsageChecksVisitor implements ASTVisitor<List<Error>> {
     private final List<Set<String>> scopedDeclarations = new LinkedList<>();
+
     @Override
     public List<Error> visitAST(ASTree ast) {
         return ast.getNodes().accept(this);
@@ -54,7 +55,7 @@ public class UsageChecksVisitor implements ASTVisitor<List<Error>> {
     @Override
     public List<Error> visitAccessTailList(AccessTailList accessTailList) {
         var errors = new LinkedList<Error>();
-        for (var t: accessTailList.getTails()) {
+        for (var t : accessTailList.getTails()) {
             errors.addAll(t.accept(this));
         }
         return errors;
@@ -89,7 +90,7 @@ public class UsageChecksVisitor implements ASTVisitor<List<Error>> {
     @Override
     public List<Error> visitDeclarationsCommaList(DeclarationsCommaList declarationsCommaList) {
         var errors = new LinkedList<Error>();
-        for (var decl: declarationsCommaList.getDeclarations()) {
+        for (var decl : declarationsCommaList.getDeclarations()) {
             errors.addAll(decl.accept(this));
         }
         return errors;
@@ -113,7 +114,7 @@ public class UsageChecksVisitor implements ASTVisitor<List<Error>> {
     @Override
     public List<Error> visitExpressionsCommaList(ExpressionsCommaList expressionsCommaList) {
         var errors = new LinkedList<Error>();
-        for (var expr: expressionsCommaList.getExpressions()) {
+        for (var expr : expressionsCommaList.getExpressions()) {
             errors.addAll(expr.accept(this));
         }
         return errors;
@@ -122,7 +123,7 @@ public class UsageChecksVisitor implements ASTVisitor<List<Error>> {
     @Override
     public List<Error> visitForStatement(ForStatement forStatementNode) {
         var errors = new LinkedList<Error>();
-        if (!isDeclared(forStatementNode.getTypeIndicator().lexeme())) {
+        if (isNotDeclared(forStatementNode.getTypeIndicator().lexeme())) {
             errors.add(new UndeclaredUsageError(forStatementNode.getTypeIndicator()));
         }
         scopedDeclarations.add(new HashSet<>());
@@ -141,7 +142,7 @@ public class UsageChecksVisitor implements ASTVisitor<List<Error>> {
     public List<Error> visitFunctionLiteral(FunctionLiteral funLiteral) {
         var errors = new LinkedList<Error>();
         scopedDeclarations.add(new HashSet<>());
-        for (var param: funLiteral.getParameters().getTokens()) {
+        for (var param : funLiteral.getParameters().getTokens()) {
             if (isDeclaredLocally(param.lexeme())) {
                 errors.add(new MultipleLocalDeclarationsError(param));
             }
@@ -155,7 +156,7 @@ public class UsageChecksVisitor implements ASTVisitor<List<Error>> {
     @Override
     public List<Error> visitIdentifierAssign(IdentifierAssign identifierAssignNode) {
         var errors = new LinkedList<Error>();
-        if (!isDeclared(identifierAssignNode.getIdentifier().lexeme())) {
+        if (isNotDeclared(identifierAssignNode.getIdentifier().lexeme())) {
             errors.add(new UndeclaredUsageError(identifierAssignNode.getIdentifier()));
         }
         errors.addAll(identifierAssignNode.getExpression().accept(this));
@@ -182,17 +183,18 @@ public class UsageChecksVisitor implements ASTVisitor<List<Error>> {
     @Override
     public List<Error> visitIdentifiersCommaList(IdentifiersCommaList identifiersList) {
         var errors = new LinkedList<Error>();
-        for (var ident: identifiersList.getTokens()) {
+        for (var ident : identifiersList.getTokens()) {
             if (isDeclaredLocally(ident.lexeme())) {
                 errors.add(new MultipleLocalDeclarationsError(ident));
             }
             scopedDeclarations.getLast().add(ident.lexeme());
         }
-        return new LinkedList<>();
+        return errors;
     }
 
     @Override
-    public List<Error> visitIdentifiersWithValueDeclarationStatement(IdentifiersWithValueDeclarationStatement multipleDeclarationsStatement) {
+    public List<Error> visitIdentifiersWithValueDeclarationStatement(
+        IdentifiersWithValueDeclarationStatement multipleDeclarationsStatement) {
         return multipleDeclarationsStatement.getDeclarations().accept(this);
     }
 
@@ -238,7 +240,7 @@ public class UsageChecksVisitor implements ASTVisitor<List<Error>> {
     @Override
     public List<Error> visitReferenceAssignStatement(ReferenceAssignStatement referenceAssignStatementNode) {
         var errors = new LinkedList<Error>();
-        if (!isDeclared(referenceAssignStatementNode.getIdentifier().lexeme())) {
+        if (isNotDeclared(referenceAssignStatementNode.getIdentifier().lexeme())) {
             errors.add(new UndeclaredUsageError(referenceAssignStatementNode.getIdentifier()));
         }
         errors.addAll(referenceAssignStatementNode.getExpression().accept(this));
@@ -248,7 +250,7 @@ public class UsageChecksVisitor implements ASTVisitor<List<Error>> {
     @Override
     public List<Error> visitReferenceTail(ReferenceTail referenceTail) {
         var errors = new LinkedList<Error>();
-        if (!isDeclared(referenceTail.getIdentifier().lexeme())) {
+        if (isNotDeclared(referenceTail.getIdentifier().lexeme())) {
             errors.add(new UndeclaredUsageError(referenceTail.getIdentifier()));
         }
         if (referenceTail.getTail() != null) {
@@ -274,9 +276,9 @@ public class UsageChecksVisitor implements ASTVisitor<List<Error>> {
     public List<Error> visitStatementsList(StatementsList statementsList) {
         var errors = new LinkedList<Error>();
         scopedDeclarations.add(new HashSet<>());
-        for (var stmt: statementsList.getStatements()) {
-             var res = stmt.accept(this);
-             errors.addAll(res);
+        for (var stmt : statementsList.getStatements()) {
+            var res = stmt.accept(this);
+            errors.addAll(res);
         }
         scopedDeclarations.removeLast();
         return errors;
@@ -300,7 +302,7 @@ public class UsageChecksVisitor implements ASTVisitor<List<Error>> {
     @Override
     public List<Error> visitTupleList(TupleList tupleListNode) {
         var errors = new LinkedList<Error>();
-        for (var expr: tupleListNode.getAllExpressions()) {
+        for (var expr : tupleListNode.getAllExpressions()) {
             errors.addAll(expr.accept(this));
         }
         return errors;
@@ -319,13 +321,13 @@ public class UsageChecksVisitor implements ASTVisitor<List<Error>> {
         return errors;
     }
 
-    private boolean isDeclared(String name) {
+    private boolean isNotDeclared(String name) {
         for (var scope : scopedDeclarations.reversed()) {
             if (scope.contains(name)) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     private boolean isDeclaredLocally(String name) {

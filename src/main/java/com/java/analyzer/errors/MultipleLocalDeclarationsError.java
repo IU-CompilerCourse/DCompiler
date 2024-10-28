@@ -4,16 +4,16 @@ import com.java.lexer.Token;
 
 public class MultipleLocalDeclarationsError extends Error {
 
+    private final Token undeclared;
     int line;
 
-    public final int atLine() {
-        return line;
-    }
-
-    private final Token undeclared;
     public MultipleLocalDeclarationsError(Token tkn) {
         line = tkn.line();
         undeclared = tkn;
+    }
+
+    public final int atLine() {
+        return line;
     }
 
     @Override

@@ -4,14 +4,16 @@ import com.java.lexer.Token;
 import com.java.parser.ast.node.ephemeral.ASTNode;
 import com.java.parser.ast.node.ephemeral.ExpressionEphemeral;
 import com.java.parser.ast.visitor.ASTVisitor;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
+@Setter
 public class IdentifierWithValue extends ASTNode {
     private final Token identifier;
-    private final ExpressionEphemeral value;
+    private ExpressionEphemeral value;
 
     @Override
     public <R> R accept(ASTVisitor<R> visitor) {

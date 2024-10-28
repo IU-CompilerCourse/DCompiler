@@ -4,12 +4,16 @@ import com.java.parser.ast.node.ephemeral.ExpressionEphemeral;
 import com.java.parser.ast.node.ephemeral.Tail;
 import com.java.parser.ast.visitor.ASTVisitor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-@RequiredArgsConstructor
 @Getter
+@Setter
 public class ArrayAccess extends Tail {
-    private final ExpressionEphemeral expression;
+    private ExpressionEphemeral expression;
+
+    public ArrayAccess(ExpressionEphemeral expression) {
+        this.expression = expression;
+    }
 
     @Override
     public <R> R accept(ASTVisitor<R> visitor) {
