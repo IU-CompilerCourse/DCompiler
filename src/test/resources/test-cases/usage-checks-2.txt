@@ -1,0 +1,2 @@
+var f := func(a) => a + x;
+print f(5);

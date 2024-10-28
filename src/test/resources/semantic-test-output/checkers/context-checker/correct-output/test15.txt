@@ -1,0 +1,35 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'endlessRecursion', literal: null, line: 1}
+				FUNCTION LITERAL
+					IDENT
+						Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+					STATEMENTS
+						EXPRESSION STMT
+							REFERENCE TAIL
+								IDENT Token{type: Identifier, lexeme: 'endlessRecursion', literal: null, line: 2}
+								TAIL
+									CALL
+										EXPRESSIONS
+											BINARY EXPRESSION
+												LEFT
+													REFERENCE TAIL
+														IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 2}
+														EMPTY TAIL
+												Token{type: Minus, lexeme: '-', literal: null, line: 2}
+												RIGHT
+													LITERAL
+														Token{type: IntLiteral, lexeme: '1', literal: 1, line: 2}
+	EXPRESSION STMT
+		REFERENCE TAIL
+			IDENT Token{type: Identifier, lexeme: 'endlessRecursion', literal: null, line: 5}
+			TAIL
+				CALL
+					EXPRESSIONS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '10', literal: 10, line: 5}
+
+ContextCheckerVisitor:
+

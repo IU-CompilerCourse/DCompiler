@@ -1,0 +1,81 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 1}
+				ARRAY
+					EXPRESSIONS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '1', literal: 1, line: 1}
+						LITERAL
+							Token{type: IntLiteral, lexeme: '2', literal: 2, line: 1}
+						LITERAL
+							Token{type: IntLiteral, lexeme: '3', literal: 3, line: 1}
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'tup', literal: null, line: 2}
+				TUPLE
+					TUPLE LIST
+						NAMED ITEM
+							Token{type: Identifier, lexeme: 'a', literal: null, line: 2}
+							LITERAL
+								Token{type: IntLiteral, lexeme: '5', literal: 5, line: 2}
+						NAMED ITEM
+							Token{type: Identifier, lexeme: 'b', literal: null, line: 2}
+							LITERAL
+								Token{type: StringLiteral, lexeme: '"test"', literal: test, line: 2}
+	REFERENCE ASSIGN
+		IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 4}
+		LITERAL
+			Token{type: IntLiteral, lexeme: '4', literal: 4, line: 4}
+		TAIL
+			ARRAY ACCESS
+				LITERAL
+					Token{type: IntLiteral, lexeme: '4', literal: 4, line: 4}
+	IDENT ASSIGNMENT
+		IDENT Token{type: Identifier, lexeme: 'tup', literal: null, line: 5}
+		BINARY EXPRESSION
+			LEFT
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'tup', literal: null, line: 5}
+					EMPTY TAIL
+			Token{type: Plus, lexeme: '+', literal: null, line: 5}
+			RIGHT
+				TUPLE
+					TUPLE LIST
+						NAMED ITEM
+							Token{type: Identifier, lexeme: 'c', literal: null, line: 5}
+							LITERAL
+								Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 5}
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'val1', literal: null, line: 7}
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 7}
+					TAIL
+						ARRAY ACCESS
+							LITERAL
+								Token{type: IntLiteral, lexeme: '4', literal: 4, line: 7}
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'val2', literal: null, line: 8}
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'tup', literal: null, line: 8}
+					TAIL
+						TUPLE ACCESS
+							Token{type: Identifier, lexeme: 'c', literal: null, line: 8}
+							null
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'val1', literal: null, line: 10}
+				EMPTY TAIL
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'val2', literal: null, line: 10}
+				EMPTY TAIL
+
+UsageChecksVisitor:
+

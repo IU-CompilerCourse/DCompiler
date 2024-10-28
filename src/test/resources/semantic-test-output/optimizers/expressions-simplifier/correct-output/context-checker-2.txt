@@ -1,0 +1,22 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'f', literal: null, line: 1}
+				FUNCTION LITERAL
+					IDENT
+						Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+					STATEMENTS
+						RETURN
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'f', literal: null, line: 4}
+				TAIL
+					CALL
+						EXPRESSIONS
+							LITERAL
+								Token{type: IntLiteral, lexeme: '5', literal: 5, line: 4}
+
+ExpressionsSimplifier:
+

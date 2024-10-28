@@ -3,13 +3,15 @@ package com.java.parser.ast.node.real;
 import com.java.parser.ast.node.ephemeral.ExpressionEphemeral;
 import com.java.parser.ast.node.ephemeral.Relation;
 import com.java.parser.ast.visitor.ASTVisitor;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
+@Setter
 public class Expression extends ExpressionEphemeral {
-    private final Relation body;
+    private Relation body;
 
     @Override
     public <R> R accept(ASTVisitor<R> visitor) {

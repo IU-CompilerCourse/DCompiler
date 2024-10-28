@@ -1,0 +1,67 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 1}
+				ARRAY
+					EXPRESSIONS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '1', literal: 1, line: 1}
+						LITERAL
+							Token{type: IntLiteral, lexeme: '2', literal: 2, line: 1}
+						LITERAL
+							Token{type: IntLiteral, lexeme: '3', literal: 3, line: 1}
+	FOR
+		IDENT Token{type: Identifier, lexeme: 'item', literal: null, line: 2}
+		TYPE IDToken{type: Identifier, lexeme: 'arr', literal: null, line: 2}
+		LOOP BODY
+			STATEMENTS
+				IF
+					COMPARISON
+						LEFT
+							REFERENCE TAIL
+								IDENT Token{type: Identifier, lexeme: 'item', literal: null, line: 3}
+								EMPTY TAIL
+						Token{type: Equal, lexeme: '=', literal: null, line: 3}
+						RIGHT
+							LITERAL
+								Token{type: IntLiteral, lexeme: '2', literal: 2, line: 3}
+					STATEMENTS
+						PRINT
+							EXPRESSIONS
+								REFERENCE TAIL
+									IDENT Token{type: Identifier, lexeme: 'item', literal: null, line: 4}
+									EMPTY TAIL
+					STATEMENTS
+						DECLARATIONS (with values)
+							DECLARATIONS
+								IDENT (with value)
+									IDENT Token{type: Identifier, lexeme: 'd', literal: null, line: 6}
+									BINARY EXPRESSION
+										LEFT
+											REFERENCE TAIL
+												IDENT Token{type: Identifier, lexeme: 'item', literal: null, line: 6}
+												EMPTY TAIL
+										Token{type: Star, lexeme: '*', literal: null, line: 6}
+										RIGHT
+											LITERAL
+												Token{type: IntLiteral, lexeme: '2', literal: 2, line: 6}
+								IDENT (with value)
+									IDENT Token{type: Identifier, lexeme: 'e', literal: null, line: 6}
+									BINARY EXPRESSION
+										LEFT
+											REFERENCE TAIL
+												IDENT Token{type: Identifier, lexeme: 'd', literal: null, line: 6}
+												EMPTY TAIL
+										Token{type: Plus, lexeme: '+', literal: null, line: 6}
+										RIGHT
+											LITERAL
+												Token{type: IntLiteral, lexeme: '5', literal: 5, line: 6}
+						PRINT
+							EXPRESSIONS
+								REFERENCE TAIL
+									IDENT Token{type: Identifier, lexeme: 'd', literal: null, line: 7}
+									EMPTY TAIL
+
+ContextCheckerVisitor:
+

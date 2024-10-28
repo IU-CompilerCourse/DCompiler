@@ -199,7 +199,9 @@ public class PrintVisitor implements ASTVisitor<Object> {
     @Override
     public Object visitReturnStatement(ReturnStatement returnStatementNode) {
         System.out.println(SEP.repeat(ident) + "Return {");
-        returnStatementNode.getExpression().accept(new PrintVisitor(ident + 1));
+        if (returnStatementNode.getExpression() != null) {
+            returnStatementNode.getExpression().accept(new PrintVisitor(ident + 1));
+        }
         System.out.println(SEP.repeat(ident) + "}");
         return null;
     }

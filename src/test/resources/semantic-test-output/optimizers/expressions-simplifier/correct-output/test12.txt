@@ -1,0 +1,152 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 1}
+				ARRAY
+					EXPRESSIONS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '1', literal: 1, line: 1}
+						LITERAL
+							Token{type: IntLiteral, lexeme: '2', literal: 2, line: 1}
+						ARRAY
+							EXPRESSIONS
+								LITERAL
+									Token{type: StringLiteral, lexeme: '"apple"', literal: apple, line: 1}
+								TUPLE
+									TUPLE LIST
+										NAMED ITEM
+											Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+											LITERAL
+												Token{type: IntLiteral, lexeme: '3', literal: 3, line: 1}
+						LITERAL
+							Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 1}
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+				TAIL
+					ARRAY ACCESS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '1', literal: 1, line: 3}
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+				TAIL
+					ARRAY ACCESS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '2', literal: 2, line: 3}
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+				TAIL
+					ARRAY ACCESS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '3', literal: 3, line: 3}
+					ARRAY ACCESS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '1', literal: 1, line: 3}
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+				TAIL
+					ARRAY ACCESS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '3', literal: 3, line: 3}
+					ARRAY ACCESS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '2', literal: 2, line: 3}
+					TUPLE ACCESS
+						Token{type: Identifier, lexeme: 'x', literal: null, line: 3}
+						null
+					ARRAY ACCESS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '1', literal: 1, line: 3}
+					CALL
+						EXPRESSIONS
+					ARRAY ACCESS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '2', literal: 2, line: 3}
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+				TAIL
+					ARRAY ACCESS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '4', literal: 4, line: 3}
+	REFERENCE ASSIGN
+		IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 5}
+		FUNCTION LITERAL
+			IDENT
+				Token{type: Identifier, lexeme: 'x', literal: null, line: 5}
+		TAIL
+			ARRAY ACCESS
+				LITERAL
+					Token{type: IntLiteral, lexeme: '1', literal: 1, line: 5}
+	REFERENCE ASSIGN
+		IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 6}
+		LITERAL
+			Token{type: StringLiteral, lexeme: '"string"', literal: string, line: 6}
+		TAIL
+			ARRAY ACCESS
+				LITERAL
+					Token{type: IntLiteral, lexeme: '2', literal: 2, line: 6}
+	REFERENCE ASSIGN
+		IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 7}
+		LITERAL
+			Token{type: BooleanLiteral, lexeme: 'false', literal: false, line: 7}
+		TAIL
+			ARRAY ACCESS
+				LITERAL
+					Token{type: IntLiteral, lexeme: '3', literal: 3, line: 7}
+	REFERENCE ASSIGN
+		IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 8}
+		TUPLE
+			TUPLE LIST
+				NAMED ITEM
+					Token{type: Identifier, lexeme: 'a', literal: null, line: 8}
+					ARRAY
+						EXPRESSIONS
+				LITERAL
+					Token{type: IntLiteral, lexeme: '12', literal: 12, line: 8}
+		TAIL
+			ARRAY ACCESS
+				LITERAL
+					Token{type: IntLiteral, lexeme: '4', literal: 4, line: 8}
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 10}
+				TAIL
+					ARRAY ACCESS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '1', literal: 1, line: 10}
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 10}
+				TAIL
+					ARRAY ACCESS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '2', literal: 2, line: 10}
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 10}
+				TAIL
+					ARRAY ACCESS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '3', literal: 3, line: 10}
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 10}
+				TAIL
+					ARRAY ACCESS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '4', literal: 4, line: 10}
+					TUPLE ACCESS
+						Token{type: Identifier, lexeme: 'a', literal: null, line: 10}
+						null
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 10}
+				TAIL
+					ARRAY ACCESS
+						LITERAL
+							Token{type: IntLiteral, lexeme: '4', literal: 4, line: 10}
+					TUPLE ACCESS
+						null
+						Token{type: IntLiteral, lexeme: '2', literal: 2, line: 10}
+
+ExpressionsSimplifier:
+

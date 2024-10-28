@@ -1,0 +1,24 @@
+TOKENS
+
+Token{type: Var, lexeme: 'var', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'f', literal: null, line: 1}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 1}
+Token{type: Func, lexeme: 'func', literal: null, line: 1}
+Token{type: OpenParen, lexeme: '(', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
+Token{type: CloseParen, lexeme: ')', literal: null, line: 1}
+Token{type: Arrow, lexeme: '=>', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'a', literal: null, line: 1}
+Token{type: Plus, lexeme: '+', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 1}
+Token{type: Print, lexeme: 'print', literal: null, line: 2}
+Token{type: Identifier, lexeme: 'f', literal: null, line: 2}
+Token{type: OpenParen, lexeme: '(', literal: null, line: 2}
+Token{type: IntLiteral, lexeme: '5', literal: 5, line: 2}
+Token{type: CloseParen, lexeme: ')', literal: null, line: 2}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 2}
+Token{type: EOF, lexeme: ';', literal: null, line: 2}
+
+ERRORS
+

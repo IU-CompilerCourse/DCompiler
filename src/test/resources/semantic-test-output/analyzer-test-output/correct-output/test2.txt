@@ -1,0 +1,40 @@
+STATEMENTS
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+				LITERAL
+					Token{type: IntLiteral, lexeme: '0', literal: 0, line: 1}
+	DECLARATIONS (with values)
+		DECLARATIONS
+			IDENT (with value)
+				IDENT Token{type: Identifier, lexeme: 'y', literal: null, line: 2}
+				LITERAL
+					Token{type: IntLiteral, lexeme: '10', literal: 10, line: 2}
+	IF
+		STATEMENTS
+			IDENT ASSIGNMENT
+				IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 5}
+		STATEMENTS
+			IDENT ASSIGNMENT
+				IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 7}
+	WHILE
+		LOOP BODY
+			STATEMENTS
+				IDENT ASSIGNMENT
+					IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 11}
+	PRINT
+		EXPRESSIONS
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 14}
+				EMPTY TAIL
+			REFERENCE TAIL
+				IDENT Token{type: Identifier, lexeme: 'y', literal: null, line: 14}
+				EMPTY TAIL
+
+ExpressionsSimplifier:
+
+UsageChecksVisitor:
+
+ContextCheckerVisitor:
+
