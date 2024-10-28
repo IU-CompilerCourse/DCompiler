@@ -1,0 +1,45 @@
+TOKENS
+
+Token{type: Var, lexeme: 'var', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'arr', literal: null, line: 1}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 1}
+Token{type: OpenBracket, lexeme: '[', literal: null, line: 1}
+Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 1}
+Token{type: And, lexeme: 'and', literal: null, line: 1}
+Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 1}
+Token{type: Comma, lexeme: ',', literal: null, line: 1}
+Token{type: StringLiteral, lexeme: '"2"', literal: 2, line: 1}
+Token{type: Plus, lexeme: '+', literal: null, line: 1}
+Token{type: IntLiteral, lexeme: '3', literal: 3, line: 1}
+Token{type: Comma, lexeme: ',', literal: null, line: 1}
+Token{type: IntLiteral, lexeme: '3', literal: 3, line: 1}
+Token{type: Star, lexeme: '*', literal: null, line: 1}
+Token{type: IntLiteral, lexeme: '8', literal: 8, line: 1}
+Token{type: Comma, lexeme: ',', literal: null, line: 1}
+Token{type: OpenParen, lexeme: '(', literal: null, line: 1}
+Token{type: IntLiteral, lexeme: '25', literal: 25, line: 1}
+Token{type: Plus, lexeme: '+', literal: null, line: 1}
+Token{type: IntLiteral, lexeme: '32', literal: 32, line: 1}
+Token{type: Minus, lexeme: '-', literal: null, line: 1}
+Token{type: IntLiteral, lexeme: '48', literal: 48, line: 1}
+Token{type: CloseParen, lexeme: ')', literal: null, line: 1}
+Token{type: Star, lexeme: '*', literal: null, line: 1}
+Token{type: IntLiteral, lexeme: '0', literal: 0, line: 1}
+Token{type: Equal, lexeme: '=', literal: null, line: 1}
+Token{type: IntLiteral, lexeme: '0', literal: 0, line: 1}
+Token{type: CloseBracket, lexeme: ']', literal: null, line: 1}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 1}
+Token{type: Var, lexeme: 'var', literal: null, line: 2}
+Token{type: Identifier, lexeme: 'temp', literal: null, line: 2}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 2}
+Token{type: Identifier, lexeme: 'arr', literal: null, line: 2}
+Token{type: OpenBracket, lexeme: '[', literal: null, line: 2}
+Token{type: IntLiteral, lexeme: '1', literal: 1, line: 2}
+Token{type: Plus, lexeme: '+', literal: null, line: 2}
+Token{type: IntLiteral, lexeme: '5', literal: 5, line: 2}
+Token{type: CloseBracket, lexeme: ']', literal: null, line: 2}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 2}
+Token{type: EOF, lexeme: '', literal: null, line: 3}
+
+ERRORS
+

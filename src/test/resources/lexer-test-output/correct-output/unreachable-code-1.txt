@@ -1,0 +1,65 @@
+TOKENS
+
+Token{type: Var, lexeme: 'var', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'f', literal: null, line: 1}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 1}
+Token{type: Func, lexeme: 'func', literal: null, line: 1}
+Token{type: OpenParen, lexeme: '(', literal: null, line: 1}
+Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+Token{type: CloseParen, lexeme: ')', literal: null, line: 1}
+Token{type: Is, lexeme: 'is', literal: null, line: 1}
+Token{type: Var, lexeme: 'var', literal: null, line: 2}
+Token{type: Identifier, lexeme: 'arr', literal: null, line: 2}
+Token{type: Assignment, lexeme: ':=', literal: null, line: 2}
+Token{type: OpenBracket, lexeme: '[', literal: null, line: 2}
+Token{type: IntLiteral, lexeme: '1', literal: 1, line: 2}
+Token{type: Comma, lexeme: ',', literal: null, line: 2}
+Token{type: IntLiteral, lexeme: '2', literal: 2, line: 2}
+Token{type: Comma, lexeme: ',', literal: null, line: 2}
+Token{type: IntLiteral, lexeme: '3', literal: 3, line: 2}
+Token{type: CloseBracket, lexeme: ']', literal: null, line: 2}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 2}
+Token{type: For, lexeme: 'for', literal: null, line: 3}
+Token{type: Identifier, lexeme: 'item', literal: null, line: 3}
+Token{type: In, lexeme: 'in', literal: null, line: 3}
+Token{type: Identifier, lexeme: 'arr', literal: null, line: 3}
+Token{type: Loop, lexeme: 'loop', literal: null, line: 3}
+Token{type: If, lexeme: 'if', literal: null, line: 4}
+Token{type: Identifier, lexeme: 'item', literal: null, line: 4}
+Token{type: Equal, lexeme: '=', literal: null, line: 4}
+Token{type: IntLiteral, lexeme: '2', literal: 2, line: 4}
+Token{type: Then, lexeme: 'then', literal: null, line: 4}
+Token{type: Return, lexeme: 'return', literal: null, line: 5}
+Token{type: IntLiteral, lexeme: '2', literal: 2, line: 5}
+Token{type: Star, lexeme: '*', literal: null, line: 5}
+Token{type: Identifier, lexeme: 'item', literal: null, line: 5}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 5}
+Token{type: Print, lexeme: 'print', literal: null, line: 6}
+Token{type: Identifier, lexeme: 'item', literal: null, line: 6}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 6}
+Token{type: End, lexeme: 'end', literal: null, line: 7}
+Token{type: Return, lexeme: 'return', literal: null, line: 8}
+Token{type: IntLiteral, lexeme: '10', literal: 10, line: 8}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 8}
+Token{type: End, lexeme: 'end', literal: null, line: 9}
+Token{type: Return, lexeme: 'return', literal: null, line: 10}
+Token{type: IntLiteral, lexeme: '5', literal: 5, line: 10}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 10}
+Token{type: Print, lexeme: 'print', literal: null, line: 11}
+Token{type: StringLiteral, lexeme: '"OK!"', literal: OK!, line: 11}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 11}
+Token{type: Return, lexeme: 'return', literal: null, line: 12}
+Token{type: IntLiteral, lexeme: '11', literal: 11, line: 12}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 12}
+Token{type: End, lexeme: 'end', literal: null, line: 13}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 13}
+Token{type: Print, lexeme: 'print', literal: null, line: 15}
+Token{type: Identifier, lexeme: 'f', literal: null, line: 15}
+Token{type: OpenParen, lexeme: '(', literal: null, line: 15}
+Token{type: IntLiteral, lexeme: '5', literal: 5, line: 15}
+Token{type: CloseParen, lexeme: ')', literal: null, line: 15}
+Token{type: Semicolon, lexeme: ';', literal: null, line: 15}
+Token{type: EOF, lexeme: '', literal: null, line: 16}
+
+ERRORS
+
