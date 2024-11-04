@@ -3,23 +3,16 @@ package com.java.evaluation;
 import com.java.lexer.Lexer;
 import com.java.parser.Parser;
 import com.java.parser.ast.visitor.PrintVisitorV2;
-import com.java.semantic.Analyzer;
 import java.io.IOException;
 
 public class Eval {
     private static final String program = """
-        var a := 5, b := 3;
+                var arr := [1, 2];
 
-        print a, b;
+                f(x)[2].a[3] := 3;
 
-        if true then
-            var a := 10;
-            print a, b;
-        end
-
-        print a, b;
-
-                 """;
+                print arr[2];
+                """;
     public static void main(String[] args) throws IOException {
 
         var ast = Parser.makeAST(new Lexer(program));

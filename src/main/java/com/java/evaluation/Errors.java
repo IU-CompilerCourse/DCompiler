@@ -41,8 +41,8 @@ public final class Errors {
         return new RuntimeException(prefix + String.format("object with name '%s' is not function, but was an attempt to call it", name));
     }
 
-    public static RuntimeException arrayIndexOutOfBounds(int idx, int size) {
-        return new RuntimeException(prefix + String.format("index %d is out of bounds of array with size %d", idx, size));
+    public static RuntimeException indexOutOfBounds(String type, int idx, int size) {
+        return new RuntimeException(prefix + String.format("index %d is out of %s bounds with size %d", idx, type, size));
     }
 
     public static RuntimeException indexAccessToNotArray(String value) {
@@ -55,5 +55,18 @@ public final class Errors {
 
     public static RuntimeException improperIteration(Obj object) {
         return new RuntimeException(prefix + String.format("can not iterate over object of type '%s'", object.type()));
+    }
+
+    public static RuntimeException noTupleNamedItem(String name) {
+        return new RuntimeException(prefix + String.format("tuple does not have item with name '%s'", name));
+    }
+
+    public static RuntimeException namedAccessToNoTuple(String name, String type) {
+        return new RuntimeException(prefix + String.format("can not perform member access to variable '%s' of type '%s'",
+            name, type));
+    }
+
+    public static RuntimeException literalAccessError() {
+        return new RuntimeException(prefix + "attempt to perform tuple member access with invalid type");
     }
 }

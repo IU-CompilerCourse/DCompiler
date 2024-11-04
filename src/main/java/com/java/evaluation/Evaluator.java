@@ -12,6 +12,7 @@ import com.java.evaluation.objects.Obj;
 import com.java.evaluation.objects.RealObj;
 import com.java.evaluation.objects.ReturnObj;
 import com.java.evaluation.objects.StringObj;
+import com.java.evaluation.objects.TupleObj;
 import com.java.lexer.Token;
 import com.java.parser.ast.ASTree;
 import com.java.parser.ast.node.real.AccessTailList;
@@ -50,6 +51,7 @@ import com.java.parser.ast.node.real.UnaryOp;
 import com.java.parser.ast.node.real.WhileStatement;
 import com.java.parser.ast.visitor.ASTVisitor;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -278,6 +280,8 @@ public class Evaluator implements ASTVisitor<Obj> {
 
     @Override
     public Obj visitReferenceAssignStatement(ReferenceAssignStatement node) {
+        var value = node.getExpression().accept(this);
+        // TODO: dodelat'
         return new EmptyObj();
     }
 
@@ -312,6 +316,20 @@ public class Evaluator implements ASTVisitor<Obj> {
                         throw Errors.notIntegerArrayIndex(index);
                     }
                     ident = arr.get(intIdx.getValue());
+                }
+                case TupleAccess access -> {
+                    if (!(ident instanceof TupleObj tuple)) {
+                        throw Errors.namedAccessToNoTuple(ident.toString(), ident.type());
+                    }
+                    if (access.getIdentifier() != null) {
+                        ident = tuple.getByName(access.getIdentifier().lexeme());
+                    } else {
+                        var idx = access.getLiteral().literal();
+                        if (!(idx instanceof Integer i)) {
+                            throw Errors.literalAccessError();
+                        }
+                        ident = tuple.getByInd(i);
+                    }
                 }
                 default -> throw new IllegalStateException("Unexpected value: " + t);
             }
@@ -388,7 +406,7 @@ public class Evaluator implements ASTVisitor<Obj> {
 
     @Override
     public Obj visitTuple(Tuple tuple) {
-        return new EmptyObj();
+        return new TupleObj(tuple, this);
     }
 
     @Override

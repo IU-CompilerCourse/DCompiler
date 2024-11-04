@@ -2,7 +2,6 @@ package com.java.evaluation.objects;
 
 import java.util.List;
 import com.java.evaluation.Errors;
-import org.apache.logging.log4j.util.Strings;
 
 public final class ArrayObj implements Obj {
     private final List<Obj> array;
@@ -11,17 +10,17 @@ public final class ArrayObj implements Obj {
     }
 
     public Obj get(int idx) {
-        if (idx < 0 || idx > array.size()) {
-            throw Errors.arrayIndexOutOfBounds(idx, array.size());
+        if (idx < 1 || idx > array.size()) {
+            throw Errors.indexOutOfBounds(type(), idx, array.size());
         }
-        return array.get(idx);
+        return array.get(idx - 1);
     }
 
     public void set(int idx, Obj val) {
-        if (idx < 0 || idx > array.size()) {
-            throw Errors.arrayIndexOutOfBounds(idx, array.size());
+        if (idx < 1 || idx > array.size()) {
+            throw Errors.indexOutOfBounds(type(), idx, array.size());
         }
-        array.set(idx, val);
+        array.set(idx - 1, val);
     }
 
     public List<Obj> getArray() {

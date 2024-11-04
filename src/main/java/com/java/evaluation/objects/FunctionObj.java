@@ -4,7 +4,6 @@ import com.java.evaluation.Errors;
 import com.java.evaluation.Evaluator;
 import com.java.parser.ast.node.ephemeral.ASTNode;
 import com.java.parser.ast.node.real.Expression;
-import lombok.Getter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
