@@ -90,7 +90,7 @@ public class ExpressionsSimplifier implements ASTVisitor<Object> {
         var maybeRight = fetchReducedValue(node.getRight());
 
         if (Stream.of(maybeLeft, maybeRight).anyMatch(reduced -> reduced == null)) {
-            return null;
+            return node;
         }
 
         var leftToken = maybeLeft.getValue();
@@ -398,10 +398,10 @@ public class ExpressionsSimplifier implements ASTVisitor<Object> {
     }
 
     private TokenLiteral fetchReducedValue(ASTNode node) {
-        Factor maybeReduced = null;
+        ExpressionEphemeral maybeReduced = null;
 
         if (isReducableType(node)) {
-            maybeReduced = (Factor) node.accept(this);
+            maybeReduced = (ExpressionEphemeral) node.accept(this);
         } else if (node instanceof TokenLiteral) {
             maybeReduced = (TokenLiteral) node;
         }
@@ -419,7 +419,7 @@ public class ExpressionsSimplifier implements ASTVisitor<Object> {
         var maybeRight = fetchReducedValue(comparisonOp.getRight());
 
         if (Stream.of(maybeLeft, maybeRight).anyMatch(reduced -> reduced == null)) {
-            return null;
+            return comparisonOp;
         }
 
         var leftToken = maybeLeft.getValue();
@@ -595,7 +595,7 @@ public class ExpressionsSimplifier implements ASTVisitor<Object> {
         var maybeRight = fetchReducedValue(logicalOp.getRight());
 
         if (Stream.of(maybeLeft, maybeRight).anyMatch(reduced -> reduced == null)) {
-            return null;
+            return logicalOp;
         }
 
         var leftToken = maybeLeft.getValue();
