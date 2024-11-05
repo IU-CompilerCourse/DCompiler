@@ -13,7 +13,7 @@ public final class StringObj implements Obj {
 
     @Override
     public String toString() {
-        return value;
+        return "\"" + value + "\"";
     }
 
     @Override

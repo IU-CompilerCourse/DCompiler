@@ -56,6 +56,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Evaluator implements ASTVisitor<Obj> {
     private final List<Map<String, Obj>> scopes;
@@ -273,15 +274,181 @@ public class Evaluator implements ASTVisitor<Obj> {
 
     @Override
     public Obj visitReadStatement(ReadStatement read) {
-        var dest = read.getDest().accept(this);
-        // TODO: пока не придумал, как, но мб придется делать разбор случаев
+        Obj value;
+        var scan = new Scanner(System.in);
+        switch (read.getReadType().type()) {
+            case ReadInt -> value = new IntegerObj(scan.nextInt());
+            case ReadReal -> value = new RealObj(scan.nextDouble());
+            case ReadString -> value = new StringObj(scan.next());
+            default -> throw new RuntimeException("unexpected read");
+        }
+        if (!(read.getDest() instanceof ReferenceTail tail)) {
+            throw new RuntimeException("Can not read to this stuff");
+        }
+
+        var ident = find(tail.getIdentifier().lexeme());
+        if (tail.getTail() instanceof EmptyTail) {
+            assign(tail.getIdentifier().lexeme(), value);
+            return new EmptyObj();
+        }
+        var tails = ((AccessTailList)tail.getTail()).getTails();
+
+        for (int idx = 0; idx < tails.size() - 1; idx++) {
+            var t = tails.get(idx);
+            switch (t) {
+                case FunctionCall f -> {
+                    if (!(ident instanceof FunctionObj func)) {
+                        throw Errors.notCallableObject(ident.toString());
+                    }
+                    List<Obj> evaluatedArgs = new LinkedList<>();
+                    for (var expr : f.getExpressions().getExpressions()) {
+                        evaluatedArgs.add(expr.accept(this));
+                    }
+                    ident = func.eval(evaluatedArgs);
+                    if (ident instanceof ReturnObj ro) {
+                        ident = ro.ret();
+                    }
+                }
+                case ArrayAccess access -> {
+                    if (!(ident instanceof ArrayObj arr)) {
+                        throw Errors.indexAccessToNotArray(ident.toString());
+                    }
+                    var index = access.getExpression().accept(this);
+                    if (!(index instanceof IntegerObj intIdx)) {
+                        throw Errors.notIntegerArrayIndex(index);
+                    }
+                    ident = arr.get(intIdx.getValue());
+                }
+                case TupleAccess access -> {
+                    if (!(ident instanceof TupleObj tuple)) {
+                        throw Errors.namedAccessToNoTuple(ident.toString(), ident.type());
+                    }
+                    if (access.getIdentifier() != null) {
+                        ident = tuple.getByName(access.getIdentifier().lexeme());
+                    } else {
+                        var ind = access.getLiteral().literal();
+                        if (!(ind instanceof Integer i)) {
+                            throw Errors.literalAccessError();
+                        }
+                        ident = tuple.getByInd(i);
+                    }
+                }
+                default -> throw new IllegalStateException("Unexpected value: " + t);
+            }
+        }
+
+        switch (tails.getLast()) {
+            case TupleAccess access -> {
+                if (!(ident instanceof TupleObj tuple)) {
+                    throw Errors.namedAccessToNoTuple(ident.toString(), ident.type());
+                }
+                if (access.getIdentifier() != null) {
+                    tuple.setByName(access.getIdentifier().lexeme(), value);
+                } else {
+                    var ind = access.getLiteral().literal();
+                    if (!(ind instanceof Integer i)) {
+                        throw Errors.literalAccessError();
+                    }
+                    tuple.setByInd(i, value);
+                }
+            }
+            case ArrayAccess access -> {
+                if (!(ident instanceof ArrayObj arr)) {
+                    throw Errors.indexAccessToNotArray(ident.toString());
+                }
+                var index = access.getExpression().accept(this);
+                if (!(index instanceof IntegerObj intIdx)) {
+                    throw Errors.notIntegerArrayIndex(index);
+                }
+                arr.set(intIdx.getValue(), value);
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + tails.getLast());
+        }
         return new EmptyObj();
     }
 
     @Override
     public Obj visitReferenceAssignStatement(ReferenceAssignStatement node) {
         var value = node.getExpression().accept(this);
-        // TODO: dodelat'
+        var tails = node.getTail().getTails();
+        var ident = find(node.getIdentifier().lexeme());
+
+        if (tails.isEmpty()) {
+            throw new RuntimeException("тут не ожидалось что может быть пустой хвост, для этого отдельный кейс есть");
+        }
+
+        for (int idx = 0; idx < tails.size() - 1; idx++) {
+            var t = tails.get(idx);
+            switch (t) {
+                case FunctionCall f -> {
+                    if (!(ident instanceof FunctionObj func)) {
+                        throw Errors.notCallableObject(ident.toString());
+                    }
+                    List<Obj> evaluatedArgs = new LinkedList<>();
+                    for (var expr : f.getExpressions().getExpressions()) {
+                        evaluatedArgs.add(expr.accept(this));
+                    }
+                    ident = func.eval(evaluatedArgs);
+                    if (ident instanceof ReturnObj ro) {
+                        ident = ro.ret();
+                    }
+                }
+                case ArrayAccess access -> {
+                    if (!(ident instanceof ArrayObj arr)) {
+                        throw Errors.indexAccessToNotArray(ident.toString());
+                    }
+                    var index = access.getExpression().accept(this);
+                    if (!(index instanceof IntegerObj intIdx)) {
+                        throw Errors.notIntegerArrayIndex(index);
+                    }
+                    ident = arr.get(intIdx.getValue());
+                }
+                case TupleAccess access -> {
+                    if (!(ident instanceof TupleObj tuple)) {
+                        throw Errors.namedAccessToNoTuple(ident.toString(), ident.type());
+                    }
+                    if (access.getIdentifier() != null) {
+                        ident = tuple.getByName(access.getIdentifier().lexeme());
+                    } else {
+                        var ind = access.getLiteral().literal();
+                        if (!(ind instanceof Integer i)) {
+                            throw Errors.literalAccessError();
+                        }
+                        ident = tuple.getByInd(i);
+                    }
+                }
+                default -> throw new IllegalStateException("Unexpected value: " + t);
+            }
+        }
+
+        switch (tails.getLast()) {
+            case TupleAccess access -> {
+                if (!(ident instanceof TupleObj tuple)) {
+                    throw Errors.namedAccessToNoTuple(ident.toString(), ident.type());
+                }
+                if (access.getIdentifier() != null) {
+                    tuple.setByName(access.getIdentifier().lexeme(), value);
+                } else {
+                    var ind = access.getLiteral().literal();
+                    if (!(ind instanceof Integer i)) {
+                        throw Errors.literalAccessError();
+                    }
+                    tuple.setByInd(i, value);
+                }
+            }
+            case ArrayAccess access -> {
+                if (!(ident instanceof ArrayObj arr)) {
+                    throw Errors.indexAccessToNotArray(ident.toString());
+                }
+                var index = access.getExpression().accept(this);
+                if (!(index instanceof IntegerObj intIdx)) {
+                    throw Errors.notIntegerArrayIndex(index);
+                }
+                arr.set(intIdx.getValue(), value);
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + tails.getLast());
+        }
+
         return new EmptyObj();
     }
 
