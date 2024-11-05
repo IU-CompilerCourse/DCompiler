@@ -159,7 +159,7 @@ return_statement:
     ;
 
 read_statement:
-    read_type expression Semicolon {
+    read_type reference Semicolon {
         $$ = new ReadStatement($1, $2);
     }
     ;

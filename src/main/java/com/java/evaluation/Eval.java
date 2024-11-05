@@ -13,6 +13,7 @@ public class Eval {
         if not (year <= 2004) then
             print "Dick";
         end
+        readString a + b;
         """;
 
     public static void main(String[] args) throws IOException {

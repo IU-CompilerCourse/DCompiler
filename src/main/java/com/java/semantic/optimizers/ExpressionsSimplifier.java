@@ -644,7 +644,7 @@ public class ExpressionsSimplifier implements ASTVisitor<Object> {
     @Override
     public Object visitReadStatement(ReadStatement readNode) {
         readNode.setDest(
-            (ExpressionEphemeral) readNode.getDest().accept(this)
+            (ReferenceTail) readNode.getDest().accept(this)
         );
         return readNode;
     }
