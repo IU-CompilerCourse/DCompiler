@@ -1,13 +1,15 @@
 package com.java.evaluation.objects;
 
 public final class EmptyObj implements Obj {
+    private static final String EMPTY = "empty";
+
     @Override
     public String toString() {
-        return "empty";
+        return EMPTY;
     }
 
     @Override
     public String type() {
-        return "empty";
+        return EMPTY;
     }
 }

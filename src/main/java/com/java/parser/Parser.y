@@ -1,10 +1,11 @@
 %code imports {
-  import java.io.IOException;
-  import com.java.parser.ast.ASTree;
-  import com.java.parser.ast.node.ephemeral.*;
-  import com.java.parser.ast.node.real.*;
-  import com.java.lexer.Token;
-  import com.java.parser.ast.node.type.*;
+import java.io.IOException;
+import com.java.parser.ast.ASTree;
+import com.java.parser.ast.node.ephemeral.*;
+import com.java.parser.ast.node.real.*;
+import com.java.lexer.Token;
+
+@SuppressWarnings("all")
 }
 
 %code {
@@ -244,6 +245,9 @@ unary_expression:
     }
     | Not term {
         $$ = new UnaryOp($1, $2);
+    }
+    | Not OpenParen expression CloseParen {
+        $$ = new UnaryOp($1, $3);
     }
     ;
 

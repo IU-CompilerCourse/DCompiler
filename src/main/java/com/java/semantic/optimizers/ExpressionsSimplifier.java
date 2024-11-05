@@ -5,7 +5,6 @@ import com.java.lexer.TokenType;
 import com.java.parser.ast.ASTree;
 import com.java.parser.ast.node.ephemeral.ASTNode;
 import com.java.parser.ast.node.ephemeral.ExpressionEphemeral;
-import com.java.parser.ast.node.ephemeral.Factor;
 import com.java.parser.ast.node.ephemeral.Relation;
 import com.java.parser.ast.node.real.AccessTailList;
 import com.java.parser.ast.node.real.Array;

@@ -1,13 +1,16 @@
 package com.java.evaluation.evaluators;
 
-import com.java.evaluation.objects.BoolObj;
 import com.java.evaluation.Errors;
+import com.java.evaluation.objects.BoolObj;
 import com.java.evaluation.objects.IntegerObj;
 import com.java.evaluation.objects.Obj;
 import com.java.evaluation.objects.RealObj;
-
 import java.util.Objects;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@SuppressWarnings("checkstyle:ReturnCount")
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class NumericEval {
     public static Obj binaryEval(Obj a, Obj b, String op) {
         switch (a) {

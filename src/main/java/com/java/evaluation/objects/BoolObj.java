@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public final class BoolObj implements Obj {
     private boolean value;
+
     public BoolObj(boolean v) {
         this.value = v;
     }
