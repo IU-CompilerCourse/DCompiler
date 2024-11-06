@@ -1,10 +1,8 @@
-package com.java;
+package com.java.evaluation;
 
-import com.java.evaluation.Evaluator;
 import com.java.evaluation.objects.EmptyObj;
 import com.java.lexer.Lexer;
 import com.java.parser.Parser;
-import com.java.parser.ast.visitor.PrintVisitorV2;
 import java.util.Scanner;
 
 public class Repl {

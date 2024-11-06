@@ -1,6 +1,5 @@
 package com.java.evaluation;
 
-import com.java.Repl;
 import com.java.evaluation.evaluators.ArrayEval;
 import com.java.evaluation.evaluators.BoolEval;
 import com.java.evaluation.evaluators.NumericEval;
