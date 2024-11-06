@@ -7,9 +7,11 @@ import lombok.Setter;
 @Setter
 public final class RealObj implements Obj {
     private Double value;
+
     public RealObj(Double value) {
         this.value = value;
     }
+
     @Override
     public String toString() {
         return value.toString();

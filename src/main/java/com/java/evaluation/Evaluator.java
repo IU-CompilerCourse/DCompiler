@@ -5,9 +5,9 @@ import com.java.evaluation.evaluators.BoolEval;
 import com.java.evaluation.evaluators.NumericEval;
 import com.java.evaluation.objects.ArrayObj;
 import com.java.evaluation.objects.BoolObj;
+import com.java.evaluation.objects.EmptyObj;
 import com.java.evaluation.objects.FunctionObj;
 import com.java.evaluation.objects.IntegerObj;
-import com.java.evaluation.objects.EmptyObj;
 import com.java.evaluation.objects.Obj;
 import com.java.evaluation.objects.RealObj;
 import com.java.evaluation.objects.ReturnObj;
@@ -51,19 +51,20 @@ import com.java.parser.ast.node.real.UnaryOp;
 import com.java.parser.ast.node.real.WhileStatement;
 import com.java.parser.ast.visitor.ASTVisitor;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+@SuppressWarnings("all")
 public class Evaluator implements ASTVisitor<Obj> {
     private final List<Map<String, Obj>> scopes;
 
     public Evaluator() {
         scopes = new ArrayList<>();
     }
+
     public Evaluator(List<Map<String, Obj>> scopes) {
         this.scopes = scopes;
     }
@@ -72,7 +73,7 @@ public class Evaluator implements ASTVisitor<Obj> {
     public Obj visitAST(ASTree ast) {
         enterScope();
         var stmts = ast.getNodes().getStatements();
-        for (var stmt: stmts) {
+        for (var stmt : stmts) {
             stmt.accept(this);
         }
         leaveScope();
@@ -92,7 +93,7 @@ public class Evaluator implements ASTVisitor<Obj> {
     @Override
     public Obj visitArray(Array array) {
         var items = new ArrayList<Obj>();
-        for (var item: array.getElements().getExpressions()) {
+        for (var item : array.getElements().getExpressions()) {
             items.add(item.accept(this));
         }
         return new ArrayObj(items);
@@ -130,7 +131,7 @@ public class Evaluator implements ASTVisitor<Obj> {
 
     @Override
     public Obj visitDeclarationsCommaList(DeclarationsCommaList declarationsCommaList) {
-        for (var decl: declarationsCommaList.getDeclarations()) {
+        for (var decl : declarationsCommaList.getDeclarations()) {
             decl.accept(this);
         }
         return new EmptyObj();
@@ -214,7 +215,7 @@ public class Evaluator implements ASTVisitor<Obj> {
 
     @Override
     public Obj visitIdentifiersWithValueDeclarationStatement(IdentifiersWithValueDeclarationStatement stmt) {
-        return  stmt.getDeclarations().accept(this);
+        return stmt.getDeclarations().accept(this);
     }
 
     @Override
@@ -242,7 +243,7 @@ public class Evaluator implements ASTVisitor<Obj> {
         if (!(left instanceof BoolObj) || !(right instanceof BoolObj)) {
             throw Errors.binaryOperationTypeMismatch(left.type(), right.type(), logicalOp.getOperator().lexeme());
         }
-        return BoolEval.binaryEval((BoolObj) left, (BoolObj)right, logicalOp.getOperator().lexeme());
+        return BoolEval.binaryEval((BoolObj) left, (BoolObj) right, logicalOp.getOperator().lexeme());
     }
 
     @Override
@@ -252,7 +253,7 @@ public class Evaluator implements ASTVisitor<Obj> {
 
     @Override
     public Obj visitOnlyIdentifiersDeclarationStatement(OnlyIdentifiersDeclarationStatement node) {
-        for (var decl: node.getIdentifiers().getTokens()) {
+        for (var decl : node.getIdentifiers().getTokens()) {
             declare(decl.lexeme(), new EmptyObj());
         }
         return new EmptyObj();
@@ -261,11 +262,11 @@ public class Evaluator implements ASTVisitor<Obj> {
     @Override
     public Obj visitPrintStatement(PrintStatement print) {
         var exprs = new ArrayList<String>();
-        for (var expr: print.getExpressions().getExpressions()) {
+        for (var expr : print.getExpressions().getExpressions()) {
             var val = expr.accept(this);
             exprs.add(val.toString());
         }
-        for (var expr: exprs) {
+        for (var expr : exprs) {
             System.out.print(expr + " ");
         }
         System.out.println();
@@ -291,7 +292,7 @@ public class Evaluator implements ASTVisitor<Obj> {
             assign(tail.getIdentifier().lexeme(), value);
             return new EmptyObj();
         }
-        var tails = ((AccessTailList)tail.getTail()).getTails();
+        var tails = ((AccessTailList) tail.getTail()).getTails();
 
         for (int idx = 0; idx < tails.size() - 1; idx++) {
             var t = tails.get(idx);
@@ -459,7 +460,7 @@ public class Evaluator implements ASTVisitor<Obj> {
             return ident;
         }
         var tail = (AccessTailList) ref.getTail();
-        for (var t: tail.getTails()) {
+        for (var t : tail.getTails()) {
             switch (t) {
                 case FunctionCall f -> {
                     if (!(ident instanceof FunctionObj func)) {
@@ -539,7 +540,7 @@ public class Evaluator implements ASTVisitor<Obj> {
     @Override
     public Obj visitStatementsList(StatementsList statementsList) {
         enterScope();
-        for (var stmt: statementsList.getStatements()) {
+        for (var stmt : statementsList.getStatements()) {
             var ret = stmt.accept(this);
             if (ret instanceof ReturnObj) {
                 return ret;
@@ -554,13 +555,13 @@ public class Evaluator implements ASTVisitor<Obj> {
         var token = node.getValue();
         switch (token.type()) {
             case BooleanLiteral -> {
-                return new BoolObj((Boolean)token.literal());
+                return new BoolObj((Boolean) token.literal());
             }
             case IntLiteral -> {
-                return new IntegerObj((Integer)token.literal());
+                return new IntegerObj((Integer) token.literal());
             }
             case StringLiteral -> {
-                return new StringObj((String)token.literal());
+                return new StringObj((String) token.literal());
             }
             case DoubleLiteral -> {
                 return new RealObj((Double) token.literal());
@@ -631,7 +632,7 @@ public class Evaluator implements ASTVisitor<Obj> {
     }
 
     private void assign(String name, Obj val) {
-        for (var scope: scopes.reversed()) {
+        for (var scope : scopes.reversed()) {
             if (scope.containsKey(name)) {
                 scope.put(name, val);
                 return;
@@ -641,7 +642,7 @@ public class Evaluator implements ASTVisitor<Obj> {
     }
 
     private Obj find(String name) {
-        for (var scope: scopes.reversed()) {
+        for (var scope : scopes.reversed()) {
             if (scope.containsKey(name)) {
                 return scope.get(name);
             }

@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 public final class StringObj implements Obj {
     private String value;
+
     public StringObj(String value) {
         this.value = value;
     }

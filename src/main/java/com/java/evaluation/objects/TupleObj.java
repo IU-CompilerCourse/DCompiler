@@ -3,42 +3,14 @@ package com.java.evaluation.objects;
 import com.java.evaluation.Errors;
 import com.java.evaluation.Evaluator;
 import com.java.parser.ast.node.real.Tuple;
-import lombok.Getter;
-import lombok.Setter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 public final class TupleObj implements Obj {
-    @Getter
-    @Setter
-    public class Item {
-        protected Obj value;
-        public Item(Obj value) {
-            this.value = value;
-        }
-
-        @Override public String toString() {
-            return value.toString();
-        }
-    }
-
-    @Getter
-    @Setter
-    public class NamedItem extends Item {
-        private final String name;
-        public NamedItem(String name, Obj value) {
-            super(value);
-            this.name = name;
-        }
-
-        @Override
-        public String toString() {
-            return name + "=" + value.toString();
-        }
-    }
-
     private final List<Item> items = new ArrayList<>();
 
     public TupleObj(Tuple tupleNode, Evaluator ev) {
@@ -112,5 +84,35 @@ public final class TupleObj implements Obj {
         }
         sb.append("}");
         return sb.toString();
+    }
+
+    @Getter
+    @Setter
+    public class Item {
+        protected Obj value;
+
+        public Item(Obj value) {
+            this.value = value;
+        }
+
+        @Override public String toString() {
+            return value.toString();
+        }
+    }
+
+    @Getter
+    @Setter
+    public class NamedItem extends Item {
+        private final String name;
+
+        public NamedItem(String name, Obj value) {
+            super(value);
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name + "=" + value.toString();
+        }
     }
 }

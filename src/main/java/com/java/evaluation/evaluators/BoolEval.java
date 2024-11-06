@@ -1,9 +1,12 @@
 package com.java.evaluation.evaluators;
 
-import com.java.evaluation.objects.BoolObj;
 import com.java.evaluation.Errors;
+import com.java.evaluation.objects.BoolObj;
 import com.java.evaluation.objects.Obj;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class BoolEval {
     public static Obj binaryEval(BoolObj left, BoolObj right, String op) {
         switch (op) {

@@ -13,11 +13,13 @@ public final class FunctionObj implements Obj {
     private final List<Map<String, Obj>> ctx;
     private final List<String> args;
     private final ASTNode body;
+
     public FunctionObj(List<Map<String, Obj>> ctx, List<String> args, ASTNode body) {
         this.ctx = ctx;
         this.args = args;
         this.body = body;
     }
+
     @Override
     public String type() {
         return "Function";

@@ -1,10 +1,13 @@
 package com.java.evaluation.objects;
 
-import java.util.List;
 import com.java.evaluation.Errors;
+import java.util.List;
+import lombok.Getter;
 
+@Getter
 public final class ArrayObj implements Obj {
     private final List<Obj> array;
+
     public ArrayObj(List<Obj> items) {
         array = items;
     }
@@ -21,10 +24,6 @@ public final class ArrayObj implements Obj {
             throw Errors.indexOutOfBounds(type(), idx, array.size());
         }
         array.set(idx - 1, val);
-    }
-
-    public List<Obj> getArray() {
-        return array;
     }
 
     @Override

@@ -7,9 +7,11 @@ import lombok.Setter;
 @Setter
 public final class IntegerObj implements Obj {
     private Integer value;
+
     public IntegerObj(Integer value) {
         this.value = value;
     }
+
     @Override
     public String toString() {
         return value.toString();

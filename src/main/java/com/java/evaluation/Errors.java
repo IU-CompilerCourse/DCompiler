@@ -1,72 +1,81 @@
 package com.java.evaluation;
 
 import com.java.evaluation.objects.Obj;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-public final class Errors {
-    private static final String prefix = "Runtime error: ";
+@NoArgsConstructor(access = AccessLevel.PRIVATE) public final class Errors {
+    private static final String PREFIX = "Runtime error: ";
+
     public static RuntimeException undeclaredName(String name) {
-        return new RuntimeException(prefix + String.format("name '%s' is undeclared", name));
+        return new RuntimeException(PREFIX + String.format("name '%s' is undeclared", name));
     }
 
     public static RuntimeException binaryOperationTypeMismatch(String t1, String t2, String op) {
-        return new RuntimeException(prefix + String.format("type mismatch in operation '%s' for types '%s' and '%s'", op, t1, t2));
+        return new RuntimeException(
+            PREFIX + String.format("type mismatch in operation '%s' for types '%s' and '%s'", op, t1, t2));
     }
 
     public static RuntimeException unaryOperationTypeMismatch(String t1, String op) {
-        return new RuntimeException(prefix + String.format("type mismatch in operation '%s' for type '%s'", op, t1));
+        return new RuntimeException(PREFIX + String.format("type mismatch in operation '%s' for type '%s'", op, t1));
     }
 
     public static RuntimeException divisionByZero() {
-        return new RuntimeException(prefix + "division by zero");
+        return new RuntimeException(PREFIX + "division by zero");
     }
 
     public static RuntimeException unexpectedBinaryOperation(String type, String type1, String op) {
-        return new RuntimeException(prefix +
-            String.format("unexpected binary operation '%s' for types '%s' and '%s'", op, type, type1));
+        return new RuntimeException(
+            PREFIX + String.format("unexpected binary operation '%s' for types '%s' and '%s'", op, type, type1));
     }
 
     public static RuntimeException unexpectedUnaryOperation(String type, String op) {
-        return new RuntimeException(prefix + String.format("unexpected unary operation '%s' for type '%s'", op, type));
+        return new RuntimeException(PREFIX + String.format("unexpected unary operation '%s' for type '%s'", op, type));
     }
 
     public static RuntimeException notBoolCond(String expr, String type) {
-        return new RuntimeException(prefix + String.format("'Bool' type expression is expected in '%s', but got '%s'", expr, type));
+        return new RuntimeException(
+            PREFIX + String.format("'Bool' type expression is expected in '%s', but got '%s'", expr, type));
     }
 
     public static RuntimeException invalidFunctionArgsCount(int size, int expectedSize) {
-        return new RuntimeException(prefix + String.format("in function expected %d arguments, got %d", expectedSize, size));
+        return new RuntimeException(
+            PREFIX + String.format("in function expected %d arguments, got %d", expectedSize, size));
     }
 
     public static RuntimeException notCallableObject(String name) {
-        return new RuntimeException(prefix + String.format("object with name '%s' is not function, but was an attempt to call it", name));
+        return new RuntimeException(
+            PREFIX + String.format("object with name '%s' is not function, but was an attempt to call it", name));
     }
 
     public static RuntimeException indexOutOfBounds(String type, int idx, int size) {
-        return new RuntimeException(prefix + String.format("index %d is out of %s bounds with size %d", idx, type, size));
+        return new RuntimeException(
+            PREFIX + String.format("index %d is out of %s bounds with size %d", idx, type, size));
     }
 
     public static RuntimeException indexAccessToNotArray(String value) {
-        return new RuntimeException(prefix + String.format("index access attempt to non-array object '%s'", value));
+        return new RuntimeException(PREFIX + String.format("index access attempt to non-array object '%s'", value));
     }
 
     public static RuntimeException notIntegerArrayIndex(Obj index) {
-        return new RuntimeException(prefix + String.format("can not perform index access by value of type '%s'", index.type()));
+        return new RuntimeException(
+            PREFIX + String.format("can not perform index access by value of type '%s'", index.type()));
     }
 
     public static RuntimeException improperIteration(Obj object) {
-        return new RuntimeException(prefix + String.format("can not iterate over object of type '%s'", object.type()));
+        return new RuntimeException(PREFIX + String.format("can not iterate over object of type '%s'", object.type()));
     }
 
     public static RuntimeException noTupleNamedItem(String name) {
-        return new RuntimeException(prefix + String.format("tuple does not have item with name '%s'", name));
+        return new RuntimeException(PREFIX + String.format("tuple does not have item with name '%s'", name));
     }
 
     public static RuntimeException namedAccessToNoTuple(String name, String type) {
-        return new RuntimeException(prefix + String.format("can not perform member access to variable '%s' of type '%s'",
-            name, type));
+        return new RuntimeException(
+            PREFIX + String.format("can not perform member access to variable '%s' of type '%s'", name, type));
     }
 
     public static RuntimeException literalAccessError() {
-        return new RuntimeException(prefix + "attempt to perform tuple member access with invalid type");
+        return new RuntimeException(PREFIX + "attempt to perform tuple member access with invalid type");
     }
 }
