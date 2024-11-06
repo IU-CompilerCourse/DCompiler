@@ -72,10 +72,14 @@ import lombok.NoArgsConstructor;
 
     public static RuntimeException namedAccessToNoTuple(String name, String type) {
         return new RuntimeException(
-            PREFIX + String.format("can not perform member access to variable '%s' of type '%s'", name, type));
+            PREFIX + String.format("can not perform member access to value '%s' of type '%s'", name, type));
     }
 
     public static RuntimeException literalAccessError() {
         return new RuntimeException(PREFIX + "attempt to perform tuple member access with invalid type");
+    }
+
+    public static RuntimeException redeclarationInScope(String name) {
+        return new RuntimeException(PREFIX + String.format("the variable '%s' is already declared in this scope", name));
     }
 }

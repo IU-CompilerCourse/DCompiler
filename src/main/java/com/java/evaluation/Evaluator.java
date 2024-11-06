@@ -1,5 +1,6 @@
 package com.java.evaluation;
 
+import com.java.Repl;
 import com.java.evaluation.evaluators.ArrayEval;
 import com.java.evaluation.evaluators.BoolEval;
 import com.java.evaluation.evaluators.NumericEval;
@@ -60,9 +61,14 @@ import java.util.Scanner;
 @SuppressWarnings("all")
 public class Evaluator implements ASTVisitor<Obj> {
     private final List<Map<String, Obj>> scopes;
+    private boolean ReplMode = false;
 
-    public Evaluator() {
+    public Evaluator(boolean replMode) {
+        this.ReplMode = true;
         scopes = new ArrayList<>();
+    }
+    public Evaluator() {
+        this(new ArrayList<>());
     }
 
     public Evaluator(List<Map<String, Obj>> scopes) {
@@ -71,13 +77,16 @@ public class Evaluator implements ASTVisitor<Obj> {
 
     @Override
     public Obj visitAST(ASTree ast) {
-        enterScope();
         var stmts = ast.getNodes().getStatements();
+        enterScope();
+        Obj res = new EmptyObj();
         for (var stmt : stmts) {
-            stmt.accept(this);
+            res = stmt.accept(this);
         }
-        leaveScope();
-        return new EmptyObj();
+        if (!ReplMode) {
+            leaveScope();
+        }
+        return res;
     }
 
     @Override
@@ -148,8 +157,8 @@ public class Evaluator implements ASTVisitor<Obj> {
     }
 
     @Override
-    public Obj visitExpressionStatement(ExpressionStatement expressionStatementNode) {
-        return new EmptyObj();
+    public Obj visitExpressionStatement(ExpressionStatement node) {
+        return node.getExpression().accept(this);
     }
 
     @Override
@@ -280,13 +289,11 @@ public class Evaluator implements ASTVisitor<Obj> {
         switch (read.getReadType().type()) {
             case ReadInt -> value = new IntegerObj(scan.nextInt());
             case ReadReal -> value = new RealObj(scan.nextDouble());
-            case ReadString -> value = new StringObj(scan.next());
+            case ReadString -> value = new StringObj(scan.nextLine());
             default -> throw new RuntimeException("unexpected read");
         }
-        if (!(read.getDest() instanceof ReferenceTail tail)) {
-            throw new RuntimeException("Can not read to this stuff");
-        }
 
+        var tail = read.getDest();
         var ident = find(tail.getIdentifier().lexeme());
         if (tail.getTail() instanceof EmptyTail) {
             assign(tail.getIdentifier().lexeme(), value);
@@ -628,6 +635,9 @@ public class Evaluator implements ASTVisitor<Obj> {
     }
 
     private void declare(String name, Obj object) {
+        if (scopes.getLast().containsKey(name)) {
+            throw Errors.redeclarationInScope(name);
+        }
         scopes.getLast().put(name, object);
     }
 
