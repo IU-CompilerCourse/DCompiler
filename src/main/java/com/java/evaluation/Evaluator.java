@@ -165,27 +165,52 @@ public class Evaluator implements ASTVisitor<Obj> {
         return new EmptyObj();
     }
 
-    // TODO: очень нищий цикл, мб надо прокачать
     @Override
     public Obj visitForStatement(ForStatement forStmt) {
         var loopVarName = forStmt.getIdentifier().lexeme();
-        var iterable = find(forStmt.getTypeIndicator().lexeme());
+        var iterable = getIterable(forStmt.getTypeIndicator().lexeme());
 
+        executeLoopWithScope(iterable, loopVarName, forStmt.getLoopBody());
+        return new EmptyObj();
+    }
+
+    private ArrayObj getIterable(String typeIndicator) {
+        var iterable = find(typeIndicator);
         if (!(iterable instanceof ArrayObj arr)) {
             throw Errors.improperIteration(iterable);
         }
+        return arr;
+    }
 
+    private void executeLoopWithScope(ArrayObj arr, String loopVarName, LoopBody loopBody) {
         enterScope();
-        for (var item : arr.getArray()) {
-            declare(loopVarName, item);
-            var ret = forStmt.getLoopBody().accept(this);
-            if (ret instanceof ReturnObj) {
-                leaveScope();
-                return ret;
+        try {
+            for (var item : arr.getArray()) {
+                declare(loopVarName, item);
+                if (executeLoopBody(loopBody) instanceof ReturnObj ret) {
+                    throw new LoopReturnException(ret);
+                }
             }
+        } catch (LoopReturnException e) {
+            leaveScope();
+            throw e;
+        } finally {
+            leaveScope();
         }
-        leaveScope();
-        return new EmptyObj();
+    }
+
+    private Obj executeLoopBody(LoopBody loopBody) {
+        return loopBody.accept(this);
+    }
+
+    private static class LoopReturnException extends RuntimeException {
+        private final ReturnObj returnObj;
+        public LoopReturnException(ReturnObj returnObj) {
+            this.returnObj = returnObj;
+        }
+        public ReturnObj getReturnObj() {
+            return returnObj;
+        }
     }
 
     @Override
@@ -269,247 +294,297 @@ public class Evaluator implements ASTVisitor<Obj> {
 
     @Override
     public Obj visitPrintStatement(PrintStatement print) {
-        var exprs = new ArrayList<String>();
-        for (var expr : print.getExpressions().getExpressions()) {
+        var exprs = evaluateExpressions(print.getExpressions());
+        printExpressions(exprs);
+        return new EmptyObj();
+    }
+
+    private List<String> evaluateExpressions(ExpressionList expressions) {
+        var result = new ArrayList<String>();
+        for (var expr : expressions.getExpressions()) {
             var val = expr.accept(this);
-            exprs.add(val.toString());
+            result.add(val.toString());
         }
-        for (var expr : exprs) {
+        return result;
+    }
+
+    private void printExpressions(List<String> expressions) {
+        for (var expr : expressions) {
             System.out.print(expr + " ");
         }
         System.out.println();
-        return new EmptyObj();
     }
 
     @Override
     public Obj visitReadStatement(ReadStatement read) {
-        Obj value;
+        Obj value = readValue(read.getReadType());
+        var dest = read.getDest();
+        assignValueToDestination(dest, value);
+        return new EmptyObj();
+    }
+
+    private Obj readValue(ReadType readType) {
         var scan = new Scanner(System.in);
-        switch (read.getReadType().type()) {
-            case ReadInt -> value = new IntegerObj(scan.nextInt());
-            case ReadReal -> value = new RealObj(scan.nextDouble());
-            case ReadString -> value = new StringObj(scan.nextLine());
+        return switch (readType.type()) {
+            case ReadInt -> new IntegerObj(scan.nextInt());
+            case ReadReal -> new RealObj(scan.nextDouble());
+            case ReadString -> new StringObj(scan.nextLine());
             default -> throw new RuntimeException("unexpected read");
-        }
+        };
+    }
 
-        var tail = read.getDest();
-        var ident = find(tail.getIdentifier().lexeme());
-        if (tail.getTail() instanceof EmptyTail) {
-            assign(tail.getIdentifier().lexeme(), value);
-            return new EmptyObj();
-        }
-        var tails = ((AccessTailList) tail.getTail()).getTails();
+    private void assignValueToDestination(Destination dest, Obj value) {
+        var ident = find(dest.getIdentifier().lexeme());
+        var tails = dest.getTail() instanceof EmptyTail
+                    ? Collections.emptyList()
+                    : ((AccessTailList) dest.getTail()).getTails();
+        ident = resolveTails(ident, tails.subList(0, tails.size() - 1));
+        assignToLastTail(ident, tails.get(tails.size() - 1), value);
+    }
 
-        for (int idx = 0; idx < tails.size() - 1; idx++) {
-            var t = tails.get(idx);
-            switch (t) {
+    private Obj resolveTails(Obj ident, List<Tail> tails) {
+        for (var t : tails) {
+            ident = switch (t) {
                 case FunctionCall f -> {
-                    if (!(ident instanceof FunctionObj func)) {
-                        throw Errors.notCallableObject(ident.toString());
-                    }
-                    List<Obj> evaluatedArgs = new LinkedList<>();
-                    for (var expr : f.getExpressions().getExpressions()) {
-                        evaluatedArgs.add(expr.accept(this));
-                    }
-                    ident = func.eval(evaluatedArgs);
-                    if (ident instanceof ReturnObj ro) {
-                        ident = ro.ret();
-                    }
+                    if (!(ident instanceof FunctionObj func)) throw Errors.notCallableObject(ident.toString());
+                    var evaluatedArgs = evaluateFunctionArguments(f.getExpressions());
+                    var result = func.eval(evaluatedArgs);
+                    yield (result instanceof ReturnObj ro) ? ro.ret() : result;
                 }
                 case ArrayAccess access -> {
-                    if (!(ident instanceof ArrayObj arr)) {
-                        throw Errors.indexAccessToNotArray(ident.toString());
-                    }
-                    var index = access.getExpression().accept(this);
-                    if (!(index instanceof IntegerObj intIdx)) {
-                        throw Errors.notIntegerArrayIndex(index);
-                    }
-                    ident = arr.get(intIdx.getValue());
+                    if (!(ident instanceof ArrayObj arr)) throw Errors.indexAccessToNotArray(ident.toString());
+                    var index = evaluateIndex(access);
+                    yield arr.get(index);
                 }
-                case TupleAccess access -> {
-                    if (!(ident instanceof TupleObj tuple)) {
-                        throw Errors.namedAccessToNoTuple(ident.toString(), ident.type());
-                    }
-                    if (access.getIdentifier() != null) {
-                        ident = tuple.getByName(access.getIdentifier().lexeme());
-                    } else {
-                        var ind = access.getLiteral().literal();
-                        if (!(ind instanceof Integer i)) {
-                            throw Errors.literalAccessError();
-                        }
-                        ident = tuple.getByInd(i);
-                    }
-                }
+                case TupleAccess access -> resolveTupleAccess(ident, access);
                 default -> throw new IllegalStateException("Unexpected value: " + t);
-            }
+            };
         }
+        return ident;
+    }
 
-        switch (tails.getLast()) {
-            case TupleAccess access -> {
-                if (!(ident instanceof TupleObj tuple)) {
-                    throw Errors.namedAccessToNoTuple(ident.toString(), ident.type());
-                }
-                if (access.getIdentifier() != null) {
-                    tuple.setByName(access.getIdentifier().lexeme(), value);
-                } else {
-                    var ind = access.getLiteral().literal();
-                    if (!(ind instanceof Integer i)) {
-                        throw Errors.literalAccessError();
-                    }
-                    tuple.setByInd(i, value);
-                }
-            }
-            case ArrayAccess access -> {
-                if (!(ident instanceof ArrayObj arr)) {
-                    throw Errors.indexAccessToNotArray(ident.toString());
-                }
-                var index = access.getExpression().accept(this);
-                if (!(index instanceof IntegerObj intIdx)) {
-                    throw Errors.notIntegerArrayIndex(index);
-                }
-                arr.set(intIdx.getValue(), value);
-            }
-            default -> throw new IllegalStateException("Unexpected value: " + tails.getLast());
+    private List<Obj> evaluateFunctionArguments(ExpressionList expressions) {
+        var args = new LinkedList<Obj>();
+        for (var expr : expressions.getExpressions()) {
+            args.add(expr.accept(this));
         }
-        return new EmptyObj();
+        return args;
+    }
+
+    private Obj resolveTupleAccess(Obj ident, TupleAccess access) {
+        if (!(ident instanceof TupleObj tuple)) throw Errors.namedAccessToNoTuple(ident.toString(), ident.type());
+        return access.getIdentifier() != null ? tuple.getByName(access.getIdentifier().lexeme())
+                                            : tuple.getByInd(evaluateLiteralIndex(access.getLiteral()));
+    }
+
+    private int evaluateIndex(ArrayAccess access) {
+        var index = access.getExpression().accept(this);
+        if (!(index instanceof IntegerObj intIdx)) throw Errors.notIntegerArrayIndex(index);
+        return intIdx.getValue();
+    }
+
+    private int evaluateLiteralIndex(Literal literal) {
+        var ind = literal.literal();
+        if (!(ind instanceof Integer i)) throw Errors.literalAccessError();
+        return i;
+    }
+
+    private void assignToLastTail(Obj ident, Tail tail, Obj value) {
+        switch (tail) {
+            case TupleAccess access -> assignToTuple(ident, access, value);
+            case ArrayAccess access -> assignToArray(ident, access, value);
+            default -> throw new IllegalStateException("Unexpected value: " + tail);
+        }
+    }
+
+    private void assignToTuple(Obj ident, TupleAccess access, Obj value) {
+        if (!(ident instanceof TupleObj tuple)) throw Errors.namedAccessToNoTuple(ident.toString(), ident.type());
+        if (access.getIdentifier() != null) {
+            tuple.setByName(access.getIdentifier().lexeme(), value);
+        } else {
+            var ind = evaluateLiteralIndex(access.getLiteral());
+            tuple.setByInd(ind, value);
+        }
+    }
+
+    private void assignToArray(Obj ident, ArrayAccess access, Obj value) {
+        if (!(ident instanceof ArrayObj arr)) throw Errors.indexAccessToNotArray(ident.toString());
+        var index = evaluateIndex(access);
+        arr.set(index, value);
     }
 
     @Override
     public Obj visitReferenceAssignStatement(ReferenceAssignStatement node) {
         var value = node.getExpression().accept(this);
-        var tails = node.getTail().getTails();
         var ident = find(node.getIdentifier().lexeme());
+        var tails = node.getTail().getTails();
 
         if (tails.isEmpty()) {
-            throw new RuntimeException("тут не ожидалось что может быть пустой хвост, для этого отдельный кейс есть");
+            throw new RuntimeException("It's not expected to be an empty tail, there's a separate case for that.");
         }
 
-        for (int idx = 0; idx < tails.size() - 1; idx++) {
-            var t = tails.get(idx);
-            switch (t) {
-                case FunctionCall f -> {
-                    if (!(ident instanceof FunctionObj func)) {
-                        throw Errors.notCallableObject(ident.toString());
-                    }
-                    List<Obj> evaluatedArgs = new LinkedList<>();
-                    for (var expr : f.getExpressions().getExpressions()) {
-                        evaluatedArgs.add(expr.accept(this));
-                    }
-                    ident = func.eval(evaluatedArgs);
-                    if (ident instanceof ReturnObj ro) {
-                        ident = ro.ret();
-                    }
-                }
-                case ArrayAccess access -> {
-                    if (!(ident instanceof ArrayObj arr)) {
-                        throw Errors.indexAccessToNotArray(ident.toString());
-                    }
-                    var index = access.getExpression().accept(this);
-                    if (!(index instanceof IntegerObj intIdx)) {
-                        throw Errors.notIntegerArrayIndex(index);
-                    }
-                    ident = arr.get(intIdx.getValue());
-                }
-                case TupleAccess access -> {
-                    if (!(ident instanceof TupleObj tuple)) {
-                        throw Errors.namedAccessToNoTuple(ident.toString(), ident.type());
-                    }
-                    if (access.getIdentifier() != null) {
-                        ident = tuple.getByName(access.getIdentifier().lexeme());
-                    } else {
-                        var ind = access.getLiteral().literal();
-                        if (!(ind instanceof Integer i)) {
-                            throw Errors.literalAccessError();
-                        }
-                        ident = tuple.getByInd(i);
-                    }
-                }
-                default -> throw new IllegalStateException("Unexpected value: " + t);
-            }
-        }
-
-        switch (tails.getLast()) {
-            case TupleAccess access -> {
-                if (!(ident instanceof TupleObj tuple)) {
-                    throw Errors.namedAccessToNoTuple(ident.toString(), ident.type());
-                }
-                if (access.getIdentifier() != null) {
-                    tuple.setByName(access.getIdentifier().lexeme(), value);
-                } else {
-                    var ind = access.getLiteral().literal();
-                    if (!(ind instanceof Integer i)) {
-                        throw Errors.literalAccessError();
-                    }
-                    tuple.setByInd(i, value);
-                }
-            }
-            case ArrayAccess access -> {
-                if (!(ident instanceof ArrayObj arr)) {
-                    throw Errors.indexAccessToNotArray(ident.toString());
-                }
-                var index = access.getExpression().accept(this);
-                if (!(index instanceof IntegerObj intIdx)) {
-                    throw Errors.notIntegerArrayIndex(index);
-                }
-                arr.set(intIdx.getValue(), value);
-            }
-            default -> throw new IllegalStateException("Unexpected value: " + tails.getLast());
-        }
+        ident = resolveTails(ident, tails.subList(0, tails.size() - 1));
+        assignToLastTail(ident, tails.getLast(), value);
 
         return new EmptyObj();
+    }
+
+    private Obj resolveTails(Obj ident, List<Tail> tails) {
+        for (var t : tails) {
+            ident = switch (t) {
+                case FunctionCall f -> resolveFunctionCall(ident, f);
+                case ArrayAccess access -> resolveArrayAccess(ident, access);
+                case TupleAccess access -> resolveTupleAccess(ident, access);
+                default -> throw new IllegalStateException("Unexpected value: " + t);
+            };
+        }
+        return ident;
+    }
+
+    private Obj resolveFunctionCall(Obj ident, FunctionCall f) {
+        if (!(ident instanceof FunctionObj func)) {
+            throw Errors.notCallableObject(ident.toString());
+        }
+        var evaluatedArgs = evaluateFunctionArguments(f.getExpressions());
+        var result = func.eval(evaluatedArgs);
+        return (result instanceof ReturnObj ro) ? ro.ret() : result;
+    }
+
+    private Obj resolveArrayAccess(Obj ident, ArrayAccess access) {
+        if (!(ident instanceof ArrayObj arr)) {
+            throw Errors.indexAccessToNotArray(ident.toString());
+        }
+        var index = access.getExpression().accept(this);
+        if (!(index instanceof IntegerObj intIdx)) {
+            throw Errors.notIntegerArrayIndex(index);
+        }
+        return arr.get(intIdx.getValue());
+    }
+
+    private Obj resolveTupleAccess(Obj ident, TupleAccess access) {
+        if (!(ident instanceof TupleObj tuple)) {
+            throw Errors.namedAccessToNoTuple(ident.toString(), ident.type());
+        }
+        return access.getIdentifier() != null ? tuple.getByName(access.getIdentifier().lexeme())
+                                            : tuple.getByInd(evaluateLiteralIndex(access.getLiteral()));
+    }
+
+    private void assignToLastTail(Obj ident, Tail tail, Obj value) {
+        switch (tail) {
+            case TupleAccess access -> assignToTuple(ident, access, value);
+            case ArrayAccess access -> assignToArray(ident, access, value);
+            default -> throw new IllegalStateException("Unexpected value: " + tail);
+        }
+    }
+
+    private void assignToTuple(Obj ident, TupleAccess access, Obj value) {
+        if (!(ident instanceof TupleObj tuple)) {
+            throw Errors.namedAccessToNoTuple(ident.toString(), ident.type());
+        }
+        if (access.getIdentifier() != null) {
+            tuple.setByName(access.getIdentifier().lexeme(), value);
+        } else {
+            var ind = evaluateLiteralIndex(access.getLiteral());
+            tuple.setByInd(ind, value);
+        }
+    }
+
+    private void assignToArray(Obj ident, ArrayAccess access, Obj value) {
+        if (!(ident instanceof ArrayObj arr)) {
+            throw Errors.indexAccessToNotArray(ident.toString());
+        }
+        var index = access.getExpression().accept(this);
+        if (!(index instanceof IntegerObj intIdx)) {
+            throw Errors.notIntegerArrayIndex(index);
+        }
+        arr.set(intIdx.getValue(), value);
+    }
+
+    private int evaluateLiteralIndex(Literal literal) {
+        var ind = literal.literal();
+        if (!(ind instanceof Integer i)) {
+            throw Errors.literalAccessError();
+        }
+        return i;
+    }
+
+    private List<Obj> evaluateFunctionArguments(ExpressionList expressions) {
+        var args = new LinkedList<Obj>();
+        for (var expr : expressions.getExpressions()) {
+            args.add(expr.accept(this));
+        }
+        return args;
     }
 
     @Override
     public Obj visitReferenceTail(ReferenceTail ref) {
         var ident = find(ref.getIdentifier().lexeme());
+
         if (ref.getTail() == null || ref.getTail() instanceof EmptyTail) {
             return ident;
         }
+
         var tail = (AccessTailList) ref.getTail();
-        for (var t : tail.getTails()) {
-            switch (t) {
-                case FunctionCall f -> {
-                    if (!(ident instanceof FunctionObj func)) {
-                        throw Errors.notCallableObject(ident.toString());
-                    }
-                    List<Obj> evaluatedArgs = new LinkedList<>();
-                    for (var expr : f.getExpressions().getExpressions()) {
-                        evaluatedArgs.add(expr.accept(this));
-                    }
-                    ident = func.eval(evaluatedArgs);
-                    if (ident instanceof ReturnObj ro) {
-                        ident = ro.ret();
-                    }
-                }
-                case ArrayAccess access -> {
-                    if (!(ident instanceof ArrayObj arr)) {
-                        throw Errors.indexAccessToNotArray(ident.toString());
-                    }
-                    var index = access.getExpression().accept(this);
-                    if (!(index instanceof IntegerObj intIdx)) {
-                        throw Errors.notIntegerArrayIndex(index);
-                    }
-                    ident = arr.get(intIdx.getValue());
-                }
-                case TupleAccess access -> {
-                    if (!(ident instanceof TupleObj tuple)) {
-                        throw Errors.namedAccessToNoTuple(ident.toString(), ident.type());
-                    }
-                    if (access.getIdentifier() != null) {
-                        ident = tuple.getByName(access.getIdentifier().lexeme());
-                    } else {
-                        var idx = access.getLiteral().literal();
-                        if (!(idx instanceof Integer i)) {
-                            throw Errors.literalAccessError();
-                        }
-                        ident = tuple.getByInd(i);
-                    }
-                }
+        ident = resolveTails(ident, tail.getTails());
+        return ident;
+    }
+
+    private Obj resolveTails(Obj ident, List<Tail> tails) {
+        for (var t : tails) {
+            ident = switch (t) {
+                case FunctionCall f -> resolveFunctionCall(ident, f);
+                case ArrayAccess access -> resolveArrayAccess(ident, access);
+                case TupleAccess access -> resolveTupleAccess(ident, access);
                 default -> throw new IllegalStateException("Unexpected value: " + t);
-            }
+            };
         }
         return ident;
     }
+
+    private Obj resolveFunctionCall(Obj ident, FunctionCall f) {
+        if (!(ident instanceof FunctionObj func)) {
+            throw Errors.notCallableObject(ident.toString());
+        }
+        var evaluatedArgs = evaluateFunctionArguments(f.getExpressions());
+        var result = func.eval(evaluatedArgs);
+        return (result instanceof ReturnObj ro) ? ro.ret() : result;
+    }
+
+    private Obj resolveArrayAccess(Obj ident, ArrayAccess access) {
+        if (!(ident instanceof ArrayObj arr)) {
+            throw Errors.indexAccessToNotArray(ident.toString());
+        }
+        var index = access.getExpression().accept(this);
+        if (!(index instanceof IntegerObj intIdx)) {
+            throw Errors.notIntegerArrayIndex(index);
+        }
+        return arr.get(intIdx.getValue());
+    }
+
+    private Obj resolveTupleAccess(Obj ident, TupleAccess access) {
+        if (!(ident instanceof TupleObj tuple)) {
+            throw Errors.namedAccessToNoTuple(ident.toString(), ident.type());
+        }
+        return access.getIdentifier() != null ? tuple.getByName(access.getIdentifier().lexeme())
+                                            : tuple.getByInd(evaluateLiteralIndex(access.getLiteral()));
+    }
+
+    private List<Obj> evaluateFunctionArguments(ExpressionList expressions) {
+        var args = new LinkedList<Obj>();
+        for (var expr : expressions.getExpressions()) {
+            args.add(expr.accept(this));
+        }
+        return args;
+    }
+
+    private int evaluateLiteralIndex(Literal literal) {
+        var ind = literal.literal();
+        if (!(ind instanceof Integer i)) {
+            throw Errors.literalAccessError();
+        }
+        return i;
+    }
+
 
     @Override
     public Obj visitReferenceType(ReferenceType node) {

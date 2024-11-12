@@ -59,3 +59,5 @@ buildNumber.properties
 
 ### Services Data ###
 minio_data
+
+.DS_Store
