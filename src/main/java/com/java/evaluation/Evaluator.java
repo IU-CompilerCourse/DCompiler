@@ -271,16 +271,25 @@ public class Evaluator implements ASTVisitor<Obj> {
 
     @Override
     public Obj visitPrintStatement(PrintStatement print) {
+        var exprs = evaluateExpressions(print);
+        printExpressions(exprs);
+        return new EmptyObj();
+    }
+
+    private List<String> evaluateExpressions(PrintStatement print) {
         var exprs = new ArrayList<String>();
         for (var expr : print.getExpressions().getExpressions()) {
             var val = expr.accept(this);
             exprs.add(val.toString());
         }
+        return exprs;
+    }
+
+    private void printExpressions(List<String> exprs) {
         for (var expr : exprs) {
             System.out.print(expr + " ");
         }
         System.out.println();
-        return new EmptyObj();
     }
 
     @Override
