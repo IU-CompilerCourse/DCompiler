@@ -1,0 +1,15 @@
+var f := func(x) is
+  var arr := [1, 2, 3];
+  for item in arr loop
+    if item = 2 then
+      return 2 * item;
+      print item;
+    end
+    return 10;
+  end
+  return 5;
+  print "OK!";
+  return 11;
+end;
+
+print f(5);

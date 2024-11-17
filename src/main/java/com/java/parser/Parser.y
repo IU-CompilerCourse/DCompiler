@@ -14,8 +14,7 @@ import com.java.lexer.Token;
     public static ASTree makeAST(com.java.lexer.Lexer lexer) throws IOException {
 		LexerAdapter lexerAdapter = new LexerAdapter(lexer);
 		Parser p = new Parser(lexerAdapter);
-		p.parse();
-		return ast;
+		return p.parse() ? ast : null;
 	}
 }
 

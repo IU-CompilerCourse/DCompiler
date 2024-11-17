@@ -672,6 +672,9 @@ public class ExpressionsSimplifier implements ASTVisitor<Object> {
 
     @Override
     public Object visitReturnStatement(ReturnStatement returnStatementNode) {
+        if (returnStatementNode.getExpression() == null) {
+            return returnStatementNode;
+        }
         returnStatementNode.setExpression(
             (ExpressionEphemeral) returnStatementNode.getExpression().accept(this)
         );

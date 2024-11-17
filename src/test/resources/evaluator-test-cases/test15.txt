@@ -1,0 +1,10 @@
+var endlessRecursion := func(x) is
+    if x = -50 then
+        return;
+    end
+
+    endlessRecursion(x - 1);
+end;
+
+endlessRecursion(10);
+print "We stop at the -50 value; However, without this threshold, we will recieve the StackOverFlow Exception";

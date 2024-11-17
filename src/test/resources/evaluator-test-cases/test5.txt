@@ -1,0 +1,15 @@
+var a := 10;
+
+if a > 5 then
+    var a := 20;
+    print a;
+end
+
+print a;
+
+while a < 15 loop
+    a := a + 1;
+    print a;
+end
+
+print a;

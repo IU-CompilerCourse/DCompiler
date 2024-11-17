@@ -75,6 +75,15 @@ STATEMENTS
 		FUNCTION LITERAL
 			IDENT
 				Token{type: Identifier, lexeme: 'x', literal: null, line: 5}
+			BINARY EXPRESSION
+				LEFT
+					REFERENCE TAIL
+						IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 5}
+						EMPTY TAIL
+				Token{type: Plus, lexeme: '+', literal: null, line: 5}
+				RIGHT
+					LITERAL
+						Token{type: IntLiteral, lexeme: '1', literal: 1, line: 5}
 		TAIL
 			ARRAY ACCESS
 				LITERAL

@@ -1,0 +1,8 @@
+var n := 7;
+
+// even or odd
+if n % 2 = 0 then
+    print "Integer ", n, " is even.";
+else
+    print "Integer ", n, " is odd.";
+end

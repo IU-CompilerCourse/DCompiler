@@ -5,6 +5,7 @@ import com.java.lexer.Lexer;
 import com.java.parser.Parser;
 import java.util.Scanner;
 
+@SuppressWarnings("all")
 public class Repl {
     public static void main(String[] args) {
         var scan = new Scanner(System.in);
@@ -12,7 +13,7 @@ public class Repl {
 
         System.out.print("> ");
         var command = scan.nextLine();
-        while (!command.equals("exit")) {
+        while (!command.equals("/exit")) {
             try {
                 var lex = new Lexer(command);
                 var ast = Parser.makeAST(lex);

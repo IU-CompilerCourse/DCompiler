@@ -1,5 +1,6 @@
 package com.java.lexer;
 
+import com.java.CompilerApplication;
 import com.java.TestUtils;
 import java.nio.file.Path;
 import java.util.HashMap;
@@ -58,7 +59,7 @@ public class LexerTest {
         TESTCASES_INPUT.forEach((key, value) -> {
             var lexer = new Lexer(value);
 
-            TESTCASES_ACTUAL_OUTPUT.put(key, TestUtils.lexerFormatOutput(lexer.scanTokens()));
+            TESTCASES_ACTUAL_OUTPUT.put(key, CompilerApplication.lexerFormatOutput(lexer.scanTokens()));
         });
 
         assertHashMapsEqual(TESTCASES_ACTUAL_OUTPUT, TESTCASES_CORRECT_OUTPUT);

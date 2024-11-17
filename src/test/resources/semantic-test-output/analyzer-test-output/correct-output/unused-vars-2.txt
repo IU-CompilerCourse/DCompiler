@@ -17,6 +17,15 @@ STATEMENTS
 		LOOP BODY
 			STATEMENTS
 				IF
+					COMPARISON
+						LEFT
+							REFERENCE TAIL
+								IDENT Token{type: Identifier, lexeme: 'item', literal: null, line: 3}
+								EMPTY TAIL
+						Token{type: Equal, lexeme: '=', literal: null, line: 3}
+						RIGHT
+							LITERAL
+								Token{type: IntLiteral, lexeme: '2', literal: 2, line: 3}
 					STATEMENTS
 						PRINT
 							EXPRESSIONS

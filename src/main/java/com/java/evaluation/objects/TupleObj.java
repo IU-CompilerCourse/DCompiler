@@ -4,12 +4,15 @@ import com.java.evaluation.Errors;
 import com.java.evaluation.Evaluator;
 import com.java.parser.ast.node.real.Tuple;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
+@NoArgsConstructor
 public final class TupleObj implements Obj {
     private final List<Item> items = new ArrayList<>();
 
@@ -25,6 +28,17 @@ public final class TupleObj implements Obj {
                 items.add(new Item(node.accept(ev)));
             }
         }
+    }
+
+    @SafeVarargs public final void addAll(List<Item>... items) {
+        Arrays.stream(items).forEach(this.items::addAll);
+    }
+
+    public List<String> getAllNames() {
+        return items.stream()
+            .filter(item -> item instanceof NamedItem)
+            .map(item -> ((NamedItem) item).name)
+            .toList();
     }
 
     public void setByInd(Integer idx, Obj value) {
@@ -88,7 +102,7 @@ public final class TupleObj implements Obj {
 
     @Getter
     @Setter
-    public class Item {
+    public static class Item {
         protected Obj value;
 
         public Item(Obj value) {
@@ -102,7 +116,7 @@ public final class TupleObj implements Obj {
 
     @Getter
     @Setter
-    public class NamedItem extends Item {
+    public static class NamedItem extends Item {
         private final String name;
 
         public NamedItem(String name, Obj value) {

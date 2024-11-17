@@ -3,6 +3,8 @@ package com.java.evaluation;
 import com.java.evaluation.evaluators.ArrayEval;
 import com.java.evaluation.evaluators.BoolEval;
 import com.java.evaluation.evaluators.NumericEval;
+import com.java.evaluation.evaluators.StringEval;
+import com.java.evaluation.evaluators.TupleEval;
 import com.java.evaluation.objects.ArrayObj;
 import com.java.evaluation.objects.BoolObj;
 import com.java.evaluation.objects.EmptyObj;
@@ -66,6 +68,7 @@ public class Evaluator implements ASTVisitor<Obj> {
         this.ReplMode = true;
         scopes = new ArrayList<>();
     }
+
     public Evaluator() {
         this(new ArrayList<>());
     }
@@ -122,6 +125,12 @@ public class Evaluator implements ASTVisitor<Obj> {
             case ArrayObj i -> {
                 return ArrayEval.binaryEval(left, right, node.getOperator().lexeme());
             }
+            case StringObj i -> {
+                return StringEval.binaryEval(left, right, node.getOperator().lexeme());
+            }
+            case TupleObj i -> {
+                return TupleEval.binaryEval(left, right, node.getOperator().lexeme());
+            }
             default -> throw Errors.binaryOperationTypeMismatch(left.type(), right.type(), node.getOperator().lexeme());
         }
     }
@@ -177,7 +186,12 @@ public class Evaluator implements ASTVisitor<Obj> {
 
         enterScope();
         for (var item : arr.getArray()) {
-            declare(loopVarName, item);
+            if (!scopes.getLast().containsKey(loopVarName)) {
+                declare(loopVarName, item);
+            } else {
+                assign(loopVarName, item);
+            }
+
             var ret = forStmt.getLoopBody().accept(this);
             if (ret instanceof ReturnObj) {
                 leaveScope();
@@ -540,6 +554,9 @@ public class Evaluator implements ASTVisitor<Obj> {
 
     @Override
     public Obj visitReturnStatement(ReturnStatement node) {
+        if (node.getExpression() == null) {
+            return new ReturnObj(new EmptyObj());
+        }
         return new ReturnObj(node.getExpression().accept(this));
     }
 

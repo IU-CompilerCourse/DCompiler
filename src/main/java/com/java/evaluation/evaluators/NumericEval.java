@@ -26,9 +26,7 @@ public class NumericEval {
             case RealObj f1 when b instanceof IntegerObj i2 -> {
                 return evalRealInt(f1, i2, op);
             }
-            default -> {
-                throw Errors.binaryOperationTypeMismatch(a.type(), b.type(), op);
-            }
+            default -> throw Errors.binaryOperationTypeMismatch(a.type(), b.type(), op);
         }
     }
 
@@ -68,9 +66,7 @@ public class NumericEval {
             case ">" -> {
                 return new BoolObj(a.getValue() > b.getValue());
             }
-            default -> {
-                throw Errors.unexpectedBinaryOperation(a.type(), b.type(), op);
-            }
+            default -> throw Errors.unexpectedBinaryOperation(a.type(), b.type(), op);
         }
     }
 
@@ -110,9 +106,7 @@ public class NumericEval {
             case ">" -> {
                 return new BoolObj(a.getValue() > b.getValue());
             }
-            default -> {
-                throw Errors.unexpectedBinaryOperation(a.type(), b.type(), op);
-            }
+            default -> throw Errors.unexpectedBinaryOperation(a.type(), b.type(), op);
         }
     }
 
@@ -152,9 +146,7 @@ public class NumericEval {
             case ">" -> {
                 return new BoolObj(a.getValue() > b.getValue());
             }
-            default -> {
-                throw Errors.unexpectedBinaryOperation(a.type(), b.type(), op);
-            }
+            default -> throw Errors.unexpectedBinaryOperation(a.type(), b.type(), op);
         }
     }
 
@@ -193,9 +185,7 @@ public class NumericEval {
             case ">" -> {
                 return new BoolObj(a.getValue() > b.getValue());
             }
-            default -> {
-                throw Errors.unexpectedBinaryOperation(a.type(), b.type(), op);
-            }
+            default -> throw Errors.unexpectedBinaryOperation(a.type(), b.type(), op);
         }
     }
 

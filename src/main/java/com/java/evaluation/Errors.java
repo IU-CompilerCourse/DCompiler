@@ -1,6 +1,7 @@
 package com.java.evaluation;
 
 import com.java.evaluation.objects.Obj;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -80,6 +81,12 @@ import lombok.NoArgsConstructor;
     }
 
     public static RuntimeException redeclarationInScope(String name) {
-        return new RuntimeException(PREFIX + String.format("the variable '%s' is already declared in this scope", name));
+        return new RuntimeException(
+            PREFIX + String.format("the variable '%s' is already declared in this scope", name));
+    }
+
+    public static RuntimeException ambiguousTupleNaming(List<String> names) {
+        return new RuntimeException(
+            PREFIX + String.format("ambiguous naming '%s' during tuple concatenation", String.join(",", names)));
     }
 }

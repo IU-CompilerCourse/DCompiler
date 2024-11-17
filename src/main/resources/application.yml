@@ -5,7 +5,8 @@ spring:
     name: dcompiler
   main:
     web-application-type: none
-
+    banner-mode: off
+    log-startup-info: off
 
 logging:
   config: classpath:log4j2-plain.xml

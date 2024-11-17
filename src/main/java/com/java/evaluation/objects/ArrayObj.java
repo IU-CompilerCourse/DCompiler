@@ -20,9 +20,16 @@ public final class ArrayObj implements Obj {
     }
 
     public void set(int idx, Obj val) {
-        if (idx < 1 || idx > array.size()) {
+        if (idx < 1) {
             throw Errors.indexOutOfBounds(type(), idx, array.size());
         }
+
+        if (idx > array.size()) {
+            for (int i = array.size(); i < idx; i++) {
+                array.add(new EmptyObj());
+            }
+        }
+
         array.set(idx - 1, val);
     }
 

@@ -12,6 +12,16 @@ STATEMENTS
 				LITERAL
 					Token{type: IntLiteral, lexeme: '20', literal: 20, line: 2}
 	IF
+		COMPARISON
+			LEFT
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 3}
+					EMPTY TAIL
+			Token{type: Less, lexeme: '<', literal: null, line: 3}
+			RIGHT
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'y', literal: null, line: 3}
+					EMPTY TAIL
 		STATEMENTS
 			PRINT
 				EXPRESSIONS

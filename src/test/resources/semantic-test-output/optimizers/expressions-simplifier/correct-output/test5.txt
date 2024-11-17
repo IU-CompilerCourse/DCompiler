@@ -6,6 +6,15 @@ STATEMENTS
 				LITERAL
 					Token{type: IntLiteral, lexeme: '10', literal: 10, line: 1}
 	IF
+		COMPARISON
+			LEFT
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 3}
+					EMPTY TAIL
+			Token{type: Greater, lexeme: '>', literal: null, line: 3}
+			RIGHT
+				LITERAL
+					Token{type: IntLiteral, lexeme: '5', literal: 5, line: 3}
 		STATEMENTS
 			DECLARATIONS (with values)
 				DECLARATIONS
@@ -24,6 +33,15 @@ STATEMENTS
 				IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 8}
 				EMPTY TAIL
 	WHILE
+		COMPARISON
+			LEFT
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 10}
+					EMPTY TAIL
+			Token{type: Less, lexeme: '<', literal: null, line: 10}
+			RIGHT
+				LITERAL
+					Token{type: IntLiteral, lexeme: '15', literal: 15, line: 10}
 		LOOP BODY
 			STATEMENTS
 				DECLARATIONS (with values)

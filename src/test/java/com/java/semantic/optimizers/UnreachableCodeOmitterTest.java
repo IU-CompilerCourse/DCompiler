@@ -5,10 +5,6 @@ import com.java.lexer.Lexer;
 import com.java.parser.Parser;
 import com.java.parser.ast.visitor.PrintVisitorV2;
 import com.java.semantic.AnalyzerOutput;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -16,6 +12,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 public class UnreachableCodeOmitterTest {
     private static final HashMap<String, String> TESTCASES_INPUT = new HashMap<>();
