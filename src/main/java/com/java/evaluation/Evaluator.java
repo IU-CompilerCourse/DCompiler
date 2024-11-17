@@ -286,6 +286,12 @@ public class Evaluator implements ASTVisitor<Obj> {
         var exprs = new ArrayList<String>();
         for (var expr : print.getExpressions().getExpressions()) {
             var val = expr.accept(this);
+
+            if (val instanceof StringObj) {
+                exprs.add(((StringObj) val).getValue());
+                continue;
+            }
+
             exprs.add(val.toString());
         }
         for (var expr : exprs) {
