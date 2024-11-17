@@ -484,7 +484,7 @@ public class ExpressionsSimplifier implements ASTVisitor<Object> {
     @Override
     public Object visitDeclarationsCommaList(DeclarationsCommaList declarationsCommaList) {
         declarationsCommaList.getDeclarations()
-            .forEach(identifierWithValue -> identifierWithValue.getValue().accept(this));
+            .forEach(identifierWithValue -> identifierWithValue.accept(this));
         return declarationsCommaList;
     }
 
