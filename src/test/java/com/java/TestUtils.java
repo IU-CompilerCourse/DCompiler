@@ -1,6 +1,5 @@
 package com.java;
 
-import com.java.lexer.LexerOutput;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.io.File;
@@ -12,8 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class TestUtils {
-    private static final String LINE_SEP = System.lineSeparator();
-
     public static Path makeDirIfNotExists(@NotNull Path dir) {
         if (!Files.isDirectory(dir)) {
             try {
@@ -60,21 +57,5 @@ public final class TestUtils {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static String lexerFormatOutput(@NotNull LexerOutput output) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("TOKENS").append(LINE_SEP.repeat(2));
-        for (var token : output.tokens()) {
-            sb.append(token).append(LINE_SEP);
-        }
-
-        sb.append(LINE_SEP).append("ERRORS").append(LINE_SEP.repeat(2));
-        for (var error : output.lexingErrors()) {
-            sb.append(String.format("Found error: '%s' at line %d", error.error(), error.atLine())).append(LINE_SEP);
-        }
-
-        return sb.toString();
     }
 }

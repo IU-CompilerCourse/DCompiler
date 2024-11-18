@@ -25,8 +25,26 @@ STATEMENTS
 							LOOP BODY
 								STATEMENTS
 									IF
+										COMPARISON
+											LEFT
+												REFERENCE TAIL
+													IDENT Token{type: Identifier, lexeme: 'item', literal: null, line: 4}
+													EMPTY TAIL
+											Token{type: Equal, lexeme: '=', literal: null, line: 4}
+											RIGHT
+												LITERAL
+													Token{type: IntLiteral, lexeme: '2', literal: 2, line: 4}
 										STATEMENTS
 											RETURN
+												BINARY EXPRESSION
+													LEFT
+														LITERAL
+															Token{type: IntLiteral, lexeme: '2', literal: 2, line: 5}
+													Token{type: Star, lexeme: '*', literal: null, line: 5}
+													RIGHT
+														REFERENCE TAIL
+															IDENT Token{type: Identifier, lexeme: 'item', literal: null, line: 5}
+															EMPTY TAIL
 									RETURN
 										LITERAL
 											Token{type: IntLiteral, lexeme: '10', literal: 10, line: 8}

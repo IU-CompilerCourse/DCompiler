@@ -25,10 +25,37 @@ STATEMENTS
 					Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 4}
 	IDENT ASSIGNMENT
 		IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 6}
+		BINARY EXPRESSION
+			LEFT
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'a', literal: null, line: 6}
+					EMPTY TAIL
+			Token{type: Plus, lexeme: '+', literal: null, line: 6}
+			RIGHT
+				LITERAL
+					Token{type: IntLiteral, lexeme: '2', literal: 2, line: 6}
 	IDENT ASSIGNMENT
 		IDENT Token{type: Identifier, lexeme: 'b', literal: null, line: 7}
+		BINARY EXPRESSION
+			LEFT
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'b', literal: null, line: 7}
+					EMPTY TAIL
+			Token{type: Minus, lexeme: '-', literal: null, line: 7}
+			RIGHT
+				LITERAL
+					Token{type: DoubleLiteral, lexeme: '3.5', literal: 3.5, line: 7}
 	IDENT ASSIGNMENT
 		IDENT Token{type: Identifier, lexeme: 'c', literal: null, line: 8}
+		BINARY EXPRESSION
+			LEFT
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'c', literal: null, line: 8}
+					EMPTY TAIL
+			Token{type: Plus, lexeme: '+', literal: null, line: 8}
+			RIGHT
+				LITERAL
+					Token{type: StringLiteral, lexeme: '" World"', literal:  World, line: 8}
 	IDENT ASSIGNMENT
 		IDENT Token{type: Identifier, lexeme: 'd', literal: null, line: 9}
 		UNARY EXPRESSION

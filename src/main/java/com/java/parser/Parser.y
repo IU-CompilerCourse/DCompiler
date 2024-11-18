@@ -1,10 +1,11 @@
 %code imports {
-  import java.io.IOException;
-  import com.java.parser.ast.ASTree;
-  import com.java.parser.ast.node.ephemeral.*;
-  import com.java.parser.ast.node.real.*;
-  import com.java.lexer.Token;
-  import com.java.parser.ast.node.type.*;
+import java.io.IOException;
+import com.java.parser.ast.ASTree;
+import com.java.parser.ast.node.ephemeral.*;
+import com.java.parser.ast.node.real.*;
+import com.java.lexer.Token;
+
+@SuppressWarnings("all")
 }
 
 %code {
@@ -13,8 +14,7 @@
     public static ASTree makeAST(com.java.lexer.Lexer lexer) throws IOException {
 		LexerAdapter lexerAdapter = new LexerAdapter(lexer);
 		Parser p = new Parser(lexerAdapter);
-		p.parse();
-		return ast;
+		return p.parse() ? ast : null;
 	}
 }
 
@@ -158,7 +158,7 @@ return_statement:
     ;
 
 read_statement:
-    read_type expression Semicolon {
+    read_type reference Semicolon {
         $$ = new ReadStatement($1, $2);
     }
     ;
@@ -244,6 +244,9 @@ unary_expression:
     }
     | Not term {
         $$ = new UnaryOp($1, $2);
+    }
+    | Not OpenParen expression CloseParen {
+        $$ = new UnaryOp($1, $3);
     }
     ;
 

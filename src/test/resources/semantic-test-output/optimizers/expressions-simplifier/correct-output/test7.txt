@@ -28,12 +28,45 @@ STATEMENTS
 		LITERAL
 			Token{type: IntLiteral, lexeme: '1', literal: 1, line: 5}
 	WHILE
+		COMPARISON
+			LEFT
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'i', literal: null, line: 6}
+					EMPTY TAIL
+			Token{type: LessEqual, lexeme: '<=', literal: null, line: 6}
+			RIGHT
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'n', literal: null, line: 6}
+					EMPTY TAIL
 		LOOP BODY
 			STATEMENTS
 				IDENT ASSIGNMENT
 					IDENT Token{type: Identifier, lexeme: 'sum', literal: null, line: 7}
+					BINARY EXPRESSION
+						LEFT
+							REFERENCE TAIL
+								IDENT Token{type: Identifier, lexeme: 'sum', literal: null, line: 7}
+								EMPTY TAIL
+						Token{type: Plus, lexeme: '+', literal: null, line: 7}
+						RIGHT
+							REFERENCE TAIL
+								IDENT Token{type: Identifier, lexeme: 'arr', literal: null, line: 7}
+								TAIL
+									ARRAY ACCESS
+										REFERENCE TAIL
+											IDENT Token{type: Identifier, lexeme: 'i', literal: null, line: 7}
+											EMPTY TAIL
 				IDENT ASSIGNMENT
 					IDENT Token{type: Identifier, lexeme: 'i', literal: null, line: 8}
+					BINARY EXPRESSION
+						LEFT
+							REFERENCE TAIL
+								IDENT Token{type: Identifier, lexeme: 'i', literal: null, line: 8}
+								EMPTY TAIL
+						Token{type: Plus, lexeme: '+', literal: null, line: 8}
+						RIGHT
+							LITERAL
+								Token{type: IntLiteral, lexeme: '1', literal: 1, line: 8}
 	PRINT
 		EXPRESSIONS
 			REFERENCE TAIL

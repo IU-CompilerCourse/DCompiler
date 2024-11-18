@@ -6,6 +6,15 @@ STATEMENTS
 				LITERAL
 					Token{type: DoubleLiteral, lexeme: '3.14', literal: 3.14, line: 1}
 	IF
+		COMPARISON
+			LEFT
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'num', literal: null, line: 3}
+					EMPTY TAIL
+			Token{type: Greater, lexeme: '>', literal: null, line: 3}
+			RIGHT
+				LITERAL
+					Token{type: IntLiteral, lexeme: '0', literal: 0, line: 3}
 		STATEMENTS
 			PRINT
 				EXPRESSIONS

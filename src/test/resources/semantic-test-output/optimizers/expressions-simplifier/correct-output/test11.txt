@@ -48,6 +48,15 @@ STATEMENTS
 				FUNCTION LITERAL
 					IDENT
 						Token{type: Identifier, lexeme: 'x', literal: null, line: 3}
+					BINARY EXPRESSION
+						LEFT
+							REFERENCE TAIL
+								IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 3}
+								EMPTY TAIL
+						Token{type: Plus, lexeme: '+', literal: null, line: 3}
+						RIGHT
+							LITERAL
+								Token{type: IntLiteral, lexeme: '1', literal: 1, line: 3}
 	DECLARATIONS (only id)
 		IDENT
 			Token{type: Identifier, lexeme: 'nullVal', literal: null, line: 4}

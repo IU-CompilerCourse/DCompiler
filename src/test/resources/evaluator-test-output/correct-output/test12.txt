@@ -1,0 +1,2 @@
+1 2 apple 3 true 
+Function(x) string false [] 12 

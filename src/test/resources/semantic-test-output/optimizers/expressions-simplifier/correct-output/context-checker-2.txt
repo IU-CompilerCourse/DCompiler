@@ -8,6 +8,16 @@ STATEMENTS
 						Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
 					STATEMENTS
 						RETURN
+							BINARY EXPRESSION
+								LEFT
+									REFERENCE TAIL
+										IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 2}
+										EMPTY TAIL
+								Token{type: Star, lexeme: '*', literal: null, line: 2}
+								RIGHT
+									REFERENCE TAIL
+										IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 2}
+										EMPTY TAIL
 	PRINT
 		EXPRESSIONS
 			REFERENCE TAIL

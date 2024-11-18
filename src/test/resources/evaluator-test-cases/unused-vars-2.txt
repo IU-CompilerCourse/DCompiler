@@ -1,0 +1,9 @@
+var arr := [1, 2, 3];
+for item in arr loop
+    if item = 2 then
+        print item;
+    else
+        var d := item * 2, e := d + 5;
+        print d;
+    end
+end

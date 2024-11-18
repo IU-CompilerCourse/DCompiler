@@ -5,7 +5,6 @@ import com.java.lexer.TokenType;
 import com.java.parser.ast.ASTree;
 import com.java.parser.ast.node.ephemeral.ASTNode;
 import com.java.parser.ast.node.ephemeral.ExpressionEphemeral;
-import com.java.parser.ast.node.ephemeral.Factor;
 import com.java.parser.ast.node.ephemeral.Relation;
 import com.java.parser.ast.node.real.AccessTailList;
 import com.java.parser.ast.node.real.Array;
@@ -90,7 +89,7 @@ public class ExpressionsSimplifier implements ASTVisitor<Object> {
         var maybeRight = fetchReducedValue(node.getRight());
 
         if (Stream.of(maybeLeft, maybeRight).anyMatch(reduced -> reduced == null)) {
-            return null;
+            return node;
         }
 
         var leftToken = maybeLeft.getValue();
@@ -398,10 +397,10 @@ public class ExpressionsSimplifier implements ASTVisitor<Object> {
     }
 
     private TokenLiteral fetchReducedValue(ASTNode node) {
-        Factor maybeReduced = null;
+        ExpressionEphemeral maybeReduced = null;
 
         if (isReducableType(node)) {
-            maybeReduced = (Factor) node.accept(this);
+            maybeReduced = (ExpressionEphemeral) node.accept(this);
         } else if (node instanceof TokenLiteral) {
             maybeReduced = (TokenLiteral) node;
         }
@@ -419,7 +418,7 @@ public class ExpressionsSimplifier implements ASTVisitor<Object> {
         var maybeRight = fetchReducedValue(comparisonOp.getRight());
 
         if (Stream.of(maybeLeft, maybeRight).anyMatch(reduced -> reduced == null)) {
-            return null;
+            return comparisonOp;
         }
 
         var leftToken = maybeLeft.getValue();
@@ -485,7 +484,7 @@ public class ExpressionsSimplifier implements ASTVisitor<Object> {
     @Override
     public Object visitDeclarationsCommaList(DeclarationsCommaList declarationsCommaList) {
         declarationsCommaList.getDeclarations()
-            .forEach(identifierWithValue -> identifierWithValue.getValue().accept(this));
+            .forEach(identifierWithValue -> identifierWithValue.accept(this));
         return declarationsCommaList;
     }
 
@@ -595,7 +594,7 @@ public class ExpressionsSimplifier implements ASTVisitor<Object> {
         var maybeRight = fetchReducedValue(logicalOp.getRight());
 
         if (Stream.of(maybeLeft, maybeRight).anyMatch(reduced -> reduced == null)) {
-            return null;
+            return logicalOp;
         }
 
         var leftToken = maybeLeft.getValue();
@@ -645,7 +644,7 @@ public class ExpressionsSimplifier implements ASTVisitor<Object> {
     @Override
     public Object visitReadStatement(ReadStatement readNode) {
         readNode.setDest(
-            (ExpressionEphemeral) readNode.getDest().accept(this)
+            (ReferenceTail) readNode.getDest().accept(this)
         );
         return readNode;
     }
@@ -673,6 +672,9 @@ public class ExpressionsSimplifier implements ASTVisitor<Object> {
 
     @Override
     public Object visitReturnStatement(ReturnStatement returnStatementNode) {
+        if (returnStatementNode.getExpression() == null) {
+            return returnStatementNode;
+        }
         returnStatementNode.setExpression(
             (ExpressionEphemeral) returnStatementNode.getExpression().accept(this)
         );

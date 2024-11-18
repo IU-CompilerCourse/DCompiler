@@ -7,6 +7,16 @@ STATEMENTS
 					IDENT
 						Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
 						Token{type: Identifier, lexeme: 'y', literal: null, line: 1}
+					BINARY EXPRESSION
+						LEFT
+							REFERENCE TAIL
+								IDENT Token{type: Identifier, lexeme: 'x', literal: null, line: 1}
+								EMPTY TAIL
+						Token{type: Plus, lexeme: '+', literal: null, line: 1}
+						RIGHT
+							REFERENCE TAIL
+								IDENT Token{type: Identifier, lexeme: 'y', literal: null, line: 1}
+								EMPTY TAIL
 	DECLARATIONS (with values)
 		DECLARATIONS
 			IDENT (with value)

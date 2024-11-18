@@ -35,6 +35,19 @@ STATEMENTS
 					Token{type: IntLiteral, lexeme: '4', literal: 4, line: 4}
 	IDENT ASSIGNMENT
 		IDENT Token{type: Identifier, lexeme: 'tup', literal: null, line: 5}
+		BINARY EXPRESSION
+			LEFT
+				REFERENCE TAIL
+					IDENT Token{type: Identifier, lexeme: 'tup', literal: null, line: 5}
+					EMPTY TAIL
+			Token{type: Plus, lexeme: '+', literal: null, line: 5}
+			RIGHT
+				TUPLE
+					TUPLE LIST
+						NAMED ITEM
+							Token{type: Identifier, lexeme: 'c', literal: null, line: 5}
+							LITERAL
+								Token{type: BooleanLiteral, lexeme: 'true', literal: true, line: 5}
 	DECLARATIONS (with values)
 		DECLARATIONS
 			IDENT (with value)

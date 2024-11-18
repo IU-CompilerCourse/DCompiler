@@ -1,0 +1,4 @@
+5 1.23 true 
+string [[true, 2], [1.23]] {x=2} 
+Function(x) 
+empty 

@@ -1,0 +1,1 @@
+We stop at the -50 value; However, without this threshold, we will recieve the StackOverFlow Exception 
